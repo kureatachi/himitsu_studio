@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>秘密スタジオ | Landing</title>
+  <style>
+    :root{
+      --bg:#0b0b10; /* deep night */
+      --fg:#e9e7e4; /* warm paper */
+      --accent:#c7ff72; /* subtle neon */
+      --muted:#8b8b94;
+      --card:#15151c;
+      --shadow: 0 8px 24px rgba(0,0,0,.3);
+      --maxw: 1080px;
+    }
+    html,body{height:100%;}
+    html{scroll-behavior:smooth;}
+    body{
+      margin:0; background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+      line-height:1.6; letter-spacing:.02em;
+    }
+
+    /* ===== Sticky Header ===== */
+    .topbar{
+      position:sticky; top:0; z-index:1000; backdrop-filter: blur(6px);
+      background: color-mix(in oklab, var(--bg), transparent 40%);
+      border-bottom: 1px solid color-mix(in oklab, var(--fg), transparent 88%);
+    }
+    .topbar .row{display:flex; gap:12px; align-items:center; justify-content:space-between; max-width:var(--maxw); margin:0 auto; padding:10px 16px;}
+    .brand{font-weight:700; letter-spacing:.06em;}
+    .controls{display:flex; gap:8px; align-items:center;}
+    .btn, .switch{
+      appearance:none; border:1px solid color-mix(in oklab, var(--fg), transparent 80%); background:var(--card); color:var(--fg);
+      border-radius:999px; padding:8px 12px; cursor:pointer; box-shadow:var(--shadow);
+      font-weight:600; font-size:14px;
+    }
+    .btn.primary{ border-color: color-mix(in oklab, var(--accent), transparent 50%);}
+    .switch{display:flex; align-items:center; gap:8px;}
+    .switch input{display:none;}
+    .switch .dot{width:12px; height:12px; border-radius:999px; background:var(--muted); transition: .2s ease background;}
+    .switch input:checked + .dot{ background: var(--accent);}    
+
+    .progress{height:3px; width:100%; background: color-mix(in oklab, var(--fg), transparent 90%);} 
+    .progress .bar{height:100%; width:0%; background: linear-gradient(90deg, var(--accent), #88ffd0);}  
+
+    /* ===== Story Rail ===== */
+    .rail{
+      scroll-snap-type: y mandatory; /* smooth stop per page (scroll mode) */
+    }
+    .page{
+      min-height: 100svh; display:grid; place-items:center; padding:18vh 16px 16vh; position:relative; scroll-snap-align:start; scroll-margin-top:64px;
+    }
+    .card{ width:min(92vw, var(--maxw)); background:var(--card); border:1px solid color-mix(in oklab, var(--fg), transparent 86%); border-radius:28px; box-shadow:var(--shadow); overflow:hidden;}
+    figure{ margin:0; position:relative;}
+    .frame{ aspect-ratio:16/9; width:100%; background:#0f0f14; display:grid; place-items:center; }
+    .frame img, .frame video{ width:100%; height:100%; object-fit:contain; }
+    figcaption{ padding:14px 16px 18px; color:var(--muted); font-size:14px; }
+
+    .pagenum{ position:absolute; left:16px; top:16px; padding:6px 10px; border-radius:999px; font-size:12px; color:var(--muted); background: color-mix(in oklab, var(--card), transparent 10%); border:1px solid color-mix(in oklab, var(--fg), transparent 85%);}    
+
+    /* ===== Footer CTA ===== */
+    .footerCTA{ position:sticky; bottom:10px; display:grid; place-items:center; z-index:500; }
+    .footerCTA .go{
+      display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:999px; text-decoration:none; color:var(--bg); background:var(--accent); font-weight:800; box-shadow:var(--shadow);
+      border:0; letter-spacing:.04em; transition: transform .1s ease;
+    }
+    .footerCTA .go:active{ transform: translateY(1px); }
+
+    /* ===== Help hint (first visit) ===== */
+    .hint{ position:fixed; inset:auto 12px 20px auto; background: color-mix(in oklab, var(--card), transparent 10%); border:1px solid color-mix(in oklab, var(--fg), transparent 80%); padding:10px 12px; border-radius:12px; max-width: 56ch; font-size:13px; color:var(--muted); box-shadow:var(--shadow);} 
+    .hint kbd{ padding:2px 6px; border-radius:6px; border:1px solid color-mix(in oklab, var(--fg), transparent 75%); color:var(--fg);}
+
+    /* ===== Slide (紙芝居) Mode ===== */
+    body.slide-mode{ overflow:hidden; }
+    .rail.slide{
+      position:fixed; inset:64px 0 0 0; /* keep under header */
+      display:grid; place-items:center; height:calc(100svh - 64px);
+    }
+    .slideStage{ width:min(92vw, var(--maxw)); }
+    .slideStage .card{ transform: translateY(var(--offset, 0px)); }
+
+    .navArrows{ position:fixed; inset:0; display:flex; align-items:center; justify-content:space-between; pointer-events:none;}
+    .navArrows button{ pointer-events:auto; background: color-mix(in oklab, var(--card), transparent 5%); border:1px solid color-mix(in oklab, var(--fg), transparent 80%); color:var(--fg); width:54px; height:54px; border-radius:50%; display:grid; place-items:center; font-size:22px; margin:0 10px; cursor:pointer; box-shadow:var(--shadow);}    
+
+    @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} .slideStage .card{ transition:none !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar" role="banner">
+    <div class="row">
+      <div class="brand">秘密スタジオ</div>
+      <div class="controls">
+        <label class="switch" title="スクロール／紙芝居 切替">
+          <input id="modeToggle" type="checkbox" aria-label="紙芝居モードに切替" />
+          <span class="dot" aria-hidden="true"></span>
+          <span>紙芝居</span>
+        </label>
+        <button class="btn" id="prevBtn" aria-label="前のページ (←)">←</button>
+        <button class="btn" id="nextBtn" aria-label="次のページ (→)">→</button>
+        <a class="btn primary" href="#studio" id="jumpStudio">秘密スタジオへ</a>
+      </div>
+    </div>
+    <div class="progress" aria-hidden="true"><div class="bar" id="progressBar"></div></div>
+  </header>
+
+  <!-- ===== Story Rail (Scroll Mode) ===== -->
+  <main id="rail" class="rail" role="main">
+
+    <!-- PAGE TEMPLATE
+      1) 画像は /assets/story/01.jpg のように配置
+      2) figcaption に短いテキスト
+      3) data-title はURLハッシュ (#p-1)のラベルにも使用
+    -->
+
+    <section class="page" data-title="ひみつの扉" id="p-1">
+      <span class="pagenum">1</span>
+      <article class="card">
+        <figure>
+          <div class="frame">
+            <img src="images/storybook/storybook1.PNG" alt="暗い廊下の奥で、半開きの扉から光が漏れている絵" loading="eager" />
+          </div>
+          <figcaption>この扉を開けたら、まだ名前のない物語が動きはじめる。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section class="page" data-title="ひそひそ" id="p-2">
+      <span class="pagenum">2</span>
+      <article class="card">
+        <figure>
+          <div class="frame">
+            <div style="background: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(-45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(-45deg, transparent 75%, #333 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 24px;">Story 2</div>
+          </div>
+          <figcaption>メモは小さな声で、忘れかけていた気持ちを呼び起こす。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section class="page" data-title="スタジオの灯り" id="p-3">
+      <span class="pagenum">3</span>
+      <article class="card">
+        <figure>
+          <div class="frame">
+            <div style="background: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(-45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(-45deg, transparent 75%, #333 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 24px;">Story 3</div>
+          </div>
+          <figcaption>光が落ちる場所に、手の動きが生まれる。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section class="page" data-title="紙芝居フレーム" id="p-4">
+      <span class="pagenum">4</span>
+      <article class="card">
+        <figure>
+          <div class="frame">
+            <div style="background: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(-45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(-45deg, transparent 75%, #333 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 24px;">Story 4</div>
+          </div>
+          <figcaption>ページの間（ま）に、ひそかな余白がひろがる。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section class="page" data-title="合図" id="p-5">
+      <span class="pagenum">5</span>
+      <article class="card">
+        <figure>
+          <div class="frame">
+            <div style="background: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(-45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(-45deg, transparent 75%, #333 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 24px;">Story 5</div>
+          </div>
+          <figcaption>準備ができたら、合図を。ここから本当の『秘密スタジオ』へ。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <!-- Studio Anchor (CTA target) -->
+    <section class="page" id="studio" data-title="秘密スタジオへ">
+      <article class="card">
+        <figure>
+          <div class="frame">
+            <div style="background: linear-gradient(45deg, #333 25%, transparent 25%), linear-gradient(-45deg, #333 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #333 75%), linear-gradient(-45deg, transparent 75%, #333 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 24px;">Studio</div>
+          </div>
+          <figcaption>「秘密スタジオへ」ボタンから、体験ゾーンに進めます。</figcaption>
+        </figure>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- Sticky CTA on bottom -->
+  <div class="footerCTA" aria-hidden="false">
+    <a class="go" href="#studio" title="秘密スタジオへ移動">🔑 秘密スタジオへ</a>
+  </div>
+
+  <!-- Slide navigation overlay (only visible in 紙芝居 mode) -->
+  <div class="navArrows" id="navArrows" hidden>
+    <button id="arrowPrev" aria-label="前へ">⟨</button>
+    <button id="arrowNext" aria-label="次へ">⟩</button>
+  </div>
+
+  <div class="hint" id="hint">
+    スクロールで読む / <kbd>←</kbd><kbd>→</kbd> でページ移動。紙芝居は右上の切替で。
+  </div>
+
+  <script>
+    const rail = document.getElementById('rail');
+    const pages = [...document.querySelectorAll('.page')];
+    const modeToggle = document.getElementById('modeToggle');
+    const progressBar = document.getElementById('progressBar');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const navArrows = document.getElementById('navArrows');
+    const arrowPrev = document.getElementById('arrowPrev');
+    const arrowNext = document.getElementById('arrowNext');
+    const hint = document.getElementById('hint');
+
+    // ===== Utilities =====
+    const clamp = (v, min, max)=> Math.min(max, Math.max(min, v));
+    const getActiveIndex = ()=>{
+      // choose the page whose top is closest to viewport top
+      let idx = 0, minAbs = Infinity;
+      pages.forEach((el,i)=>{
+        const rect = el.getBoundingClientRect();
+        const abs = Math.abs(rect.top - 80); // offset (header)
+        if(abs < minAbs){minAbs = abs; idx = i;}
+      });
+      return idx;
+    }
+
+    // ===== Progress (scroll mode) =====
+    const updateProgress = ()=>{
+      const total = pages.length - 1;
+      const idx = getActiveIndex();
+      const pct = (idx / total) * 100;
+      progressBar.style.width = pct + '%';
+    }
+    document.addEventListener('scroll', updateProgress, {passive:true});
+    window.addEventListener('resize', updateProgress);
+
+    // ===== Hash navigation (#p-3 etc.) =====
+    const goto = (i)=>{
+      i = clamp(i, 0, pages.length-1);
+      const target = pages[i];
+      if(document.body.classList.contains('slide-mode')){
+        current = i; renderSlide();
+      }else{
+        target?.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      history.replaceState(null, '', '#' + target.id);
+    }
+
+    // ===== Buttons / Keys =====
+    const step = (dir)=>{ const i = getActiveIndex(); goto(i + dir); };
+    prevBtn.addEventListener('click', ()=> step(-1));
+    nextBtn.addEventListener('click', ()=> step(1));
+    arrowPrev.addEventListener('click', ()=> step(-1));
+    arrowNext.addEventListener('click', ()=> step(1));
+
+    document.addEventListener('keydown', (e)=>{
+      if(['ArrowRight','ArrowDown','PageDown','KeyJ','Space'].includes(e.code)){ e.preventDefault(); step(1); }
+      if(['ArrowLeft','ArrowUp','PageUp','KeyK','Backspace'].includes(e.code)){ e.preventDefault(); step(-1); }
+      if(e.code==='Home'){ e.preventDefault(); goto(0); }
+      if(e.code==='End'){ e.preventDefault(); goto(pages.length-1); }
+    });
+
+    // ===== First-visit hint hide =====
+    setTimeout(()=> hint.remove(), 5200);
+
+    // ===== Slide (紙芝居) Mode =====
+    let current = 0; // slide index
+    const renderSlide = ()=>{
+      current = clamp(current, 0, pages.length-1);
+      const pct = (current / (pages.length-1)) * 100;
+      progressBar.style.width = pct + '%';
+      // Extract the current page's card and show it centered
+      const page = pages[current];
+      // Create a stage if not existing
+      let stage = document.querySelector('.slideStage');
+      if(!stage){
+        stage = document.createElement('div');
+        stage.className = 'slideStage';
+        document.querySelector('.rail').appendChild(stage);
+      }
+      stage.innerHTML = '';
+      const clone = page.querySelector('.card').cloneNode(true);
+      clone.style.transition = 'transform .35s ease, opacity .35s ease';
+      clone.style.opacity = '0';
+      stage.appendChild(clone);
+      requestAnimationFrame(()=>{ clone.style.opacity = '1'; clone.style.setProperty('--offset','0px'); });
+      history.replaceState(null, '', '#' + page.id);
+    }
+
+    const setMode = (slide)=>{
+      document.body.classList.toggle('slide-mode', slide);
+      rail.classList.toggle('slide', slide);
+      navArrows.hidden = !slide;
+      if(slide){
+        current = getActiveIndex();
+        renderSlide();
+      }
+    }
+
+    modeToggle.addEventListener('change', (e)=> setMode(e.target.checked));
+
+    // Wheel / touch in slide mode = page flip
+    let wheelLock = false;
+    window.addEventListener('wheel', (e)=>{
+      if(!document.body.classList.contains('slide-mode')) return;
+      if(wheelLock) return; wheelLock = true;
+      const delta = e.deltaY;
+      if(delta > 10) { current++; renderSlide(); }
+      if(delta < -10){ current--; renderSlide(); }
+      setTimeout(()=> wheelLock = false, 350);
+    }, {passive:true});
+
+    // Touch swipe for mobile (simple)
+    let tsY = null;
+    window.addEventListener('touchstart', (e)=>{ if(!document.body.classList.contains('slide-mode')) return; tsY = e.touches[0].clientY; }, {passive:true});
+    window.addEventListener('touchend', (e)=>{
+      if(!document.body.classList.contains('slide-mode') || tsY===null) return; 
+      const dy = e.changedTouches[0].clientY - tsY;
+      if(Math.abs(dy) > 40){ current += (dy < 0 ? 1 : -1); renderSlide(); }
+      tsY = null;
+    }, {passive:true});
+
+    // Restore from hash (#p-3)
+    window.addEventListener('load', ()=>{
+      const id = location.hash.slice(1);
+      const idx = pages.findIndex(p=> p.id === id);
+      if(idx >= 0){ goto(idx); }
+      updateProgress();
+    });
+  </script>
+</body>
+</html>

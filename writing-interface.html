@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>秘密スタジオ - Write Your Thoughts</title>
+    <style>
+        :root {
+            --bg: #f8f6f0;
+            --fg: #3a3a3a;
+            --accent: #a67c52;
+            --text-color: #2c2c2c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #f0ede5 100%);
+            color: var(--fg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .writing-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Origami background */
+        .origami-background {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f7f3 100%);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(139, 125, 107, 0.2);
+            border: 1px solid rgba(139, 125, 107, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .origami-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 246, 240, 0.1) 100%);
+        }
+        
+        /* Placeholder for your origami image */
+        .origami-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* Writing area overlay */
+        .writing-area {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 60%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(139, 125, 107, 0.3);
+            box-shadow: 0 8px 24px rgba(139, 125, 107, 0.15);
+        }
+        
+        .writing-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 246, 240, 0.1) 100%);
+            border-radius: 15px;
+        }
+        
+        .writing-prompt {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .text-input {
+            width: 100%;
+            height: 200px;
+            border: none;
+            background: transparent;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-color);
+            resize: none;
+            outline: none;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .text-input::placeholder {
+            color: #999;
+            font-style: italic;
+        }
+        
+        /* Done button */
+        .done-button {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--accent) 0%, #8b6f47 100%);
+            color: #f8f6f0;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 24px rgba(166, 124, 82, 0.3);
+            z-index: 20;
+        }
+        
+        .done-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(166, 124, 82, 0.4);
+        }
+        
+        .done-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Text on origami (hidden initially) */
+        .text-on-origami {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 60%;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-color);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 5;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Animation states */
+        .writing-container.folding-mode .writing-area {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+            transition: all 0.5s ease;
+        }
+        
+        .writing-container.folding-mode .done-button {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .writing-container.folding-mode .text-on-origami {
+            opacity: 1;
+            transition: opacity 0.5s ease 0.3s;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .writing-container {
+                height: 500px;
+            }
+            
+            .writing-area {
+                width: 80%;
+                height: 70%;
+                padding: 20px;
+            }
+            
+            .text-input {
+                height: 150px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="writing-container" id="writingContainer">
+        <!-- Origami background -->
+        <div class="origami-background">
+            <!-- Placeholder for your origami image -->
+            <img src="images/origami/placeholder.png" alt="Origami" class="origami-image" />
+            
+            <!-- Writing area overlay -->
+            <div class="writing-area">
+                <div class="writing-prompt">
+                    Write down what you want to transform...
+                </div>
+                <textarea 
+                    class="text-input" 
+                    placeholder="Type your thoughts, feelings, or anything you want to fold into something beautiful..."
+                    id="textInput"
+                ></textarea>
+            </div>
+            
+            <!-- Text that will appear on origami -->
+            <div class="text-on-origami" id="textOnOrigami">
+                <!-- Text will be inserted here -->
+            </div>
+        </div>
+        
+        <!-- Done button -->
+        <button class="done-button" id="doneButton" disabled>Done</button>
+    </div>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const doneButton = document.getElementById('doneButton');
+        const writingContainer = document.getElementById('writingContainer');
+        const textOnOrigami = document.getElementById('textOnOrigami');
+        
+        // Enable done button when user types
+        textInput.addEventListener('input', () => {
+            if (textInput.value.trim().length > 0) {
+                doneButton.disabled = false;
+            } else {
+                doneButton.disabled = true;
+            }
+        });
+        
+        // Handle done button click
+        doneButton.addEventListener('click', () => {
+            if (textInput.value.trim().length > 0) {
+                // Copy text to origami
+                textOnOrigami.textContent = textInput.value;
+                
+                // Enter folding mode
+                writingContainer.classList.add('folding-mode');
+                
+                // After animation, show folding interface
+                setTimeout(() => {
+                    alert('Ready for folding! Your text is now on the origami.');
+                    // Here we would start the folding animation
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

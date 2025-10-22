@@ -1,0 +1,324 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(135deg, #f8f6f0 0%, #f0ede5 100%);
+    color: #3a3a3a;
+    margin: 0;
+    padding: 0;
+}
+
+/* Stories container - Full screen layout */
+.stories-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Individual story item - Full screen layout */
+.story-item {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Story image - Full screen to show complete image */
+.story-image {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffffff 0%, #f9f7f3 100%);
+    overflow: hidden;
+    box-shadow: 
+        0 12px 40px rgba(139, 125, 107, 0.2),
+        0 4px 16px rgba(139, 125, 107, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    position: relative;
+    border: 1px solid rgba(139, 125, 107, 0.2);
+}
+
+/* Paper texture effect */
+.story-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 0, 0, 0.05) 0%, transparent 50%),
+        linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+    border-radius: 12px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Kamishibai card reveal animation */
+.story-item.visible .story-image {
+    transform: translateX(0) rotateY(0deg);
+    opacity: 1;
+}
+
+/* Kamishibai card exit animation */
+.story-item.exiting .story-image {
+    transform: translateX(-120%) rotateY(-15deg);
+    opacity: 0;
+}
+
+/* Actual story images - Show complete image without cropping */
+.story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Placeholder styling */
+.placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 400;
+    color: #8b7d6b;
+    background: linear-gradient(45deg, #e8e2d8 25%, transparent 25%), 
+                linear-gradient(-45deg, #e8e2d8 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #e8e2d8 75%), 
+                linear-gradient(-45deg, transparent 75%, #e8e2d8 75%);
+    background-size: 30px 30px;
+    background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 246, 240, 0.1) 100%);
+    border-radius: 12px;
+}
+
+/* Navigation section - At the end of stories */
+.navigation-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 40px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Hand-drawn button container */
+.handdrawn-button-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Hand-drawn button image */
+.handdrawn-button {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.handdrawn-button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Invisible clickable overlay */
+.button-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+    background: transparent;
+}
+
+.navigation-section.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Studio button */
+.studio-button {
+    display: inline-block;
+    padding: 18px 48px;
+    background: linear-gradient(135deg, #a67c52 0%, #8b6f47 100%);
+    color: #f8f6f0;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 32px rgba(166, 124, 82, 0.3);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(139, 111, 71, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.studio-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.studio-button:hover::before {
+    left: 100%;
+}
+
+.studio-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 16px 48px rgba(166, 124, 82, 0.4);
+    background: linear-gradient(135deg, #b88a5e 0%, #9d7a52 100%);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .story-image {
+        max-width: 90%;
+    }
+    
+    .placeholder {
+        font-size: 18px;
+    }
+    
+    .studio-button {
+        padding: 16px 40px;
+        font-size: 18px;
+    }
+    
+    .navigation-section {
+        bottom: 30px;
+    }
+    
+    .scroll-indicator {
+        top: 10px;
+    }
+    
+    .scroll-text {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .placeholder {
+        font-size: 16px;
+    }
+    
+    .studio-button {
+        padding: 12px 28px;
+        font-size: 14px;
+    }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.scroll-indicator.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.navigation-section.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scroll-text {
+    font-size: 14px;
+    color: #8b7d6b;
+    margin-bottom: 8px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.scroll-arrow {
+    animation: bounce 2s infinite;
+    color: #a67c52;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* Navigation arrows - Removed for cleaner design */
+
+/* Loading animation for placeholders */
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+    100% {
+        background-position: calc(200px + 100%) 0;
+    }
+}
+
+/* Story captions */
+.story-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    padding: 40px 30px 30px;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-weight: 400;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.placeholder {
+    background: linear-gradient(90deg, #e8e2d8 0px, #f0ede5 40px, #e8e2d8 80px);
+    background-size: 200px 100%;
+    animation: shimmer 3s infinite;
+}
