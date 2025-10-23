@@ -70,38 +70,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 75%;
-            height: 65%;
-            background: rgba(255, 255, 255, 0.7);
+            height: 75%;
+            background: transparent;
             border-radius: 15px;
             padding: 30px;
             z-index: 10;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(139, 125, 107, 0.3);
-            box-shadow: 0 8px 24px rgba(139, 125, 107, 0.15);
         }
         
-        .writing-area::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 246, 240, 0.1) 100%);
-            border-radius: 15px;
-        }
-        
-        .writing-prompt {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 500;
-        }
         
         .text-input {
             width: 100%;
-            height: 200px;
+            height: 250px;
             border: none;
             background: transparent;
             font-family: 'Georgia', 'Times New Roman', serif;
@@ -273,12 +252,9 @@
             
             <!-- Writing area overlay -->
             <div class="writing-area">
-                <div class="writing-prompt">
-                    Write down what you want to transform...
-                </div>
                 <textarea 
                     class="text-input" 
-                    placeholder="Type your thoughts, feelings, or anything you want to fold into something beautiful..."
+                    placeholder="Ex. I wish people knew that I struggle so hard to keep up at school..."
                     id="textInput"
                 ></textarea>
             </div>
