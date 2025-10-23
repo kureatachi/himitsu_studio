@@ -311,16 +311,18 @@
         // Handle done button click
         doneButton.addEventListener('click', () => {
             if (textInput.value.trim().length > 0) {
+                // Save user text to localStorage
+                localStorage.setItem('userText', textInput.value.trim());
+                
                 // Copy text to origami
                 textOnOrigami.textContent = textInput.value;
                 
                 // Enter folding mode
                 writingContainer.classList.add('folding-mode');
                 
-                // After animation, show folding interface
+                // After animation, redirect to folding page
                 setTimeout(() => {
-                    alert('Ready for folding! Your text is now on the origami.');
-                    // Here we would start the folding animation
+                    window.location.href = 'folding-interface.html';
                 }, 1000);
             }
         });
