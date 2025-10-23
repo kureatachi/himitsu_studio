@@ -21,11 +21,11 @@
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: var(--bg);
+            background: #ffffff;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23ffffff"/><circle cx="20" cy="20" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="80" cy="40" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="40" cy="80" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="60" cy="10" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="10" cy="70" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="90" cy="90" r="0.3" fill="%23f8f8f8" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
             color: var(--fg);
             min-height: 100vh;
             padding: 40px 20px;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23f8f6f0"/><circle cx="20" cy="20" r="1" fill="%23e8e6e0" opacity="0.3"/><circle cx="80" cy="40" r="1" fill="%23e8e6e0" opacity="0.3"/><circle cx="40" cy="80" r="1" fill="%23e8e6e0" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -34,10 +34,12 @@
         
         /* Header */
         .header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
+            gap: 10px;
         }
         
         .home-button {
@@ -52,29 +54,34 @@
             cursor: pointer;
             color: white;
             font-size: 20px;
-        }
-        
-        .language-toggle {
-            display: flex;
-            background: var(--bg);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        
-        .lang-option {
-            padding: 8px 16px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-            color: var(--fg);
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        .lang-option.active {
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .back-button {
+            width: 50px;
+            height: 50px;
             background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
         /* Main content */
@@ -102,13 +109,31 @@
             gap: 20px;
             overflow-x: auto;
             padding: 20px 0;
-            justify-content: center;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            justify-content: flex-start;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) transparent;
+            cursor: grab;
         }
         
         .paper-selection::-webkit-scrollbar {
-            display: none;
+            height: 8px;
+        }
+        
+        .paper-selection::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .paper-selection::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        
+        .paper-selection::-webkit-scrollbar-thumb:hover {
+            background: #6b5b4a;
+        }
+        
+        .paper-selection:active {
+            cursor: grabbing;
         }
         
         .paper-option {
@@ -127,8 +152,8 @@
         }
         
         .paper-square {
-            width: 180px;
-            height: 180px;
+            width: 220px;
+            height: 220px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
@@ -147,10 +172,34 @@
             background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
         }
         
-        .paper-1 { background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); }
-        .paper-2 { background: linear-gradient(135deg, #7ed321 0%, #5cb85c 100%); }
-        .paper-3 { background: linear-gradient(135deg, #f5a623 0%, #e67e22 100%); }
-        .paper-4 { background: linear-gradient(135deg, #bd10e0 0%, #9013fe 100%); }
+        .paper-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .paper-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .paper-overlay:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .paper-option.selected .paper-overlay {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 0 0 3px var(--accent);
+        }
+        
         
         .paper-option.selected .paper-square {
             box-shadow: 0 8px 24px rgba(0,0,0,0.2);
@@ -225,8 +274,8 @@
         /* Responsive */
         @media (max-width: 768px) {
             .paper-square {
-                width: 150px;
-                height: 150px;
+                width: 180px;
+                height: 180px;
             }
             
             .main-title {
@@ -239,10 +288,7 @@
     <!-- Header -->
     <div class="header">
         <button class="home-button" onclick="window.location.href='index.html'">🏠</button>
-        <div class="language-toggle">
-            <button class="lang-option active">EN</button>
-            <button class="lang-option">JA</button>
-        </div>
+        <button class="back-button" onclick="window.location.href='studio.html'">←</button>
     </div>
     
     <!-- Main content -->
@@ -252,25 +298,25 @@
         <div class="paper-selection-container">
             <div class="paper-selection">
                 <div class="paper-option" data-color="blue">
-                    <div class="paper-square paper-1"></div>
+                    <div class="paper-square paper-1" style="background-image: url('images/origamis/origami1.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
                     <div class="paper-name">Starry Night Sky</div>
                     <div class="selection-indicator">✓</div>
                 </div>
                 
                 <div class="paper-option" data-color="green">
-                    <div class="paper-square paper-2"></div>
+                    <div class="paper-square paper-2" style="background-image: url('images/origamis/origami2.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
                     <div class="paper-name">Gentle Forest</div>
                     <div class="selection-indicator">✓</div>
                 </div>
                 
                 <div class="paper-option" data-color="orange">
-                    <div class="paper-square paper-3"></div>
+                    <div class="paper-square paper-3" style="background-image: url('images/origamis/origami3.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
                     <div class="paper-name">Morning Glow Sea</div>
                     <div class="selection-indicator">✓</div>
                 </div>
                 
                 <div class="paper-option" data-color="purple">
-                    <div class="paper-square paper-4"></div>
+                    <div class="paper-square paper-4" style="background-image: url('images/origamis/origami4.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
                     <div class="paper-name">Rainbow Dreams</div>
                     <div class="selection-indicator">✓</div>
                 </div>
@@ -305,6 +351,37 @@
                 localStorage.setItem('selectedPaper', selectedPaper);
                 window.location.href = 'origami-choice.html';
             }
+        });
+        
+        // Mouse drag scrolling
+        const paperSelection = document.querySelector('.paper-selection');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        
+        paperSelection.addEventListener('mousedown', (e) => {
+            isDown = true;
+            paperSelection.classList.add('active');
+            startX = e.pageX - paperSelection.offsetLeft;
+            scrollLeft = paperSelection.scrollLeft;
+        });
+        
+        paperSelection.addEventListener('mouseleave', () => {
+            isDown = false;
+            paperSelection.classList.remove('active');
+        });
+        
+        paperSelection.addEventListener('mouseup', () => {
+            isDown = false;
+            paperSelection.classList.remove('active');
+        });
+        
+        paperSelection.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - paperSelection.offsetLeft;
+            const walk = (x - startX) * 2;
+            paperSelection.scrollLeft = scrollLeft - walk;
         });
     </script>
 </body>

@@ -10,6 +10,7 @@
             --fg: #3a3a3a;
             --accent: #a67c52;
             --text-color: #2c2c2c;
+            --text-dark: #2c2c2c;
         }
         
         * {
@@ -20,7 +21,8 @@
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(135deg, var(--bg) 0%, #f0ede5 100%);
+            background: #ffffff;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23ffffff"/><circle cx="20" cy="20" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="80" cy="40" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="40" cy="80" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="60" cy="10" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="10" cy="70" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="90" cy="90" r="0.3" fill="%23f8f8f8" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
             color: var(--fg);
             min-height: 100vh;
             display: flex;
@@ -32,22 +34,19 @@
         
         .writing-container {
             position: relative;
-            width: 100%;
-            max-width: 800px;
-            height: 600px;
+            width: 400px;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0 auto;
         }
         
         /* Origami background */
         .origami-background {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #ffffff 0%, #f9f7f3 100%);
-            border-radius: 20px;
-            box-shadow: 0 12px 40px rgba(139, 125, 107, 0.2);
-            border: 1px solid rgba(139, 125, 107, 0.2);
+            background: transparent;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -55,24 +54,12 @@
             justify-content: center;
         }
         
-        .origami-background::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 246, 240, 0.1) 100%);
-        }
-        
-        /* Placeholder for your origami image */
+        /* Origami image */
         .origami-image {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: relative;
             z-index: 1;
         }
         
@@ -82,8 +69,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 70%;
-            height: 60%;
+            width: 75%;
+            height: 65%;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
             padding: 30px;
@@ -134,26 +121,25 @@
         
         /* Done button */
         .done-button {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, var(--accent) 0%, #8b6f47 100%);
-            color: #f8f6f0;
-            border: none;
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
             border-radius: 50px;
             font-size: 16px;
             font-weight: 500;
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 24px rgba(166, 124, 82, 0.3);
-            z-index: 20;
+            box-shadow: 0 4px 12px rgba(166, 124, 82, 0.3);
+            border: none;
+            margin-top: 30px;
         }
         
         .done-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(166, 124, 82, 0.4);
+            box-shadow: 0 6px 20px rgba(139, 125, 107, 0.3);
         }
         
         .done-button:disabled {
@@ -204,7 +190,12 @@
         /* Responsive */
         @media (max-width: 768px) {
             .writing-container {
-                height: 500px;
+                width: 300px;
+                height: 300px;
+            }
+            
+            .main-title {
+                font-size: 1.3rem;
             }
             
             .writing-area {
@@ -218,14 +209,67 @@
                 font-size: 14px;
             }
         }
+        
+        /* Main content */
+        .main-content {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .main-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 40px;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .home-button, .back-button {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .home-button:hover, .back-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
-    <div class="writing-container" id="writingContainer">
+    <!-- Header -->
+    <div class="header">
+        <button class="home-button" onclick="window.location.href='index.html'">🏠</button>
+        <button class="back-button" onclick="window.location.href='origami-choice.html'">←</button>
+    </div>
+    
+    <div class="main-content">
+        <h1 class="main-title">3. Type what you want feelings you want to fold</h1>
+        
+        <div class="writing-container" id="writingContainer">
         <!-- Origami background -->
         <div class="origami-background">
-            <!-- Placeholder for your origami image -->
-            <img src="images/origami/placeholder.png" alt="Origami" class="origami-image" />
+            <!-- Dynamic origami image based on selection -->
+            <img id="origamiImage" src="" alt="Selected Origami" class="origami-image" />
             
             <!-- Writing area overlay -->
             <div class="writing-area">
@@ -244,16 +288,40 @@
                 <!-- Text will be inserted here -->
             </div>
         </div>
-        
-        <!-- Done button -->
-        <button class="done-button" id="doneButton" disabled>Done</button>
     </div>
+    
+    <!-- Done button -->
+    <button class="done-button" id="doneButton" disabled>Start Folding</button>
 
     <script>
         const textInput = document.getElementById('textInput');
         const doneButton = document.getElementById('doneButton');
         const writingContainer = document.getElementById('writingContainer');
         const textOnOrigami = document.getElementById('textOnOrigami');
+        const origamiImage = document.getElementById('origamiImage');
+        
+        // Load the correct origami based on user's selection
+        function loadSelectedOrigami() {
+            const selectedColor = localStorage.getItem('selectedOrigamiColor');
+            const origamiImages = {
+                'blue': 'images/origamis/origami1.png',
+                'green': 'images/origamis/origami2.png',
+                'orange': 'images/origamis/origami3.png',
+                'purple': 'images/origamis/origami4.png'
+            };
+            
+            if (selectedColor && origamiImages[selectedColor]) {
+                origamiImage.src = origamiImages[selectedColor];
+                console.log(`Loading origami: ${origamiImages[selectedColor]}`);
+            } else {
+                // Default fallback
+                origamiImage.src = 'images/origamis/origami1.png';
+                console.log('No selection found, using default origami');
+            }
+        }
+        
+        // Load origami on page load
+        document.addEventListener('DOMContentLoaded', loadSelectedOrigami);
         
         // Enable done button when user types
         textInput.addEventListener('input', () => {

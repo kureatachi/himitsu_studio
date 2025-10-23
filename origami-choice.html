@@ -8,7 +8,9 @@
         :root {
             --bg: #f8f6f0;
             --fg: #3a3a3a;
-            --accent: #a67c52;
+            --accent: #8b7d6b;
+            --text-dark: #2c2c2c;
+            --border-light: rgba(139, 125, 107, 0.2);
         }
         
         * {
@@ -19,7 +21,8 @@
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: linear-gradient(135deg, var(--bg) 0%, #f0ede5 100%);
+            background: #ffffff;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23ffffff"/><circle cx="20" cy="20" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="80" cy="40" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="40" cy="80" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="60" cy="10" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="10" cy="70" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="90" cy="90" r="0.3" fill="%23f8f8f8" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
             color: var(--fg);
             min-height: 100vh;
             display: flex;
@@ -29,70 +32,111 @@
             padding: 20px;
         }
         
-        .studio-container {
+        /* Header */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .home-button {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .back-button {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Main content */
+        .main-content {
             text-align: center;
-            max-width: 1000px;
-            width: 100%;
+            margin-bottom: 40px;
+            max-width: 800px;
         }
         
-        .studio-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
-            letter-spacing: 0.1em;
-        }
-        
-        .studio-subtitle {
-            font-size: 1.2rem;
-            color: var(--fg);
-            margin-bottom: 50px;
-            font-style: italic;
-        }
-        
-        .instruction-text {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 50px;
-            line-height: 1.6;
+        .main-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 40px;
         }
         
         /* Origami selection */
-        .origami-selection {
+        .origami-selection-container {
             display: flex;
             justify-content: center;
-            gap: 60px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .origami-selection {
+            display: flex;
+            gap: 40px;
+            padding: 20px 0;
+            justify-content: center;
         }
         
         .origami-option {
-            position: relative;
+            flex-shrink: 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            max-width: 300px;
+            text-align: center;
         }
         
         .origami-option:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
         }
         
         .origami-option.selected {
-            transform: translateY(-15px);
+            transform: translateY(-8px);
         }
         
         .origami-image-container {
             width: 300px;
             height: 300px;
-            background: linear-gradient(135deg, #ffffff 0%, #f9f7f3 100%);
             border-radius: 20px;
-            box-shadow: 0 12px 40px rgba(139, 125, 107, 0.2);
-            border: 1px solid rgba(139, 125, 107, 0.2);
             overflow: hidden;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
         
         .origami-image-container::before {
@@ -102,47 +146,35 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(248, 246, 240, 0.1) 100%);
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
         }
         
         .origami-image {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            transition: transform 0.3s ease;
+            border-radius: 20px;
         }
         
-        .origami-option:hover .origami-image {
-            transform: scale(1.05);
-        }
-        
-        .origami-option.selected .origami-image-container {
-            box-shadow: 0 16px 48px rgba(139, 125, 107, 0.3);
-            border-color: var(--accent);
+        .origami-image.heart {
+            width: 80%;
+            height: 80%;
         }
         
         .origami-name {
-            margin-top: 20px;
             font-size: 1.3rem;
             font-weight: 600;
             color: var(--fg);
+            margin-top: 20px;
             margin-bottom: 10px;
         }
         
-        .origami-description {
-            font-size: 1rem;
-            color: #666;
-            line-height: 1.5;
-            max-width: 280px;
-        }
-        
-        /* Selection indicator */
         .selection-indicator {
             position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 40px;
-            height: 40px;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
             background: var(--accent);
             border-radius: 50%;
             display: none;
@@ -161,16 +193,14 @@
         /* Choose button */
         .choose-button {
             display: inline-block;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, var(--accent) 0%, #8b6f47 100%);
-            color: #f8f6f0;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
             text-decoration: none;
-            border-radius: 50px;
-            font-size: 20px;
+            border-radius: 25px;
+            font-size: 16px;
             font-weight: 500;
-            letter-spacing: 1px;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(166, 124, 82, 0.3);
             border: none;
             cursor: pointer;
             opacity: 0.5;
@@ -183,9 +213,15 @@
         }
         
         .choose-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(166, 124, 82, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(166, 124, 82, 0.3);
         }
+        
+        /* Dynamic origami colors based on selection */
+        .origami-image-container.blue { background: transparent; }
+        .origami-image-container.green { background: transparent; }
+        .origami-image-container.orange { background: transparent; }
+        .origami-image-container.purple { background: transparent; }
         
         /* Responsive */
         @media (max-width: 768px) {
@@ -200,48 +236,40 @@
                 height: 250px;
             }
             
-            .studio-title {
+            .main-title {
                 font-size: 2rem;
             }
         }
-        
-        /* Dynamic origami colors based on selection */
-        .origami-image-container.blue { background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); }
-        .origami-image-container.green { background: linear-gradient(135deg, #7ed321 0%, #5cb85c 100%); }
-        .origami-image-container.orange { background: linear-gradient(135deg, #f5a623 0%, #e67e22 100%); }
-        .origami-image-container.purple { background: linear-gradient(135deg, #bd10e0 0%, #9013fe 100%); }
     </style>
 </head>
 <body>
-    <div class="studio-container">
-        <h1 class="studio-title">秘密スタジオ</h1>
-        <p class="studio-subtitle">Choose Your Origami</p>
+    <!-- Header -->
+    <div class="header">
+        <button class="home-button" onclick="window.location.href='index.html'">🏠</button>
+        <button class="back-button" onclick="window.location.href='origami-studio.html'">←</button>
+    </div>
+    
+    <!-- Main content -->
+    <div class="main-content">
+        <h1 class="main-title">2. Choose what to fold</h1>
         
-        <div class="instruction-text">
-            What would you like to fold? Each origami carries its own meaning and beauty.
-        </div>
-        
-        <div class="origami-selection">
-            <div class="origami-option" data-type="crane">
-                <div class="origami-image-container">
-                    <img src="images/origami/crane.png" alt="Origami Crane" class="origami-image" />
+        <div class="origami-selection-container">
+            <div class="origami-selection">
+                <div class="origami-option" data-type="crane">
+                    <div class="origami-image-container">
+                        <img src="images/origamis/choice1-crane.png" alt="Origami Crane" class="origami-image" />
+                    </div>
+                    <div class="origami-name">Crane</div>
+                    <div class="selection-indicator">✓</div>
                 </div>
-                <div class="origami-name">Crane</div>
-                <div class="origami-description">
-                    A symbol of peace, hope, and transformation. Fold your thoughts into something that soars.
+                
+                <div class="origami-option" data-type="heart">
+                    <div class="origami-image-container">
+                        <img src="images/origamis/choice2-heart.png" alt="Origami Heart" class="origami-image heart" />
+                    </div>
+                    <div class="origami-name">Heart</div>
+                    <div class="selection-indicator">✓</div>
                 </div>
-                <div class="selection-indicator">✓</div>
-            </div>
-            
-            <div class="origami-option" data-type="heart">
-                <div class="origami-image-container">
-                    <img src="images/origami/heart.png" alt="Origami Heart" class="origami-image" />
-                </div>
-                <div class="origami-name">Heart</div>
-                <div class="origami-description">
-                    A symbol of love, compassion, and self-acceptance. Transform your feelings into something beautiful.
-                </div>
-                <div class="selection-indicator">✓</div>
             </div>
         </div>
         
