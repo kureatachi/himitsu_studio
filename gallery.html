@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>秘密スタジオ - Himitsu Gallery</title>
+    <style>
+        :root {
+            --bg: #f8f6f0;
+            --fg: #3a3a3a;
+            --accent: #a67c52;
+            --text-color: #2c2c2c;
+            --text-dark: #2c2c2c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #ffffff;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23ffffff"/><circle cx="20" cy="20" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="80" cy="40" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="40" cy="80" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="60" cy="10" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="10" cy="70" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="90" cy="90" r="0.3" fill="%23f8f8f8" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
+            color: var(--fg);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .gallery-title {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .gallery-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+        
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+        
+        .origami-item {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(166, 124, 82, 0.15);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .origami-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(166, 124, 82, 0.25);
+        }
+        
+        .origami-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f8f6f0 0%, #e8e2d8 100%);
+        }
+        
+        .origami-info {
+            padding: 20px;
+        }
+        
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        
+        .origami-type {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        
+        .user-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+            font-style: italic;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .origami-item:hover .user-text {
+            opacity: 1;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+        
+        .hover-indicator {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(166, 124, 82, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .origami-item:hover .hover-indicator {
+            opacity: 1;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .empty-gallery {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dark);
+            opacity: 0.7;
+        }
+        
+        .empty-gallery h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 10px;
+            }
+            
+            .gallery-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">←</a>
+    
+    <div class="gallery-header">
+        <h1 class="gallery-title">Himitsu Gallery</h1>
+        <p class="gallery-subtitle">Community creations and shared thoughts</p>
+    </div>
+    
+    <div class="gallery-container" id="galleryContainer">
+        <!-- Gallery items will be dynamically loaded here -->
+    </div>
+
+    <script>
+        // Sample data - in a real app, this would come from a database
+        const sampleGalleryData = [
+            {
+                id: 1,
+                userName: "Sarah",
+                origamiType: "Starry Night Sky - Crane",
+                userText: "I wish people knew that I struggle so hard to keep up at school, but I'm afraid they'll think I'm not smart enough.",
+                origamiImage: "images/origamis/origami1.png"
+            },
+            {
+                id: 2,
+                userName: "Alex",
+                origamiType: "Gentle Forest - Heart",
+                userText: "Sometimes I feel like I'm pretending to be someone I'm not, just to fit in with everyone else.",
+                origamiImage: "images/origamis/origami2.png"
+            },
+            {
+                id: 3,
+                userName: "Maya",
+                origamiType: "Morning Glow Sea - Crane",
+                userText: "I wish my family understood that I need time alone to recharge, it doesn't mean I don't love them.",
+                origamiImage: "images/origamis/origami3.png"
+            },
+            {
+                id: 4,
+                userName: "Jordan",
+                origamiType: "Rainbow Dreams - Heart",
+                userText: "I'm scared that if I show my true feelings, people will think I'm too much to handle.",
+                origamiImage: "images/origamis/origami4.png"
+            }
+        ];
+        
+        function loadGallery() {
+            const galleryContainer = document.getElementById('galleryContainer');
+            
+            // Check if there are any saved creations in localStorage
+            const savedCreations = JSON.parse(localStorage.getItem('galleryCreations') || '[]');
+            
+            // Combine sample data with saved creations
+            const allCreations = [...sampleGalleryData, ...savedCreations];
+            
+            if (allCreations.length === 0) {
+                galleryContainer.innerHTML = `
+                    <div class="empty-gallery">
+                        <h3>No creations yet</h3>
+                        <p>Be the first to create something beautiful!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Render gallery items
+            galleryContainer.innerHTML = allCreations.map(creation => `
+                <div class="origami-item">
+                    <div class="hover-indicator">Hover to read</div>
+                    <img src="${creation.origamiImage}" alt="${creation.origamiType}" class="origami-image">
+                    <div class="origami-info">
+                        <div class="user-name">${creation.userName}</div>
+                        <div class="origami-type">${creation.origamiType}</div>
+                        <div class="user-text">"${creation.userText}"</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Load gallery on page load
+        document.addEventListener('DOMContentLoaded', loadGallery);
+        
+        // Function to add a new creation to the gallery
+        function addToGallery(userName, origamiType, userText, origamiImage) {
+            const savedCreations = JSON.parse(localStorage.getItem('galleryCreations') || '[]');
+            
+            const newCreation = {
+                id: Date.now(), // Simple ID generation
+                userName: userName || 'Anonymous',
+                origamiType: origamiType,
+                userText: userText,
+                origamiImage: origamiImage
+            };
+            
+            savedCreations.push(newCreation);
+            localStorage.setItem('galleryCreations', JSON.stringify(savedCreations));
+        }
+        
+        // Make addToGallery available globally for other pages to use
+        window.addToGallery = addToGallery;
+    </script>
+</body>
+</html>

@@ -44,69 +44,350 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('images/intro.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             z-index: 1;
         }
         
-        .intro-content {
+        .background-default {
             position: absolute;
-            top: 10%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/intro-desk-default.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1;
+            transition: opacity 0.2s ease;
+        }
+        
+        .background-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/intro-desk-hover.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .intro-background.hovered .background-default {
+            opacity: 0;
+        }
+        
+        .intro-background.hovered .background-hover {
+            opacity: 1;
+        }
+        
+        /* Book hover area */
+        .book-area {
+            position: absolute;
+            top: 15%;
+            left: 55%;
+            width: 8%;
+            height: 15%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 6;
+        }
+        
+        /* Hover text */
+        .hover-text {
+            position: absolute;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .drawer-area:hover .hover-text {
+            opacity: 1;
+        }
+        
+        .book-area:hover .hover-text {
+            opacity: 1;
+        }
+        
+        .drawer-hover-text {
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 10;
-            text-align: center;
-            color: var(--text-dark);
-            max-width: 600px;
-            padding: 0;
         }
         
-        .start-button {
-            display: inline-block;
-            padding: 20px 50px;
-            background: linear-gradient(135deg, var(--accent) 0%, #8b6f47 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.4rem;
-            font-weight: 500;
-            letter-spacing: 1px;
+        .book-hover-text {
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Collection hover area */
+        .collection-area {
+            position: absolute;
+            top: 58%;
+            left: 60%;
+            width: 15%;
+            height: 10%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 6;
+        }
+        
+        .collection-area:hover .hover-text {
+            opacity: 1;
+        }
+        
+        .collection-hover-text {
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Invisible drawer hover area */
+        .drawer-hover-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            cursor: pointer;
+        }
+        
+        /* Specific drawer area - adjust these values based on your image */
+        .drawer-area {
+            position: absolute;
+            /* Adjust these values to match the drawer position in your image */
+            top: 35%;
+            left: 28%;
+            width: 30%;
+            height: 15%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 6;
+        }
+        
+        
+        /* Menu dropdown */
+        .menu-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            background: rgba(166, 124, 82, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(166, 124, 82, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
         }
         
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(166, 124, 82, 0.6);
-            background: linear-gradient(135deg, #8b6f47 0%, var(--accent) 100%);
+        .menu-icon:hover {
+            background: var(--accent);
+            transform: scale(1.1);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .start-button {
-                padding: 15px 40px;
-                font-size: 1.2rem;
-            }
+        .menu-icon span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+            margin: 3px 0;
+            transition: all 0.3s ease;
         }
         
-        @media (max-width: 480px) {
-            .start-button {
-                font-size: 1rem;
-                padding: 12px 30px;
-            }
+        .menu-icon:hover span {
+            background: white;
+        }
+        
+        .dropdown-menu {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid var(--accent);
+            border-radius: 15px;
+            padding: 10px 0;
+            min-width: 200px;
+            box-shadow: 0 8px 24px rgba(166, 124, 82, 0.2);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(166, 124, 82, 0.1);
+        }
+        
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-menu a:hover {
+            background: rgba(166, 124, 82, 0.1);
+            color: var(--accent);
+            padding-left: 25px;
         }
     </style>
 </head>
 <body>
     <div class="intro-container">
-        <div class="intro-background"></div>
-        
-        <div class="intro-content">
-            <a href="storybook.html" class="start-button">Click to find out what she is reading</a>
+        <!-- Menu icon -->
+        <div class="menu-icon" id="menuIcon">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+        
+        <!-- Dropdown menu -->
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="#about">About Himitsu Studio</a>
+            <a href="#character">Character Introduction</a>
+            <a href="#author">About the Author</a>
+            <a href="gallery.html">Himitsu Gallery</a>
+        </div>
+        
+        <div class="intro-background" id="introBackground">
+            <div class="background-default"></div>
+            <div class="background-hover"></div>
+        </div>
+        
+        <!-- Invisible drawer hover area -->
+        <div class="drawer-area" id="drawerArea">
+            <div class="hover-text drawer-hover-text">Click to Explore</div>
+        </div>
+        
+        <!-- Book hover area -->
+        <div class="book-area" id="bookArea">
+            <div class="hover-text book-hover-text">Click to Read</div>
+        </div>
+        
+        <!-- Collection hover area -->
+        <div class="collection-area" id="collectionArea">
+            <div class="hover-text collection-hover-text">View Collection</div>
+        </div>
+        
     </div>
+
+    <script>
+        const menuIcon = document.getElementById('menuIcon');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const introBackground = document.getElementById('introBackground');
+        const drawerArea = document.getElementById('drawerArea');
+        const bookArea = document.getElementById('bookArea');
+        const collectionArea = document.getElementById('collectionArea');
+        
+        // Toggle dropdown menu
+        menuIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('active');
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+        
+        // Close dropdown when clicking on menu items
+        const menuItems = dropdownMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                dropdownMenu.classList.remove('active');
+            });
+        });
+        
+        // Drawer hover effect
+        drawerArea.addEventListener('mouseenter', () => {
+            console.log('Mouse entered drawer area');
+            introBackground.classList.add('hovered');
+            console.log('Added hovered class');
+        });
+        
+        drawerArea.addEventListener('mouseleave', () => {
+            console.log('Mouse left drawer area');
+            introBackground.classList.remove('hovered');
+            console.log('Removed hovered class');
+        });
+        
+        // Drawer click - redirect to studio
+        drawerArea.addEventListener('click', () => {
+            window.location.href = 'studio.html';
+        });
+        
+        // Book hover effect
+        bookArea.addEventListener('mouseenter', () => {
+            console.log('Mouse entered book area');
+            // Change to book hover image
+            const backgroundDefault = document.querySelector('.background-default');
+            const backgroundHover = document.querySelector('.background-hover');
+            backgroundDefault.style.backgroundImage = 'url("images/intro-book-hover.png")';
+        });
+        
+        bookArea.addEventListener('mouseleave', () => {
+            console.log('Mouse left book area');
+            // Return to default image
+            const backgroundDefault = document.querySelector('.background-default');
+            backgroundDefault.style.backgroundImage = 'url("images/intro-desk-default.png")';
+        });
+        
+        // Book click - redirect to storybook
+        bookArea.addEventListener('click', () => {
+            window.location.href = 'storybook.html';
+        });
+        
+        // Collection hover effect
+        collectionArea.addEventListener('mouseenter', () => {
+            console.log('Mouse entered collection area');
+            // Change to collection hover image
+            const backgroundDefault = document.querySelector('.background-default');
+            backgroundDefault.style.backgroundImage = 'url("images/intro-drawer-hover.png")';
+        });
+        
+        collectionArea.addEventListener('mouseleave', () => {
+            console.log('Mouse left collection area');
+            // Return to default image
+            const backgroundDefault = document.querySelector('.background-default');
+            backgroundDefault.style.backgroundImage = 'url("images/intro-desk-default.png")';
+        });
+        
+        // Collection click - redirect to gallery
+        collectionArea.addEventListener('click', () => {
+            window.location.href = 'gallery.html';
+        });
+    </script>
 </body>
 </html>

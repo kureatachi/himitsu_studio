@@ -242,7 +242,7 @@
         
         // Load the correct origami based on user's selection
         function loadSelectedOrigami() {
-            const selectedColor = localStorage.getItem('selectedOrigamiColor');
+            const selectedColor = localStorage.getItem('selectedPaper');
             const origamiImages = {
                 'blue': 'images/origamis/origami1.png',
                 'green': 'images/origamis/origami2.png',
@@ -297,7 +297,50 @@
                     console.log('Folding arrow element not found');
                 }
             }, 1000);
+            
+            // After showing instruction, add click handler to save to gallery
+            setTimeout(() => {
+                addSaveToGalleryHandler();
+            }, 3000);
         });
+        
+        function addSaveToGalleryHandler() {
+            // Add click handler to save creation to gallery
+            document.addEventListener('click', () => {
+                const userName = prompt('What\'s your name? (optional)') || 'Anonymous';
+                const selectedColor = localStorage.getItem('selectedPaper');
+                const userText = localStorage.getItem('userText');
+                
+                // Map origami colors to names
+                const origamiNames = {
+                    'blue': 'Starry Night Sky',
+                    'green': 'Gentle Forest',
+                    'orange': 'Morning Glow Sea',
+                    'purple': 'Rainbow Dreams'
+                };
+                
+                // Map origami types
+                const origamiTypes = {
+                    'blue': 'Crane',
+                    'green': 'Heart',
+                    'orange': 'Crane',
+                    'purple': 'Heart'
+                };
+                
+                const origamiName = origamiNames[selectedColor] || 'Unknown';
+                const origamiType = origamiTypes[selectedColor] || 'Unknown';
+                const origamiImage = `images/origamis/origami${selectedColor === 'blue' ? '1' : selectedColor === 'green' ? '2' : selectedColor === 'orange' ? '3' : '4'}.png`;
+                
+                // Save to gallery
+                if (window.addToGallery) {
+                    window.addToGallery(userName, `${origamiName} - ${origamiType}`, userText, origamiImage);
+                    alert('Your creation has been added to the gallery!');
+                }
+                
+                // Remove the click handler after first use
+                document.removeEventListener('click', arguments.callee);
+            });
+        }
     </script>
 </body>
 </html>
