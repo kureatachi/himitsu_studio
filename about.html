@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - 秘密スタジオ</title>
+    <style>
+        :root {
+            --bg: #f8f6f0;
+            --fg: #3a3a3a;
+            --accent: #a67c52;
+            --text-color: #2c2c2c;
+            --text-dark: #2c2c2c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #ffffff;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23ffffff"/><circle cx="20" cy="20" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="80" cy="40" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="40" cy="80" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="60" cy="10" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="10" cy="70" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="90" cy="90" r="0.3" fill="%23f8f8f8" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
+            color: var(--fg);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 50px;
+            opacity: 0.8;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 24px rgba(166, 124, 82, 0.15);
+            margin-bottom: 30px;
+        }
+        
+        .content-section h2 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+        
+        .content-section p:last-child {
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 30px 20px;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-section p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">←</a>
+    
+    <div class="container">
+        <h1>About Himitsu Studio</h1>
+        <p class="subtitle">A digital space where vulnerability becomes art</p>
+        
+        <div class="content-section">
+            <h2>Welcome to Your Secret Studio</h2>
+            <p>Himitsu Studio is a digital sanctuary where the messy, imperfect parts of ourselves are not only welcomed but celebrated. Inspired by the metaphor of a hidden drawer, this project explores the beauty in our hidden truths.</p>
+            <p>Just like the character in our story who learns to accept her messy drawer, Himitsu Studio invites you to acknowledge, express, and transform your own "messiness" — the emotions, struggles, and authentic experiences we often keep hidden from the world.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>The Journey</h2>
+            <p>Begin by reading the story of a girl and her hidden drawer. As you progress, you'll be invited into her secret studio — a place of reflection and transformation.</p>
+            <p>Through the interactive process of writing your thoughts on origami paper and watching them fold into something beautiful, you'll experience a symbolic transformation of vulnerability into art.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>The Concept</h2>
+            <p>In a world that demands perfection and polished exteriors, Himitsu Studio serves as a reminder that everyone has their own "messy drawer." The neat desk we show the world doesn't tell the whole story.</p>
+            <p>This project celebrates authenticity, encourages self-reflection, and creates a space where your hidden truths can be acknowledged without judgment, then transformed into something meaningful.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>How to Use</h2>
+            <p>Simply explore at your own pace. Read the story, enter the studio, choose your origami paper, write your thoughts, and fold them into existence. Your creation becomes part of a collective gallery of shared vulnerability.</p>
+            <p>Remember: There's no right or wrong way to engage with Himitsu Studio. It's your space, your journey, your hidden drawer.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -260,6 +260,110 @@
             color: var(--accent);
             padding-left: 25px;
         }
+        
+        /* Content overlay modal */
+        .content-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .content-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .content-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .content-overlay.active .content-modal {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        .content-header {
+            padding: 30px 40px;
+            border-bottom: 2px solid var(--accent);
+            background: linear-gradient(135deg, rgba(166, 124, 82, 0.1) 0%, rgba(166, 124, 82, 0.05) 100%);
+        }
+        
+        .content-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 0;
+        }
+        
+        .content-body {
+            padding: 40px;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+        
+        .content-body p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .content-body h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .content-body h3:first-child {
+            margin-top: 0;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(166, 124, 82, 0.1);
+            border: none;
+            font-size: 28px;
+            color: var(--accent);
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+        
+        .modal-close:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -273,10 +377,23 @@
         
         <!-- Dropdown menu -->
         <div class="dropdown-menu" id="dropdownMenu">
-            <a href="#about">About Himitsu Studio</a>
-            <a href="#character">Character Introduction</a>
-            <a href="#author">About the Author</a>
-            <a href="gallery.html">Himitsu Gallery</a>
+            <a href="#" data-content="about">About Himitsu Studio</a>
+            <a href="#" data-content="background">Background</a>
+            <a href="#" data-content="character">Character Introduction</a>
+            <a href="#" data-content="author">About the Author</a>
+        </div>
+        
+        <!-- Content Overlays -->
+        <div class="content-overlay" id="contentOverlay">
+            <div class="content-modal">
+                <button class="modal-close" id="modalClose">×</button>
+                <div class="content-header">
+                    <h2 class="content-title" id="contentTitle"></h2>
+                </div>
+                <div class="content-body" id="contentBody">
+                    <!-- Content will be inserted here -->
+                </div>
+            </div>
         </div>
         
         <div class="intro-background" id="introBackground">
@@ -322,12 +439,68 @@
             }
         });
         
-        // Close dropdown when clicking on menu items
+        // Content overlay functionality
+        const contentOverlay = document.getElementById('contentOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const contentTitle = document.getElementById('contentTitle');
+        const contentBody = document.getElementById('contentBody');
+        
+        const contentData = {
+            about: {
+                title: 'About Himitsu Studio',
+                body: '<h3>What is Himitsu Studio?</h3><p>Himitsu Studio is a digital space where you can acknowledge and transform your "messiness" — the parts of yourself you often keep hidden from the world.</p><h3>How to Use</h3><p>Read the story, enter the studio, choose your origami paper, write your thoughts, and fold them into existence. Your creation becomes part of a collective gallery of shared vulnerability.</p><p>There\'s no right or wrong way to engage with Himitsu Studio. It\'s your space, your journey, your hidden drawer.</p>'
+            },
+            background: {
+                title: 'Background',
+                body: '<h3>The Messy Drawer Metaphor</h3><p>The messy drawer represents the parts of ourselves we keep hidden — our fears, insecurities, struggles, and unfiltered emotions. Just as a physical drawer can hold both organized items and chaos, our inner selves contain both polished and messy aspects.</p><h3>Art as Transformation</h3><p>The act of folding origami with written thoughts serves as a powerful metaphor for transformation. By writing down what we keep hidden and watching it fold into something beautiful, we symbolically transform vulnerability into art.</p><h3>Creating Space for Authenticity</h3><p>In a world that rewards perfection, Himitsu Studio creates a safe digital space where authenticity is celebrated, fostering self-acceptance and emotional healing.</p>'
+            },
+            character: {
+                title: 'Character Introduction',
+                body: '<p>Meet our protagonist — a thoughtful girl who maintains a tidy desk for the world to see, while her drawer holds the chaos of everyday life.</p><p>Through her journey, she discovers that everyone has their own "messy drawer" — hidden truths, struggles, and imperfections that make us human.</p><p>Her realization helps her accept her own messiness and understand that it\'s okay to have a space where you can be yourself, unfiltered and authentic.</p>'
+            },
+            author: {
+                title: 'About the Author',
+                body: '<p>This project was created to foster self-acceptance and vulnerability in a world that often demands we appear perfect.</p><p>Through interactive storytelling and origami folding, the creator invites users to explore their own hidden truths and transform them into something beautiful.</p>'
+            }
+        };
+        
+        function openContentOverlay(contentKey) {
+            const content = contentData[contentKey];
+            if (content) {
+                contentTitle.textContent = content.title;
+                contentBody.innerHTML = content.body;
+                contentOverlay.classList.add('active');
+            }
+        }
+        
+        function closeContentOverlay() {
+            contentOverlay.classList.remove('active');
+        }
+        
+        // Handle menu item clicks
         const menuItems = dropdownMenu.querySelectorAll('a');
         menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                dropdownMenu.classList.remove('active');
+            item.addEventListener('click', (e) => {
+                const contentKey = item.getAttribute('data-content');
+                if (contentKey) {
+                    e.preventDefault();
+                    dropdownMenu.classList.remove('active');
+                    openContentOverlay(contentKey);
+                } else {
+                    dropdownMenu.classList.remove('active');
+                }
             });
+        });
+        
+        // Close content overlay
+        modalClose.addEventListener('click', () => {
+            closeContentOverlay();
+        });
+        
+        contentOverlay.addEventListener('click', (e) => {
+            if (e.target === contentOverlay) {
+                closeContentOverlay();
+            }
         });
         
         // Drawer hover effect
