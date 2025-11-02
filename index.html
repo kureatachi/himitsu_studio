@@ -364,6 +364,34 @@
             color: white;
             transform: rotate(90deg) scale(1.1);
         }
+        
+        /* Rotating text hint */
+        .text-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent);
+            font-size: 16px;
+            font-weight: 400;
+            text-align: center;
+            opacity: 0.7;
+            transition: opacity 0.5s ease;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .text-hint.fade-out {
+            opacity: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .text-hint {
+                font-size: 14px;
+                bottom: 20px;
+                padding: 0 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -416,6 +444,9 @@
             <div class="hover-text collection-hover-text">View Collection</div>
         </div>
         
+        <!-- Rotating text hint -->
+        <div class="text-hint" id="textHint">A seemingly clean desk...</div>
+        
     </div>
 
     <script>
@@ -425,6 +456,31 @@
         const drawerArea = document.getElementById('drawerArea');
         const bookArea = document.getElementById('bookArea');
         const collectionArea = document.getElementById('collectionArea');
+        const textHint = document.getElementById('textHint');
+        
+        // Rotating text hints
+        const hints = [
+            'A seemingly clean desk...',
+            'What lies beneath the surface?',
+            'Every drawer holds secrets',
+            'Look closer',
+            'Something is waiting...'
+        ];
+        
+        let currentHintIndex = 0;
+        
+        function rotateHint() {
+            textHint.classList.add('fade-out');
+            
+            setTimeout(() => {
+                currentHintIndex = (currentHintIndex + 1) % hints.length;
+                textHint.textContent = hints[currentHintIndex];
+                textHint.classList.remove('fade-out');
+            }, 500);
+        }
+        
+        // Start rotating hints every 5 seconds
+        setInterval(rotateHint, 5000);
         
         // Toggle dropdown menu
         menuIcon.addEventListener('click', (e) => {
@@ -460,7 +516,7 @@
             },
             author: {
                 title: 'About the Author',
-                body: '<p>This project was created to foster self-acceptance and vulnerability in a world that often demands we appear perfect.</p><p>Through interactive storytelling and origami folding, the creator invites users to explore their own hidden truths and transform them into something beautiful.</p>'
+                body: '<p>Thank you for visiting! This project was born from my love for origami. I\'ve always enjoyed folding and creating with it, but I also used it in a unique way. As a child, I used origami as letters: I would write something inside, fold it up, and give it to someone. But no one ever opened them. They just stayed folded, quietly holding the words I wrote.</p><p>Some people might wonder, what\'s the point if no one sees it?<br>But I think there\'s beauty in the things we keep hidden. Not everything beautiful has to be seen.</p><p>My website, Himitsu Studio, was created from that same feeling. Like those folded papers, it\'s a place to write, fold, and keep something just for yourself, a small reminder that not everything beautiful needs to be seen. :)</p>'
             }
         };
         

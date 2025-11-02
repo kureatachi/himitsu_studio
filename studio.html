@@ -26,7 +26,6 @@
             overflow: hidden;
         }
         
-        /* Desk background */
         .desk-container {
             width: 100vw;
             height: 100vh;
@@ -37,116 +36,6 @@
             background: #ffffff;
         }
         
-        .desk-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        /* Opened drawer background */
-        .drawer-end-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: none;
-        }
-        
-        .drawer-end-image.active {
-            display: block;
-        }
-        
-        /* Drawer trigger area */
-        .drawer-trigger {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 10;
-        }
-        
-        /* Arrow indicator */
-        .arrow-indicator {
-            position: absolute;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
-            animation: flicker 2s infinite;
-            pointer-events: none;
-        }
-        
-        .arrow-indicator svg {
-            width: 40px;
-            height: 40px;
-            color: var(--accent);
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-        
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        
-        /* Hand-drawn arrow video */
-        .arrow-video {
-            position: absolute;
-            bottom: 20%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
-            width: 80px;
-            height: 80px;
-            pointer-events: none;
-        }
-        
-        .arrow-video video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        /* Emphasis lines (left side) */
-        .emphasis-lines {
-            position: absolute;
-            left: 10%;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 5;
-            width: 60px;
-            height: 60px;
-            pointer-events: none;
-        }
-        
-        .emphasis-lines video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        /* Instruction text */
-        .instruction-text {
-            position: absolute;
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 5;
-            color: var(--accent);
-            font-size: 18px;
-            font-weight: 500;
-            text-align: center;
-            pointer-events: none;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
         /* Video container */
         .video-container {
             position: absolute;
@@ -155,162 +44,133 @@
             width: 100%;
             height: 100%;
             z-index: 20;
-            display: none;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0s, visibility 0s;
         }
         
-        .video-container.active {
-            display: block;
+        .video-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
         }
         
         .drawer-video {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            animation-duration: 2s;
-            animation-timing-function: ease-in-out;
         }
         
-        /* Overlay */
-        .overlay {
+        /* End image background */
+        .end-image-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 30;
-            display: none;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            background: #ffffff;
+            transition: opacity 0s, visibility 0s;
         }
         
-        .overlay.active {
-            display: flex;
+        .end-image-container.active {
+            opacity: 1;
+            visibility: visible;
         }
         
-        .overlay-content {
-            max-width: 600px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .overlay-image {
+        .end-image {
             width: 100%;
-            height: auto;
-            max-width: 600px;
-            display: block;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         
         .continue-button {
             position: absolute;
-            bottom: 80px;
+            bottom: 350px;
             left: 50%;
             transform: translateX(-50%);
-            width: 150px;
-            height: 60px;
+            min-width: 150px;
+            height: 50px;
             background: transparent;
+            color: transparent;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
             z-index: 15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            pointer-events: auto;
+        }
+        
+        .continue-button:hover {
+            background: transparent;
+            border: none;
+        }
+        
+        .continue-button:active {
+            background: transparent;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .overlay-content {
-                padding: 40px 20px;
-            }
-            
-            .overlay-title {
-                font-size: 2rem;
-            }
-            
-            .arrow-indicator {
-                bottom: 15%;
+            .continue-button {
+                bottom: 280px;
+                font-size: 14px;
+                min-width: 120px;
+                height: 45px;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Desk background -->
-    <div class="desk-container">
-        <img src="images/himitsu-intro/deskintro.PNG" alt="Desk" class="desk-image" />
-        <img src="images/himitsu-intro/deskend.png" alt="Opened Drawer" class="drawer-end-image" />
-        
-        <!-- Arrow indicator -->
-        <div class="arrow-indicator">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 13l3 3 3-3M7 6l3 3 3-3"/>
-            </svg>
-        </div>
-        
-        <!-- Hand-drawn arrow video -->
-        <div class="arrow-video">
-            <video autoplay muted loop>
-                <source src="media/arrow-video.mp4" type="video/mp4">
-            </video>
-        </div>
-        
-        <!-- Emphasis lines (left side) -->
-        <div class="emphasis-lines">
-            <video autoplay muted loop>
-                <source src="media/emphasis-lines.mp4" type="video/mp4">
-            </video>
-        </div>
-        
-        <!-- Instruction text -->
-        <div class="instruction-text">
-            pull the drawer open
-        </div>
-        
-        <!-- Drawer trigger (invisible clickable area) -->
-        <div class="drawer-trigger" id="drawerTrigger"></div>
-        
-        <!-- Video container -->
-        <div class="video-container" id="videoContainer">
-            <video class="drawer-video" id="drawerVideo" autoplay muted>
-                <source src="media/deskanimation.MP4" type="video/mp4">
-            </video>
-        </div>
-        
-        <!-- Overlay -->
-        <div class="overlay" id="overlay">
-            <div class="overlay-content">
-                <img src="images/himitsu-intro/deskoverlay2.png" alt="Himitsu Studio" class="overlay-image" />
-                <a href="origami-studio.html" class="continue-button"></a>
+    <body>
+        <div class="desk-container">
+            <!-- Video container -->
+            <div class="video-container" id="videoContainer">
+                <video class="drawer-video" id="drawerVideo" autoplay muted>
+                    <source src="media/longerintro.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- End image background with button -->
+            <div class="end-image-container" id="endImageContainer">
+                <img src="images/himitsu-intro/newintroend.PNG" alt="Himitsu Studio" class="end-image" loading="eager" />
+                <a href="origami-studio.html" class="continue-button">Continue</a>
             </div>
         </div>
-    </div>
 
     <script>
-        const drawerTrigger = document.getElementById('drawerTrigger');
-        const videoContainer = document.getElementById('videoContainer');
         const drawerVideo = document.getElementById('drawerVideo');
-        const overlay = document.getElementById('overlay');
-        const drawerEndImage = document.querySelector('.drawer-end-image');
+        const videoContainer = document.getElementById('videoContainer');
+        const endImageContainer = document.getElementById('endImageContainer');
         
-        drawerTrigger.addEventListener('click', () => {
-            // Hide the arrow indicator
-            document.querySelector('.arrow-indicator').style.display = 'none';
-            
-            // Hide the instruction text and emphasis lines
-            document.querySelector('.instruction-text').style.display = 'none';
-            document.querySelector('.emphasis-lines').style.display = 'none';
-            
-            // Show and play the video
-            videoContainer.classList.add('active');
-            drawerVideo.play();
-            
-            // When video ends, show opened drawer image first, then overlay
-            drawerVideo.addEventListener('ended', () => {
-                videoContainer.classList.remove('active');
-                drawerEndImage.classList.add('active');
-                
-            // Show overlay after a longer delay to let the end image be appreciated
-            setTimeout(() => {
-                overlay.classList.add('active');
-            }, 1500);
+        // Preload the end image to ensure it's ready
+        const endImage = document.querySelector('.end-image');
+        if (endImage.complete) {
+            // Image already loaded
+        } else {
+            endImage.addEventListener('load', () => {
+                // Image loaded and ready
             });
-        });
+        }
+        
+        // When video ends, transition seamlessly to the image
+        drawerVideo.addEventListener('ended', () => {
+            // Instant switch - hide video and show image simultaneously
+            videoContainer.classList.add('hidden');
+            endImageContainer.classList.add('active');
+        }, { once: true });
     </script>
 </body>
 </html>
