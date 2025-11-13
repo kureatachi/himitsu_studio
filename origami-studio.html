@@ -189,6 +189,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 10;
         }
         
         .paper-overlay:hover {
@@ -198,6 +199,33 @@
         .paper-option.selected .paper-overlay {
             background: rgba(255, 255, 255, 0.2);
             box-shadow: inset 0 0 0 3px var(--accent);
+        }
+        
+        /* Visible square trigger container */
+        .paper-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            background: rgba(200, 200, 200, 0.15);
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+        
+        .paper-trigger:hover {
+            border-color: rgba(0, 0, 0, 0.6);
+            background: rgba(200, 200, 200, 0.25);
+        }
+        
+        .paper-option.selected .paper-trigger {
+            border-color: #000000;
+            border-width: 3px;
+            background: rgba(0, 0, 0, 0.3);
         }
         
         
@@ -298,25 +326,37 @@
         <div class="paper-selection-container">
             <div class="paper-selection">
                 <div class="paper-option" data-color="blue">
-                    <div class="paper-square paper-1" style="background-image: url('images/origamis/origami1.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
+                    <div class="paper-square paper-1" style="background-image: url('images/origamis/origami1.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
+                        <div class="paper-trigger"></div>
+                        <div class="paper-overlay"></div>
+                    </div>
                     <div class="paper-name">Starry Night Sky</div>
                     <div class="selection-indicator">✓</div>
                 </div>
                 
                 <div class="paper-option" data-color="green">
-                    <div class="paper-square paper-2" style="background-image: url('images/origamis/origami2.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
+                    <div class="paper-square paper-2" style="background-image: url('images/origamis/origami2.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
+                        <div class="paper-trigger"></div>
+                        <div class="paper-overlay"></div>
+                    </div>
                     <div class="paper-name">Gentle Forest</div>
                     <div class="selection-indicator">✓</div>
                 </div>
                 
                 <div class="paper-option" data-color="orange">
-                    <div class="paper-square paper-3" style="background-image: url('images/origamis/origami3.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
+                    <div class="paper-square paper-3" style="background-image: url('images/origamis/origami3.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
+                        <div class="paper-trigger"></div>
+                        <div class="paper-overlay"></div>
+                    </div>
                     <div class="paper-name">Morning Glow Sea</div>
                     <div class="selection-indicator">✓</div>
                 </div>
                 
                 <div class="paper-option" data-color="purple">
-                    <div class="paper-square paper-4" style="background-image: url('images/origamis/origami4.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;"></div>
+                    <div class="paper-square paper-4" style="background-image: url('images/origamis/origami4.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
+                        <div class="paper-trigger"></div>
+                        <div class="paper-overlay"></div>
+                    </div>
                     <div class="paper-name">Rainbow Dreams</div>
                     <div class="selection-indicator">✓</div>
                 </div>
