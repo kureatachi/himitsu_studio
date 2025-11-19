@@ -10,6 +10,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>秘密スタジオ - Welcome</title>
     <style>
+        /* Children One Font */
+        @font-face {
+            font-family: 'Children One';
+            src: url('ChildrenOne-Opyp.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        /* VAG Rounded Next Font */
+        @font-face {
+            font-family: 'VAG Rounded Next';
+            src: url('VAG-Rounded-Next-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         :root {
             --bg: #f8f6f0;
             --fg: #3a3a3a;
@@ -25,11 +43,25 @@
         }
         
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
+            font-family: 'VAG Rounded Next', sans-serif;
             background: #000000;
             color: var(--fg);
             min-height: 100vh;
             overflow-x: hidden;
+        }
+        
+        /* Headings with Children One font */
+        h1, h2, h3, h4, h5, h6,
+        .heading,
+        .heading-style {
+            font-family: 'Children One', cursive;
+        }
+        
+        /* Sub-text elements with VAG Rounded Next */
+        p, span, div, label,
+        .sub-text, .subtitle, .caption,
+        .text, .body-text {
+            font-family: 'VAG Rounded Next', sans-serif;
         }
         
         .intro-container {
@@ -330,6 +362,7 @@
         }
         
         .content-title {
+            font-family: 'Children One', cursive;
             font-size: 28px;
             font-weight: 600;
             color: var(--accent);
@@ -400,18 +433,18 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            color: var(--accent);
-            font-size: 16px;
+            color: #232E50;
+            font-family: 'Children One', cursive;
+            font-size: 30px;
             font-weight: 400;
+            letter-spacing: 0.08em;
             text-align: center;
-            opacity: 0.7;
-            transition: opacity 0.5s ease;
+            opacity: 1;
             z-index: 100;
             pointer-events: none;
-        }
-        
-        .text-hint.fade-out {
-            opacity: 0;
+            background-color: #CDC9D3;
+            padding: 15px 20px;
+            display: inline-block;
         }
         
         @media (max-width: 768px) {
@@ -476,8 +509,8 @@
             <div class="hover-text collection-hover-text">View Collection</div>
         </div>
         
-        <!-- Rotating text hint -->
-        <div class="text-hint" id="textHint">A seemingly clean desk...</div>
+        <!-- Static text hint -->
+        <div class="text-hint" id="textHint">Every Drawer Holds Secrets..</div>
         
     </div>
 
@@ -520,32 +553,6 @@
         }
 
 
-        const textHint = document.getElementById('textHint');
-        
-        // Rotating text hints
-        const hints = [
-            'A seemingly clean desk...',
-            'What lies beneath the surface?',
-            'Every drawer holds secrets',
-            'Look closer',
-            'Something is waiting...'
-        ];
-        
-        let currentHintIndex = 0;
-        
-        function rotateHint() {
-            textHint.classList.add('fade-out');
-            
-            setTimeout(() => {
-                currentHintIndex = (currentHintIndex + 1) % hints.length;
-                textHint.textContent = hints[currentHintIndex];
-                textHint.classList.remove('fade-out');
-            }, 500);
-        }
-        
-        // Start rotating hints every 5 seconds
-        setInterval(rotateHint, 5000);
-        
         // Toggle dropdown menu
         menuIcon.addEventListener('click', (e) => {
             e.stopPropagation();
