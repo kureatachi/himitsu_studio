@@ -1042,8 +1042,8 @@
         /* Curved stroke trigger area slightly off-center to the right for fold4.end.png */
         .fold4-semioval-trigger {
             position: absolute;
-            top: 50%;
-            left: 52%;
+            top: 35%;
+            left: 67%;
             width: 15%;
             height: 30%;
             z-index: 44;
@@ -1063,11 +1063,11 @@
         
         .fold4-semioval-trigger path {
             fill: none;
-            stroke: rgba(166, 124, 82, 0.9);
+            stroke: transparent;
             stroke-width: 4;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter: drop-shadow(0 0 4px rgba(166, 124, 82, 0.6));
+            filter: none;
         }
         
         /* Fold3 video container */
@@ -1339,7 +1339,7 @@
         /* Curved stroke trigger area for fold2.3end.png */
         .fold2-3-curve-trigger {
             position: absolute;
-            top: 45%;
+            top: 35%;
             left: 67%;
             width: 15%;
             height: 30%;
@@ -1360,11 +1360,11 @@
         
         .fold2-3-curve-trigger path {
             fill: none;
-            stroke: rgba(166, 124, 82, 0.9);
+            stroke: transparent;
             stroke-width: 4;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter: drop-shadow(0 0 4px rgba(166, 124, 82, 0.6));
+            filter: none;
         }
         
         /* Fold2.3 video container (for box 2) */
@@ -1712,7 +1712,7 @@
         /* Curved stroke trigger area for fold3.2endfold.PNG */
         .fold3-2endfold-curve-trigger {
             position: absolute;
-            top: 45%;
+            top: 30%;
             left: 67%;
             width: 15%;
             height: 30%;
@@ -1733,11 +1733,83 @@
         
         .fold3-2endfold-curve-trigger path {
             fill: none;
-            stroke: rgba(166, 124, 82, 0.9);
+            stroke: transparent;
             stroke-width: 4;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter: drop-shadow(0 0 4px rgba(166, 124, 82, 0.6));
+            filter: none;
+        }
+        
+        /* Fold3.3 video container (for box 3) */
+        .fold3-3-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 64;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold3-3-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-3-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3.3end image container (for box 3) */
+        .fold3-3end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 65;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold3-3end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-3end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
         }
         
         .origami-text-input:focus {
@@ -2300,6 +2372,18 @@
                 </div>
             </div>
             
+            <!-- Fold3.3 video container (for box 3) -->
+            <div class="fold3-3-video-container" id="fold3-3VideoContainer">
+                <video class="fold3-3-video" id="fold3-3Video" muted>
+                    <source src="media/fold3.3.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold3.3end image container (for box 3) -->
+            <div class="fold3-3end-image-container" id="fold3-3endImageContainer">
+                <img src="images/fold3.3end.PNG" alt="Fold3.3end" class="fold3-3end-image" loading="eager" />
+            </div>
+            
             <!-- Final image background with button -->
             <div class="final-image-container" id="finalImageContainer">
                 <img src="images/origami-beginend1.png" alt="Himitsu Studio" class="final-image" loading="eager" />
@@ -2367,6 +2451,10 @@
         const fold3_2VideoContainer = document.getElementById('fold3-2VideoContainer');
         const fold3_2endImageContainer = document.getElementById('fold3-2endImageContainer');
         const fold3_2endfoldImageContainer = document.getElementById('fold3-2endfoldImageContainer');
+        const fold3_2endfoldCurveTrigger = document.getElementById('fold3-2endfoldCurveTrigger');
+        const fold3_3Video = document.getElementById('fold3-3Video');
+        const fold3_3VideoContainer = document.getElementById('fold3-3VideoContainer');
+        const fold3_3endImageContainer = document.getElementById('fold3-3endImageContainer');
         const origamiFoldResultImageContainer = document.getElementById('origamiFoldResultImageContainer');
         
         // Set video playback speed (slower)
@@ -2404,6 +2492,9 @@
         }
         if (fold3_2Video) {
             fold3_2Video.playbackRate = 0.6;
+        }
+        if (fold3_3Video) {
+            fold3_3Video.playbackRate = 0.6;
         }
         
         // Check if we should restore state from localStorage (only on page reload after reaching final image)
@@ -3352,6 +3443,97 @@
                 // Show fold2.4 image
                 if (fold2_4ImageContainer) {
                     fold2_4ImageContainer.classList.add('active');
+                }
+            });
+        }
+        
+        // Handle curved stroke trigger for fold3.2endfold.PNG (flexible - any drag direction)
+        if (fold3_2endfoldCurveTrigger && fold3_2endfoldImageContainer && fold3_3Video && fold3_3VideoContainer && fold3_3endImageContainer) {
+            let fold3CurveDragStartPoint = null;
+            let isFold3CurveDragActive = false;
+            const FOLD3_CURVE_DRAG_THRESHOLD = 30; // Lower threshold for more flexibility
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function triggerFold3_3Video() {
+                console.log('Curved stroke trigger activated! Playing fold3.3.MP4');
+                // Hide fold3.2endfold image
+                fold3_2endfoldImageContainer.classList.remove('active');
+                // Show and play the video
+                fold3_3VideoContainer.classList.add('active');
+                fold3_3Video.currentTime = 0;
+                fold3_3Video.play().catch(err => {
+                    console.error('Error playing fold3.3 video:', err);
+                });
+            }
+            
+            // Mouse drag handler (curved stroke trigger - any drag in the area, more flexible)
+            fold3_2endfoldCurveTrigger.addEventListener('mousedown', (e) => {
+                // Only activate if fold3.2endfold image is visible
+                if (fold3_2endfoldImageContainer && fold3_2endfoldImageContainer.classList.contains('active')) {
+                    fold3CurveDragStartPoint = { x: e.clientX, y: e.clientY };
+                    isFold3CurveDragActive = true;
+                }
+            });
+            
+            fold3_2endfoldCurveTrigger.addEventListener('mouseup', (e) => {
+                if (!isFold3CurveDragActive || !fold3CurveDragStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    fold3CurveDragStartPoint.x,
+                    fold3CurveDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Trigger if dragged at least the threshold distance (any direction - more flexible)
+                if (distance >= FOLD3_CURVE_DRAG_THRESHOLD) {
+                    triggerFold3_3Video();
+                }
+                
+                fold3CurveDragStartPoint = null;
+                isFold3CurveDragActive = false;
+            });
+            
+            // Touch handlers for mobile (curved stroke drag - flexible)
+            fold3_2endfoldCurveTrigger.addEventListener('touchstart', (e) => {
+                if (fold3_2endfoldImageContainer && fold3_2endfoldImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    fold3CurveDragStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isFold3CurveDragActive = true;
+                }
+            });
+            
+            fold3_2endfoldCurveTrigger.addEventListener('touchend', (e) => {
+                if (!isFold3CurveDragActive || !fold3CurveDragStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    fold3CurveDragStartPoint.x,
+                    fold3CurveDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Trigger if dragged at least the threshold distance (any direction)
+                if (distance >= FOLD3_CURVE_DRAG_THRESHOLD) {
+                    triggerFold3CurveAction();
+                }
+                
+                fold3CurveDragStartPoint = null;
+                isFold3CurveDragActive = false;
+            });
+            
+            // Handle fold3.3 video end - show fold3.3end.PNG
+            fold3_3Video.addEventListener('ended', () => {
+                fold3_3VideoContainer.classList.remove('active');
+                // Show fold3.3end image
+                if (fold3_3endImageContainer) {
+                    fold3_3endImageContainer.classList.add('active');
                 }
             });
         }
