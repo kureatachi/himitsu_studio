@@ -550,201 +550,44 @@
         }
         
         /* Text input on origami fold after image - square sized */
-        .origami-text-input {
-            position: absolute;
-            top: 50%;
-            left: 51%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            height: 400px;
-            aspect-ratio: 1 / 1;
-            padding: 15px;
-            background: transparent;
-            border: 2px solid transparent;
-            border-radius: 12px;
-            font-family: 'VAG Rounded Next', sans-serif;
-            font-size: 24px;
-            line-height: 2;
-            color: #232E50;
-            resize: none;
-            z-index: 30;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            box-shadow: none;
-        }
-        
-        .origami-fold-after-image-container.active .origami-text-input {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: auto;
-        }
+.origami-text-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: visible;
+    pointer-events: auto;
+    border: none;
+    background: transparent;
+    color: transparent;
+    z-index: 40;
+}
         
         /* Box 1 trigger button at bottom of page - only visible for box 1, completely transparent */
-        .origami-box1-trigger-button {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            min-width: 200px;
-            height: 50px;
-            background: transparent;
-            color: transparent;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 32;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 600;
-            font-family: 'VAG Rounded Next', sans-serif;
-            padding: 0 20px;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
+.origami-box1-trigger-button,
+.origami-box2-trigger-button,
+.origami-box3-trigger-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: visible;
+    pointer-events: none;
+    border: none;
+    background: transparent;
+    z-index: 45;
+}
         
-        .origami-fold-after-image-container.active .origami-box1-trigger-button.visible {
-            opacity: 1 !important;
-            visibility: visible !important;
+.origami-fold-after-image-container.active .origami-box1-trigger-button.visible,
+.origami-fold-after-image-container.active .origami-box2-trigger-button.visible,
+.origami-fold-after-image-container.active .origami-box3-trigger-button.visible {
             pointer-events: auto !important;
-            display: flex !important;
-            color: transparent !important;
-            background: transparent !important;
         }
         
-        .origami-box1-trigger-button:hover {
-            background: transparent;
-            color: transparent;
-            border: 2px solid transparent;
-            transform: translateX(-50%) scale(1);
-        }
-        
-        .origami-box1-trigger-button:active {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
-        }
-        
-        .origami-box1-trigger-button:disabled {
-            opacity: 0.3 !important;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        
-        /* Box 2 trigger button - same style as Box 1 */
-        .origami-box2-trigger-button {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            min-width: 200px;
-            height: 50px;
-            background: transparent;
-            color: transparent;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 32;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 600;
-            font-family: 'VAG Rounded Next', sans-serif;
-            padding: 0 20px;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        
-        .origami-fold-after-image-container.active .origami-box2-trigger-button.visible {
-            opacity: 1 !important;
-            visibility: visible !important;
-            pointer-events: auto !important;
-            display: flex !important;
-            color: transparent !important;
-            background: transparent !important;
-        }
-        
-        .origami-box2-trigger-button:hover {
-            background: transparent;
-            color: transparent;
-            border: 2px solid transparent;
-            transform: translateX(-50%) scale(1);
-        }
-        
-        .origami-box2-trigger-button:active {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
-        }
-        
-        .origami-box2-trigger-button:disabled {
-            opacity: 0.3 !important;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        
-        /* Box 3 trigger button - same style as Box 1 */
-        .origami-box3-trigger-button {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            min-width: 200px;
-            height: 50px;
-            background: transparent;
-            color: transparent;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 32;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 600;
-            font-family: 'VAG Rounded Next', sans-serif;
-            padding: 0 20px;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        
-        .origami-fold-after-image-container.active .origami-box3-trigger-button.visible {
-            opacity: 1 !important;
-            visibility: visible !important;
-            pointer-events: auto !important;
-            display: flex !important;
-            color: transparent !important;
-            background: transparent !important;
-        }
-        
-        .origami-box3-trigger-button:hover {
-            background: transparent;
-            color: transparent;
-            border: 2px solid transparent;
-            transform: translateX(-50%) scale(1);
-        }
-        
-        .origami-box3-trigger-button:active {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
-        }
-        
-        .origami-box3-trigger-button:disabled {
-            opacity: 0.3 !important;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
         
         /* White rectangle to cover the button in the image */
         .button-cover-rectangle {
@@ -2128,10 +1971,10 @@
             transform: translateX(-50%);
             min-width: 100px;
             height: 50px;
-            background: rgba(166, 124, 82, 0.1);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            border-radius: 8px;
+            background: transparent;
+            color: transparent;
+            border: none;
+            border-radius: 0;
             cursor: pointer;
             z-index: 25;
             display: flex;
@@ -2148,21 +1991,21 @@
         }
         
         .intro-go-image-container.active .continue-button {
-            opacity: 1 !important;
+            opacity: 0 !important;
             visibility: visible !important;
             pointer-events: auto !important;
             display: flex !important;
         }
 
         .continue-button:hover {
-            background: var(--accent);
-            color: white;
-            border: 1px solid var(--accent);
+            background: transparent;
+            color: transparent;
+            border: none;
         }
         
         .continue-button:active {
-            background: var(--accent);
-            opacity: 0.9;
+            background: transparent;
+            opacity: 0;
         }
         
         .final-button {
@@ -3010,21 +2853,16 @@
                     backButton.classList.add('visible');
                 }
                 
-                // After 1 second, show origami-fold-afterpng with text input
-                setTimeout(() => {
-                    origamiFoldGoImageContainer.classList.remove('active');
-                    origamiFoldAfterImageContainer.classList.add('active');
-                    if (origamiTextInput) {
-                        origamiTextInput.value = '';
-                        origamiTextInput.disabled = false;
-                    }
-                    // Show Box 1 trigger button only if box 1 is selected (initially disabled)
-                    const origamiBox1TriggerButton = document.getElementById('origamiBox1TriggerButton');
-                    if (origamiBox1TriggerButton && selectedOrigamiBox === 1) {
-                        origamiBox1TriggerButton.classList.add('visible');
-                        origamiBox1TriggerButton.disabled = true; // Disabled until text is entered
-                    }
-                }, 1000); // 1 second for origami-fold-go.png
+            // After 1 second, show origami-fold-afterpng
+            setTimeout(() => {
+                origamiFoldGoImageContainer.classList.remove('active');
+                origamiFoldAfterImageContainer.classList.add('active');
+                const origamiBox1TriggerButton = document.getElementById('origamiBox1TriggerButton');
+                if (origamiBox1TriggerButton && selectedOrigamiBox === 1) {
+                    origamiBox1TriggerButton.classList.add('visible');
+                    origamiBox1TriggerButton.disabled = false;
+                }
+            }, 1000);
             }, { once: true });
         }
         
