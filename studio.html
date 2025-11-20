@@ -782,6 +782,964 @@
             backface-visibility: hidden;
         }
         
+        /* Diagonal trigger line overlay for fold1-origami1 */
+        .fold1-diagonal-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 36;
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+        
+        .fold1-diagonal-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 141.42%; /* sqrt(2) * 100% for diagonal */
+            background: rgba(166, 124, 82, 0.9);
+            transform: rotate(45deg);
+            transform-origin: top left;
+            box-shadow: 0 0 12px rgba(166, 124, 82, 0.6);
+            pointer-events: none;
+        }
+        
+        /* Fold1 video container */
+        .fold1-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 37;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold1-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold1-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold1 end image container */
+        .fold1-end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 38;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold1-end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold1-end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Down-to-up swipe trigger overlay for fold1.end.png */
+        .fold1-end-swipe-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 39;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        /* Fold2 end image container */
+        .fold2-end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold2-end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold2 video container */
+        .fold2-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 41;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold2-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3 end image container */
+        .fold3-end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 42;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold3-end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold4 end image container */
+        .fold4-end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 43;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold4-end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold4-end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Curved stroke trigger area slightly off-center to the right for fold4.end.png */
+        .fold4-semioval-trigger {
+            position: absolute;
+            top: 50%;
+            left: 52%;
+            width: 15%;
+            height: 30%;
+            z-index: 44;
+            pointer-events: auto;
+            cursor: pointer;
+            background: transparent;
+            transform: translate(-50%, -50%);
+        }
+        
+        .fold4-semioval-trigger svg {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            transform: rotate(35deg);
+            transform-origin: center;
+        }
+        
+        .fold4-semioval-trigger path {
+            fill: none;
+            stroke: rgba(166, 124, 82, 0.9);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(166, 124, 82, 0.6));
+        }
+        
+        /* Fold3 video container */
+        .fold3-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 45;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold3-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold5 end image container */
+        .fold5-end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 46;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold5-end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold5-end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold2.1 video container (for box 2) */
+        .fold2-1-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 47;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold2-1-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-1-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Foldend2.1 image container (for box 2) */
+        .foldend2-1-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 48;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .foldend2-1-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .foldend2-1-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold2.1end image container (for box 2) */
+        .fold2-1end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 49;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold2-1end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-1end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Top-to-bottom drag trigger overlay for fold2.1end.png */
+        .fold2-1end-drag-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 50;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        /* Fold2.2 video container (for box 2) */
+        .fold2-2-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 51;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold2-2-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-2-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold2.3 image container (for box 2) */
+        .fold2-3-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 52;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold2-3-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-3-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Curved stroke trigger area for fold2.3end.png */
+        .fold2-3-curve-trigger {
+            position: absolute;
+            top: 45%;
+            left: 67%;
+            width: 15%;
+            height: 30%;
+            z-index: 54;
+            pointer-events: auto;
+            cursor: pointer;
+            background: transparent;
+            transform: translate(-50%, -50%);
+        }
+        
+        .fold2-3-curve-trigger svg {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            transform: rotate(35deg);
+            transform-origin: center;
+        }
+        
+        .fold2-3-curve-trigger path {
+            fill: none;
+            stroke: rgba(166, 124, 82, 0.9);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(166, 124, 82, 0.6));
+        }
+        
+        /* Fold2.3 video container (for box 2) */
+        .fold2-3-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 54;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold2-3-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-3-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold2.3end image container (for box 2) */
+        .fold2-3end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 53;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold2-3end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-3end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold2.4 image container (for box 2) */
+        .fold2-4-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 55;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold2-4-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold2-4-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3.1 video container (for box 3) */
+        .fold3-1-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 56;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold3-1-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-1-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3end image container (for box 3) */
+        .fold3end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 57;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold3end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3end-fold image container (for box 3) */
+        .fold3end-fold-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 58;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold3end-fold-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3end-fold-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Bottom-to-top drag trigger overlay for fold3end-fold.PNG */
+        .fold3end-fold-drag-trigger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 59;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        
+        /* Fold3.2 video container (for box 3) */
+        .fold3-2-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 60;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold3-2-video-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-2-video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3.2end image container (for box 3) */
+        .fold3-2end-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 61;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold3-2end-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-2end-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Fold3.2endfold image container (for box 3) */
+        .fold3-2endfold-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 62;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold3-2endfold-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold3-2endfold-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Curved stroke trigger area for fold3.2endfold.PNG */
+        .fold3-2endfold-curve-trigger {
+            position: absolute;
+            top: 45%;
+            left: 67%;
+            width: 15%;
+            height: 30%;
+            z-index: 63;
+            pointer-events: auto;
+            cursor: pointer;
+            background: transparent;
+            transform: translate(-50%, -50%);
+        }
+        
+        .fold3-2endfold-curve-trigger svg {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            transform: rotate(35deg);
+            transform-origin: center;
+        }
+        
+        .fold3-2endfold-curve-trigger path {
+            fill: none;
+            stroke: rgba(166, 124, 82, 0.9);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 0 4px rgba(166, 124, 82, 0.6));
+        }
+        
         .origami-text-input:focus {
             outline: none;
             border: 2px solid transparent;
@@ -1180,9 +2138,166 @@
                 <div class="top-cover-rectangle" id="topCoverRectangle"></div>
             </div>
             
-            <!-- Origami fold result image - shown 4 seconds after fold button is triggered -->
+            <!-- Origami fold result image - shown 2 seconds after fold button is triggered -->
             <div class="origami-fold-result-image-container" id="origamiFoldResultImageContainer">
                 <img src="images/fold1-origami1.png" alt="Origami Fold Result" class="origami-fold-result-image" loading="eager" />
+                <!-- Diagonal trigger line overlay for fold1-origami1 -->
+                <div class="fold1-diagonal-trigger" id="fold1DiagonalTrigger">
+                    <div class="fold1-diagonal-line"></div>
+                </div>
+            </div>
+            
+            <!-- Fold1 video container -->
+            <div class="fold1-video-container" id="fold1VideoContainer">
+                <video class="fold1-video" id="fold1Video" muted>
+                    <source src="media/fold1.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold1 end image container -->
+            <div class="fold1-end-image-container" id="fold1EndImageContainer">
+                <img src="images/fold1.end.png" alt="Fold1 End" class="fold1-end-image" loading="eager" />
+            </div>
+            
+            <!-- Fold2 end image container -->
+            <div class="fold2-end-image-container" id="fold2EndImageContainer">
+                <img src="images/fold2.end.png" alt="Fold2 End" class="fold2-end-image" loading="eager" />
+                <!-- Down-to-up swipe trigger overlay -->
+                <div class="fold1-end-swipe-trigger" id="fold2EndSwipeTrigger"></div>
+            </div>
+            
+            <!-- Fold2 video container -->
+            <div class="fold2-video-container" id="fold2VideoContainer">
+                <video class="fold2-video" id="fold2Video" muted>
+                    <source src="media/fold2.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold3 end image container -->
+            <div class="fold3-end-image-container" id="fold3EndImageContainer">
+                <img src="images/fold3.end.PNG" alt="Fold3 End" class="fold3-end-image" loading="eager" />
+            </div>
+            
+            <!-- Fold4 end image container -->
+            <div class="fold4-end-image-container" id="fold4EndImageContainer">
+                <img src="images/fold4.end.png" alt="Fold4 End" class="fold4-end-image" loading="eager" />
+                <!-- Curved stroke trigger overlay in middle right area -->
+                <div class="fold4-semioval-trigger" id="fold4SemiovalTrigger">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Smooth Bézier curve: starts left, curves outward, bends inward, ends downward-right -->
+                        <path d="M 10 20 Q 30 5, 50 25 T 90 80" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Fold3 video container -->
+            <div class="fold3-video-container" id="fold3VideoContainer">
+                <video class="fold3-video" id="fold3Video" muted>
+                    <source src="media/fold3.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold5 end image container -->
+            <div class="fold5-end-image-container" id="fold5EndImageContainer">
+                <img src="images/fold5.end.png" alt="Fold5 End" class="fold5-end-image" loading="eager" />
+            </div>
+            
+            <!-- Fold2.1 video container (for box 2) -->
+            <div class="fold2-1-video-container" id="fold2-1VideoContainer">
+                <video class="fold2-1-video" id="fold2-1Video" muted>
+                    <source src="media/fold2.1.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Foldend2.1 image container (for box 2) -->
+            <div class="foldend2-1-image-container" id="foldend2-1ImageContainer">
+                <img src="images/foldend2.1.PNG" alt="Foldend2.1" class="foldend2-1-image" loading="eager" />
+            </div>
+            
+            <!-- Fold2.1end image container (for box 2) -->
+            <div class="fold2-1end-image-container" id="fold2-1endImageContainer">
+                <img src="images/fold2.1end..png" alt="Fold2.1end" class="fold2-1end-image" loading="eager" />
+                <!-- Bottom-to-top drag trigger overlay -->
+                <div class="fold2-1end-drag-trigger" id="fold2-1endDragTrigger"></div>
+            </div>
+            
+            <!-- Fold2.2 video container (for box 2) -->
+            <div class="fold2-2-video-container" id="fold2-2VideoContainer">
+                <video class="fold2-2-video" id="fold2-2Video" muted>
+                    <source src="media/fold2.2.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold2.3 image container (for box 2) -->
+            <div class="fold2-3-image-container" id="fold2-3ImageContainer">
+                <img src="images/fold2.3.PNG" alt="Fold2.3" class="fold2-3-image" loading="eager" />
+            </div>
+            
+            <!-- Fold2.3 video container (for box 2) -->
+            <div class="fold2-3-video-container" id="fold2-3VideoContainer">
+                <video class="fold2-3-video" id="fold2-3Video" muted>
+                    <source src="media/fold2.3.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold2.3end image container (for box 2) -->
+            <div class="fold2-3end-image-container" id="fold2-3endImageContainer">
+                <img src="images/fold2.3end.png" alt="Fold2.3end" class="fold2-3end-image" loading="eager" />
+                <!-- Curved stroke trigger overlay -->
+                <div class="fold2-3-curve-trigger" id="fold2-3CurveTrigger">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Smooth Bézier curve: starts left, curves outward, bends inward, ends downward-right -->
+                        <path d="M 10 20 Q 30 5, 50 25 T 90 80" />
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- Fold2.4 image container (for box 2) -->
+            <div class="fold2-4-image-container" id="fold2-4ImageContainer">
+                <img src="images/fold2.4.PNG" alt="Fold2.4" class="fold2-4-image" loading="eager" />
+            </div>
+            
+            <!-- Fold3.1 video container (for box 3) -->
+            <div class="fold3-1-video-container" id="fold3-1VideoContainer">
+                <video class="fold3-1-video" id="fold3-1Video" muted>
+                    <source src="media/fold3.1.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold3end image container (for box 3) -->
+            <div class="fold3end-image-container" id="fold3endImageContainer">
+                <img src="images/fold3end.PNG" alt="Fold3end" class="fold3end-image" loading="eager" />
+            </div>
+            
+            <!-- Fold3end-fold image container (for box 3) -->
+            <div class="fold3end-fold-image-container" id="fold3end-foldImageContainer">
+                <img src="images/fold3end-fold.PNG" alt="Fold3end-fold" class="fold3end-fold-image" loading="eager" />
+                <!-- Bottom-to-top drag trigger overlay -->
+                <div class="fold3end-fold-drag-trigger" id="fold3end-foldDragTrigger"></div>
+            </div>
+            
+            <!-- Fold3.2 video container (for box 3) -->
+            <div class="fold3-2-video-container" id="fold3-2VideoContainer">
+                <video class="fold3-2-video" id="fold3-2Video" muted>
+                    <source src="media/fold3.2.MP4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Fold3.2end image container (for box 3) -->
+            <div class="fold3-2end-image-container" id="fold3-2endImageContainer">
+                <img src="images/fold3.2end.PNG" alt="Fold3.2end" class="fold3-2end-image" loading="eager" />
+            </div>
+            
+            <!-- Fold3.2endfold image container (for box 3) -->
+            <div class="fold3-2endfold-image-container" id="fold3-2endfoldImageContainer">
+                <img src="images/fold3.2endfold.PNG" alt="Fold3.2endfold" class="fold3-2endfold-image" loading="eager" />
+                <!-- Curved stroke trigger overlay -->
+                <div class="fold3-2endfold-curve-trigger" id="fold3-2endfoldCurveTrigger">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Smooth Bézier curve: starts left, curves outward, bends inward, ends downward-right -->
+                        <path d="M 10 20 Q 30 5, 50 25 T 90 80" />
+                    </svg>
+                </div>
             </div>
             
             <!-- Final image background with button -->
@@ -1216,6 +2331,43 @@
         const origamiFoldAfterImageContainer = document.getElementById('origamiFoldAfterImageContainer');
         const origamiTextInput = document.getElementById('origamiTextInput');
         const finalImageContainer = document.getElementById('finalImageContainer');
+        const fold1DiagonalTrigger = document.getElementById('fold1DiagonalTrigger');
+        const fold1Video = document.getElementById('fold1Video');
+        const fold1VideoContainer = document.getElementById('fold1VideoContainer');
+        const fold1EndImageContainer = document.getElementById('fold1EndImageContainer');
+        const fold2EndSwipeTrigger = document.getElementById('fold2EndSwipeTrigger');
+        const fold2Video = document.getElementById('fold2Video');
+        const fold2VideoContainer = document.getElementById('fold2VideoContainer');
+        const fold2EndImageContainer = document.getElementById('fold2EndImageContainer');
+        const fold3EndImageContainer = document.getElementById('fold3EndImageContainer');
+        const fold3Video = document.getElementById('fold3Video');
+        const fold3VideoContainer = document.getElementById('fold3VideoContainer');
+        const fold4EndImageContainer = document.getElementById('fold4EndImageContainer');
+        const fold4SemiovalTrigger = document.getElementById('fold4SemiovalTrigger');
+        const fold5EndImageContainer = document.getElementById('fold5EndImageContainer');
+        const fold2_1Video = document.getElementById('fold2-1Video');
+        const fold2_1VideoContainer = document.getElementById('fold2-1VideoContainer');
+        const foldend2_1ImageContainer = document.getElementById('foldend2-1ImageContainer');
+        const fold2_1endImageContainer = document.getElementById('fold2-1endImageContainer');
+        const fold2_1endDragTrigger = document.getElementById('fold2-1endDragTrigger');
+        const fold2_2Video = document.getElementById('fold2-2Video');
+        const fold2_2VideoContainer = document.getElementById('fold2-2VideoContainer');
+        const fold2_3ImageContainer = document.getElementById('fold2-3ImageContainer');
+        const fold2_3CurveTrigger = document.getElementById('fold2-3CurveTrigger');
+        const fold2_3Video = document.getElementById('fold2-3Video');
+        const fold2_3VideoContainer = document.getElementById('fold2-3VideoContainer');
+        const fold2_3endImageContainer = document.getElementById('fold2-3endImageContainer');
+        const fold2_4ImageContainer = document.getElementById('fold2-4ImageContainer');
+        const fold3_1Video = document.getElementById('fold3-1Video');
+        const fold3_1VideoContainer = document.getElementById('fold3-1VideoContainer');
+        const fold3endImageContainer = document.getElementById('fold3endImageContainer');
+        const fold3end_foldImageContainer = document.getElementById('fold3end-foldImageContainer');
+        const fold3end_foldDragTrigger = document.getElementById('fold3end-foldDragTrigger');
+        const fold3_2Video = document.getElementById('fold3-2Video');
+        const fold3_2VideoContainer = document.getElementById('fold3-2VideoContainer');
+        const fold3_2endImageContainer = document.getElementById('fold3-2endImageContainer');
+        const fold3_2endfoldImageContainer = document.getElementById('fold3-2endfoldImageContainer');
+        const origamiFoldResultImageContainer = document.getElementById('origamiFoldResultImageContainer');
         
         // Set video playback speed (slower)
         drawerVideo.playbackRate = 0.85;
@@ -1228,6 +2380,30 @@
         }
         if (origami3Video) {
             origami3Video.playbackRate = 0.85;
+        }
+        if (fold1Video) {
+            fold1Video.playbackRate = 0.6;
+        }
+        if (fold2Video) {
+            fold2Video.playbackRate = 0.6;
+        }
+        if (fold3Video) {
+            fold3Video.playbackRate = 0.6;
+        }
+        if (fold2_1Video) {
+            fold2_1Video.playbackRate = 0.6;
+        }
+        if (fold2_2Video) {
+            fold2_2Video.playbackRate = 0.6;
+        }
+        if (fold2_3Video) {
+            fold2_3Video.playbackRate = 0.6;
+        }
+        if (fold3_1Video) {
+            fold3_1Video.playbackRate = 0.6;
+        }
+        if (fold3_2Video) {
+            fold3_2Video.playbackRate = 0.6;
         }
         
         // Check if we should restore state from localStorage (only on page reload after reaching final image)
@@ -1598,14 +2774,14 @@
             buttonElement.style.transition = 'opacity 2s ease-in-out';
             buttonElement.style.opacity = '0';
             
-            // Show fold result image 4 seconds after button is triggered (only for Box 1)
-            if (selectedBox === 1) {
+            // Show fold result image 2 seconds after button is triggered (for Box 1, Box 2, and Box 3)
+            if (selectedBox === 1 || selectedBox === 2 || selectedBox === 3) {
                 setTimeout(() => {
                     const origamiFoldResultImageContainer = document.getElementById('origamiFoldResultImageContainer');
                     if (origamiFoldResultImageContainer) {
                         origamiFoldResultImageContainer.classList.add('active');
                     }
-                }, 4000); // 4 seconds after button trigger
+                }, 2000); // 2 seconds after button trigger
             }
             
             // After animation completes, proceed with action
@@ -1643,6 +2819,764 @@
             });
         }
         
+        // Handle diagonal trigger for fold1-origami1 (top-left to bottom-right) - for box 1, box 2, and box 3
+        if (fold1DiagonalTrigger && fold1Video && fold1VideoContainer && fold1EndImageContainer && origamiFoldResultImageContainer && fold2_1Video && fold2_1VideoContainer && foldend2_1ImageContainer && fold3_1Video && fold3_1VideoContainer && fold3endImageContainer && fold3end_foldImageContainer) {
+            let diagonalStartPoint = null;
+            let isDiagonalActive = false;
+            const DIAGONAL_THRESHOLD = 50;
+            const DIAGONAL_TOLERANCE = 30;
+            
+            function calculateAngle(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                return angle;
+            }
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function isDiagonalDirection(angle) {
+                const targetAngle = 45;
+                return Math.abs(angle - targetAngle) <= DIAGONAL_TOLERANCE;
+            }
+            
+            function triggerFoldVideo() {
+                // Hide the origami fold result image
+                origamiFoldResultImageContainer.classList.remove('active');
+                
+                // Check which box is selected
+                if (selectedOrigamiBox === 1) {
+                    console.log('Diagonal trigger activated for Box 1! Playing fold1.MP4');
+                    // Show and play fold1 video
+                    fold1VideoContainer.classList.add('active');
+                    fold1Video.currentTime = 0;
+                    fold1Video.play().catch(err => {
+                        console.error('Error playing fold1 video:', err);
+                    });
+                } else if (selectedOrigamiBox === 2) {
+                    console.log('Diagonal trigger activated for Box 2! Playing fold2.1.MP4');
+                    // Show and play fold2.1 video
+                    fold2_1VideoContainer.classList.add('active');
+                    fold2_1Video.currentTime = 0;
+                    fold2_1Video.play().catch(err => {
+                        console.error('Error playing fold2.1 video:', err);
+                    });
+                } else if (selectedOrigamiBox === 3) {
+                    console.log('Diagonal trigger activated for Box 3! Playing fold3.1.MP4');
+                    // Show and play fold3.1 video
+                    fold3_1VideoContainer.classList.add('active');
+                    fold3_1Video.currentTime = 0;
+                    fold3_1Video.play().catch(err => {
+                        console.error('Error playing fold3.1 video:', err);
+                    });
+                }
+            }
+            
+            // Click handler (simple click on the diagonal line)
+            fold1DiagonalTrigger.addEventListener('click', (e) => {
+                // Only trigger if the container is active (visible)
+                if (origamiFoldResultImageContainer.classList.contains('active')) {
+                    triggerFoldVideo();
+                }
+            });
+            
+            // Mouse drag handler (top-left to bottom-right swipe)
+            fold1DiagonalTrigger.addEventListener('mousedown', (e) => {
+                if (origamiFoldResultImageContainer.classList.contains('active')) {
+                    diagonalStartPoint = { x: e.clientX, y: e.clientY };
+                    isDiagonalActive = true;
+                }
+            });
+            
+            fold1DiagonalTrigger.addEventListener('mouseup', (e) => {
+                if (!isDiagonalActive || !diagonalStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    diagonalStartPoint.x,
+                    diagonalStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    diagonalStartPoint.x,
+                    diagonalStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                if (distance >= DIAGONAL_THRESHOLD && isDiagonalDirection(angle)) {
+                    triggerFoldVideo();
+                }
+                
+                diagonalStartPoint = null;
+                isDiagonalActive = false;
+            });
+            
+            // Touch handlers for mobile
+            fold1DiagonalTrigger.addEventListener('touchstart', (e) => {
+                if (origamiFoldResultImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    diagonalStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isDiagonalActive = true;
+                }
+            });
+            
+            fold1DiagonalTrigger.addEventListener('touchend', (e) => {
+                if (!isDiagonalActive || !diagonalStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    diagonalStartPoint.x,
+                    diagonalStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    diagonalStartPoint.x,
+                    diagonalStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                if (distance >= DIAGONAL_THRESHOLD && isDiagonalDirection(angle)) {
+                    triggerFoldVideo();
+                }
+                
+                diagonalStartPoint = null;
+                isDiagonalActive = false;
+            });
+            
+            // Handle video end - hide video and show end image, then show fold2.end.png
+            fold1Video.addEventListener('ended', () => {
+                fold1VideoContainer.classList.remove('active');
+                // Show fold1 end image
+                if (fold1EndImageContainer) {
+                    fold1EndImageContainer.classList.add('active');
+                }
+                // Show fold2.end.png right after fold1.end.png (with a small delay for smooth transition)
+                setTimeout(() => {
+                    if (fold1EndImageContainer) {
+                        fold1EndImageContainer.classList.remove('active');
+                    }
+                    if (fold2EndImageContainer) {
+                        fold2EndImageContainer.classList.add('active');
+                    }
+                }, 500); // Show fold2.end.png after 0.5 seconds
+            });
+            
+            // Handle fold2.1 video end (for box 2) - show foldend2.1.PNG, then immediately show fold2.1end.png
+            fold2_1Video.addEventListener('ended', () => {
+                fold2_1VideoContainer.classList.remove('active');
+                // Show foldend2.1 image first
+                if (foldend2_1ImageContainer) {
+                    foldend2_1ImageContainer.classList.add('active');
+                }
+                // Show fold2.1end.png right after foldend2.1.PNG (immediately)
+                setTimeout(() => {
+                    if (foldend2_1ImageContainer) {
+                        foldend2_1ImageContainer.classList.remove('active');
+                    }
+                    if (fold2_1endImageContainer) {
+                        fold2_1endImageContainer.classList.add('active');
+                    }
+                }, 100); // Show fold2.1end.png immediately after foldend2.1.PNG
+            });
+            
+            // Handle fold3.1 video end (for box 3) - show fold3end.PNG, then fold3end-fold.PNG
+            fold3_1Video.addEventListener('ended', () => {
+                fold3_1VideoContainer.classList.remove('active');
+                // Show fold3end image first
+                if (fold3endImageContainer) {
+                    fold3endImageContainer.classList.add('active');
+                }
+                // Show fold3end-fold.PNG right after fold3end.PNG (with a small delay for smooth transition)
+                setTimeout(() => {
+                    if (fold3endImageContainer) {
+                        fold3endImageContainer.classList.remove('active');
+                    }
+                    if (fold3end_foldImageContainer) {
+                        fold3end_foldImageContainer.classList.add('active');
+                    }
+                }, 500); // Show fold3end-fold.PNG after 0.5 seconds
+            });
+        }
+        
+        // Handle bottom-to-top drag trigger for fold3.2.MP4 on fold3end-fold.PNG (for box 3)
+        if (fold3end_foldDragTrigger && fold3_2Video && fold3_2VideoContainer && fold3end_foldImageContainer && fold3_2endImageContainer && fold3_2endfoldImageContainer) {
+            let fold3BottomTopDragStartPoint = null;
+            let isFold3BottomTopDragActive = false;
+            const FOLD3_BOTTOM_TOP_DRAG_THRESHOLD = 50;
+            const FOLD3_BOTTOM_TOP_DRAG_TOLERANCE = 30;
+            
+            function calculateAngle(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                return angle;
+            }
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function isUpwardDirection(angle) {
+                // Upward drag: angle should be around -90 degrees (straight up)
+                // Allow tolerance for slight variations
+                return (angle >= -90 - FOLD3_BOTTOM_TOP_DRAG_TOLERANCE && angle <= -90 + FOLD3_BOTTOM_TOP_DRAG_TOLERANCE) ||
+                       (angle >= 270 - FOLD3_BOTTOM_TOP_DRAG_TOLERANCE && angle <= 270 + FOLD3_BOTTOM_TOP_DRAG_TOLERANCE);
+            }
+            
+            function triggerFold3_2Video() {
+                console.log('Bottom-to-top drag trigger activated! Playing fold3.2.MP4');
+                // Hide fold3end-fold image
+                fold3end_foldImageContainer.classList.remove('active');
+                // Show and play the video
+                fold3_2VideoContainer.classList.add('active');
+                fold3_2Video.currentTime = 0;
+                fold3_2Video.play().catch(err => {
+                    console.error('Error playing fold3.2 video:', err);
+                });
+            }
+            
+            // Mouse drag handler (bottom-to-top drag)
+            fold3end_foldDragTrigger.addEventListener('mousedown', (e) => {
+                // Only activate if fold3end-fold image is visible
+                if (fold3end_foldImageContainer && fold3end_foldImageContainer.classList.contains('active')) {
+                    fold3BottomTopDragStartPoint = { x: e.clientX, y: e.clientY };
+                    isFold3BottomTopDragActive = true;
+                }
+            });
+            
+            fold3end_foldDragTrigger.addEventListener('mouseup', (e) => {
+                if (!isFold3BottomTopDragActive || !fold3BottomTopDragStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    fold3BottomTopDragStartPoint.x,
+                    fold3BottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    fold3BottomTopDragStartPoint.x,
+                    fold3BottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Check if it's a valid upward drag
+                if (distance >= FOLD3_BOTTOM_TOP_DRAG_THRESHOLD && isUpwardDirection(angle)) {
+                    triggerFold3_2Video();
+                }
+                
+                fold3BottomTopDragStartPoint = null;
+                isFold3BottomTopDragActive = false;
+            });
+            
+            // Touch handlers for mobile (bottom-to-top drag)
+            fold3end_foldDragTrigger.addEventListener('touchstart', (e) => {
+                if (fold3end_foldImageContainer && fold3end_foldImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    fold3BottomTopDragStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isFold3BottomTopDragActive = true;
+                }
+            });
+            
+            fold3end_foldDragTrigger.addEventListener('touchend', (e) => {
+                if (!isFold3BottomTopDragActive || !fold3BottomTopDragStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    fold3BottomTopDragStartPoint.x,
+                    fold3BottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    fold3BottomTopDragStartPoint.x,
+                    fold3BottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Check if it's a valid upward drag
+                if (distance >= FOLD3_BOTTOM_TOP_DRAG_THRESHOLD && isUpwardDirection(angle)) {
+                    triggerFold3_2Video();
+                }
+                
+                fold3BottomTopDragStartPoint = null;
+                isFold3BottomTopDragActive = false;
+            });
+            
+            // Handle fold3.2 video end - show fold3.2end.PNG, then fold3.2endfold.PNG
+            fold3_2Video.addEventListener('ended', () => {
+                fold3_2VideoContainer.classList.remove('active');
+                // Show fold3.2end image first
+                if (fold3_2endImageContainer) {
+                    fold3_2endImageContainer.classList.add('active');
+                }
+                // Show fold3.2endfold.PNG a bit after fold3.2end.PNG (with a small delay for smooth transition)
+                setTimeout(() => {
+                    if (fold3_2endImageContainer) {
+                        fold3_2endImageContainer.classList.remove('active');
+                    }
+                    if (fold3_2endfoldImageContainer) {
+                        fold3_2endfoldImageContainer.classList.add('active');
+                    }
+                }, 500); // Show fold3.2endfold.PNG after 0.5 seconds
+            });
+        }
+        
+        // Handle bottom-to-top drag trigger for fold2.2.MP4 on fold2.1end.png (for box 2)
+        if (fold2_1endDragTrigger && fold2_2Video && fold2_2VideoContainer && fold2_1endImageContainer && fold2_3ImageContainer) {
+            let bottomTopDragStartPoint = null;
+            let isBottomTopDragActive = false;
+            const BOTTOM_TOP_DRAG_THRESHOLD = 50;
+            const BOTTOM_TOP_DRAG_TOLERANCE = 30;
+            
+            function calculateAngle(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                return angle;
+            }
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function isUpwardDirection(angle) {
+                // Upward drag: angle should be around -90 degrees (straight up)
+                // Allow tolerance for slight variations
+                return (angle >= -90 - BOTTOM_TOP_DRAG_TOLERANCE && angle <= -90 + BOTTOM_TOP_DRAG_TOLERANCE) ||
+                       (angle >= 270 - BOTTOM_TOP_DRAG_TOLERANCE && angle <= 270 + BOTTOM_TOP_DRAG_TOLERANCE);
+            }
+            
+            function triggerFold2_2Video() {
+                console.log('Top-to-bottom drag trigger activated! Playing fold2.2.MP4');
+                // Hide fold2.1end image
+                fold2_1endImageContainer.classList.remove('active');
+                // Show and play the video
+                fold2_2VideoContainer.classList.add('active');
+                fold2_2Video.currentTime = 0;
+                fold2_2Video.play().catch(err => {
+                    console.error('Error playing fold2.2 video:', err);
+                });
+            }
+            
+            // Mouse drag handler (bottom-to-top drag)
+            fold2_1endDragTrigger.addEventListener('mousedown', (e) => {
+                // Only activate if fold2.1end image is visible
+                if (fold2_1endImageContainer && fold2_1endImageContainer.classList.contains('active')) {
+                    bottomTopDragStartPoint = { x: e.clientX, y: e.clientY };
+                    isBottomTopDragActive = true;
+                }
+            });
+            
+            fold2_1endDragTrigger.addEventListener('mouseup', (e) => {
+                if (!isBottomTopDragActive || !bottomTopDragStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    bottomTopDragStartPoint.x,
+                    bottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    bottomTopDragStartPoint.x,
+                    bottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Check if it's a valid upward drag
+                if (distance >= BOTTOM_TOP_DRAG_THRESHOLD && isUpwardDirection(angle)) {
+                    triggerFold2_2Video();
+                }
+                
+                bottomTopDragStartPoint = null;
+                isBottomTopDragActive = false;
+            });
+            
+            // Touch handlers for mobile (bottom-to-top drag)
+            fold2_1endDragTrigger.addEventListener('touchstart', (e) => {
+                if (fold2_1endImageContainer && fold2_1endImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    bottomTopDragStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isBottomTopDragActive = true;
+                }
+            });
+            
+            fold2_1endDragTrigger.addEventListener('touchend', (e) => {
+                if (!isBottomTopDragActive || !bottomTopDragStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    bottomTopDragStartPoint.x,
+                    bottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    bottomTopDragStartPoint.x,
+                    bottomTopDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Check if it's a valid upward drag
+                if (distance >= BOTTOM_TOP_DRAG_THRESHOLD && isUpwardDirection(angle)) {
+                    triggerFold2_2Video();
+                }
+                
+                bottomTopDragStartPoint = null;
+                isBottomTopDragActive = false;
+            });
+            
+            // Handle fold2.2 video end - show fold2.3.PNG, then fold2.3end.png
+            fold2_2Video.addEventListener('ended', () => {
+                fold2_2VideoContainer.classList.remove('active');
+                // Show fold2.3 image
+                if (fold2_3ImageContainer) {
+                    fold2_3ImageContainer.classList.add('active');
+                }
+                // Show fold2.3end.png right after fold2.3.PNG (with a small delay for smooth transition)
+                setTimeout(() => {
+                    if (fold2_3ImageContainer) {
+                        fold2_3ImageContainer.classList.remove('active');
+                    }
+                    if (fold2_3endImageContainer) {
+                        fold2_3endImageContainer.classList.add('active');
+                    }
+                }, 500); // Show fold2.3end.png after 0.5 seconds
+            });
+        }
+        
+        // Handle curved stroke trigger for fold2.3.MP4 on fold2.3end.png (for box 2)
+        if (fold2_3CurveTrigger && fold2_3Video && fold2_3VideoContainer && fold2_3endImageContainer && fold2_4ImageContainer) {
+            let curveDragStartPoint = null;
+            let isCurveDragActive = false;
+            const CURVE_DRAG_THRESHOLD = 50; // Minimum distance in pixels to trigger
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function triggerFold2_3Video() {
+                console.log('Curved stroke trigger activated! Playing fold2.3.MP4');
+                // Hide fold2.3end image
+                fold2_3endImageContainer.classList.remove('active');
+                // Show and play the video
+                fold2_3VideoContainer.classList.add('active');
+                fold2_3Video.currentTime = 0;
+                fold2_3Video.play().catch(err => {
+                    console.error('Error playing fold2.3 video:', err);
+                });
+            }
+            
+            // Mouse drag handler (curved stroke trigger - any drag in the area)
+            fold2_3CurveTrigger.addEventListener('mousedown', (e) => {
+                // Only activate if fold2.3end image is visible
+                if (fold2_3endImageContainer && fold2_3endImageContainer.classList.contains('active')) {
+                    curveDragStartPoint = { x: e.clientX, y: e.clientY };
+                    isCurveDragActive = true;
+                }
+            });
+            
+            fold2_3CurveTrigger.addEventListener('mouseup', (e) => {
+                if (!isCurveDragActive || !curveDragStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    curveDragStartPoint.x,
+                    curveDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Trigger if dragged at least the threshold distance (any direction within the curve area)
+                if (distance >= CURVE_DRAG_THRESHOLD) {
+                    triggerFold2_3Video();
+                }
+                
+                curveDragStartPoint = null;
+                isCurveDragActive = false;
+            });
+            
+            // Touch handlers for mobile (curved stroke drag)
+            fold2_3CurveTrigger.addEventListener('touchstart', (e) => {
+                if (fold2_3endImageContainer && fold2_3endImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    curveDragStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isCurveDragActive = true;
+                }
+            });
+            
+            fold2_3CurveTrigger.addEventListener('touchend', (e) => {
+                if (!isCurveDragActive || !curveDragStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    curveDragStartPoint.x,
+                    curveDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Trigger if dragged at least the threshold distance
+                if (distance >= CURVE_DRAG_THRESHOLD) {
+                    triggerFold2_3Video();
+                }
+                
+                curveDragStartPoint = null;
+                isCurveDragActive = false;
+            });
+            
+            // Handle fold2.3 video end - show fold2.4.PNG
+            fold2_3Video.addEventListener('ended', () => {
+                fold2_3VideoContainer.classList.remove('active');
+                // Show fold2.4 image
+                if (fold2_4ImageContainer) {
+                    fold2_4ImageContainer.classList.add('active');
+                }
+            });
+        }
+        
+        // Handle down-to-up drag trigger for fold2.MP4 on fold2.end.png (similar to diagonal trigger)
+        if (fold2EndSwipeTrigger && fold2Video && fold2VideoContainer && fold2EndImageContainer) {
+            let dragStartPoint = null;
+            let isDragActive = false;
+            const DRAG_THRESHOLD = 50; // Minimum distance in pixels to trigger
+            const DRAG_TOLERANCE = 30; // Tolerance for vertical angle (degrees)
+            
+            function calculateAngle(x1, y1, x2, y2) {
+                const dx = x2 - x1;
+                const dy = y2 - y1;
+                const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+                return angle;
+            }
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function isUpwardDirection(angle) {
+                // Upward drag: angle should be around -90 degrees (straight up)
+                // Allow tolerance for slight variations
+                // -90 degrees = straight up, -90 ± tolerance
+                return (angle >= -90 - DRAG_TOLERANCE && angle <= -90 + DRAG_TOLERANCE) ||
+                       (angle >= 270 - DRAG_TOLERANCE && angle <= 270 + DRAG_TOLERANCE);
+            }
+            
+            function triggerFold2Video() {
+                console.log('Down-to-up drag trigger activated! Playing fold2.MP4');
+                // Hide fold2 end image
+                fold2EndImageContainer.classList.remove('active');
+                // Show and play the video
+                fold2VideoContainer.classList.add('active');
+                fold2Video.currentTime = 0;
+                fold2Video.play().catch(err => {
+                    console.error('Error playing fold2 video:', err);
+                });
+            }
+            
+            // Mouse drag handler (down-to-up drag) - similar to diagonal trigger
+            fold2EndSwipeTrigger.addEventListener('mousedown', (e) => {
+                // Only activate if fold2 end image is visible
+                if (fold2EndImageContainer && fold2EndImageContainer.classList.contains('active')) {
+                    dragStartPoint = { x: e.clientX, y: e.clientY };
+                    isDragActive = true;
+                }
+            });
+            
+            fold2EndSwipeTrigger.addEventListener('mouseup', (e) => {
+                if (!isDragActive || !dragStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    dragStartPoint.x,
+                    dragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    dragStartPoint.x,
+                    dragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Check if it's a valid upward drag (similar to diagonal trigger logic)
+                if (distance >= DRAG_THRESHOLD && isUpwardDirection(angle)) {
+                    triggerFold2Video();
+                }
+                
+                dragStartPoint = null;
+                isDragActive = false;
+            });
+            
+            // Touch handlers for mobile (down-to-up drag)
+            fold2EndSwipeTrigger.addEventListener('touchstart', (e) => {
+                if (fold2EndImageContainer && fold2EndImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    dragStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isDragActive = true;
+                }
+            });
+            
+            fold2EndSwipeTrigger.addEventListener('touchend', (e) => {
+                if (!isDragActive || !dragStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    dragStartPoint.x,
+                    dragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                const angle = calculateAngle(
+                    dragStartPoint.x,
+                    dragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Check if it's a valid upward drag
+                if (distance >= DRAG_THRESHOLD && isUpwardDirection(angle)) {
+                    triggerFold2Video();
+                }
+                
+                dragStartPoint = null;
+                isDragActive = false;
+            });
+            
+            // Handle fold2 video end - show fold3.end.PNG, then fold4.end.png
+            fold2Video.addEventListener('ended', () => {
+                fold2VideoContainer.classList.remove('active');
+                // Show fold3 end image
+                if (fold3EndImageContainer) {
+                    fold3EndImageContainer.classList.add('active');
+                }
+                // Show fold4.end.png right after fold3.end.PNG (with a small delay for smooth transition)
+                setTimeout(() => {
+                    if (fold3EndImageContainer) {
+                        fold3EndImageContainer.classList.remove('active');
+                    }
+                    if (fold4EndImageContainer) {
+                        fold4EndImageContainer.classList.add('active');
+                    }
+                }, 500); // Show fold4.end.png after 0.5 seconds
+            });
+        }
+        
+        // Handle semi-oval drag trigger for fold3.MP4 on fold4.end.png (middle right area)
+        if (fold4SemiovalTrigger && fold3Video && fold3VideoContainer && fold4EndImageContainer && fold5EndImageContainer) {
+            let semiovalDragStartPoint = null;
+            let isSemiovalDragActive = false;
+            const SEMIOVAL_DRAG_THRESHOLD = 50; // Minimum distance in pixels to trigger
+            
+            function calculateDistance(x1, y1, x2, y2) {
+                return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+            }
+            
+            function triggerFold3Video() {
+                console.log('Semi-oval drag trigger activated! Playing fold3.MP4');
+                // Hide fold4 end image
+                fold4EndImageContainer.classList.remove('active');
+                // Show and play the video
+                fold3VideoContainer.classList.add('active');
+                fold3Video.currentTime = 0;
+                fold3Video.play().catch(err => {
+                    console.error('Error playing fold3 video:', err);
+                });
+            }
+            
+            // Mouse drag handler (semi-oval trigger - any drag in the area)
+            fold4SemiovalTrigger.addEventListener('mousedown', (e) => {
+                // Only activate if fold4 end image is visible
+                if (fold4EndImageContainer && fold4EndImageContainer.classList.contains('active')) {
+                    semiovalDragStartPoint = { x: e.clientX, y: e.clientY };
+                    isSemiovalDragActive = true;
+                }
+            });
+            
+            fold4SemiovalTrigger.addEventListener('mouseup', (e) => {
+                if (!isSemiovalDragActive || !semiovalDragStartPoint) return;
+                
+                const endPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    semiovalDragStartPoint.x,
+                    semiovalDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Trigger if dragged at least the threshold distance (any direction within the semi-oval area)
+                if (distance >= SEMIOVAL_DRAG_THRESHOLD) {
+                    triggerFold3Video();
+                }
+                
+                semiovalDragStartPoint = null;
+                isSemiovalDragActive = false;
+            });
+            
+            // Touch handlers for mobile (semi-oval drag)
+            fold4SemiovalTrigger.addEventListener('touchstart', (e) => {
+                if (fold4EndImageContainer && fold4EndImageContainer.classList.contains('active')) {
+                    const touch = e.touches[0];
+                    semiovalDragStartPoint = { x: touch.clientX, y: touch.clientY };
+                    isSemiovalDragActive = true;
+                }
+            });
+            
+            fold4SemiovalTrigger.addEventListener('touchend', (e) => {
+                if (!isSemiovalDragActive || !semiovalDragStartPoint) return;
+                
+                const touch = e.changedTouches[0];
+                const endPoint = { x: touch.clientX, y: touch.clientY };
+                const distance = calculateDistance(
+                    semiovalDragStartPoint.x,
+                    semiovalDragStartPoint.y,
+                    endPoint.x,
+                    endPoint.y
+                );
+                
+                // Trigger if dragged at least the threshold distance
+                if (distance >= SEMIOVAL_DRAG_THRESHOLD) {
+                    triggerFold3Video();
+                }
+                
+                semiovalDragStartPoint = null;
+                isSemiovalDragActive = false;
+            });
+            
+            // Handle fold3 video end - show fold5.end.png
+            fold3Video.addEventListener('ended', () => {
+                fold3VideoContainer.classList.remove('active');
+                // Show fold5 end image
+                if (fold5EndImageContainer) {
+                    fold5EndImageContainer.classList.add('active');
+                }
+            });
+        }
+        
         // Handle text input with validation - enable/disable trigger buttons based on text
         if (origamiTextInput) {
             origamiTextInput.addEventListener('input', function() {
@@ -1664,6 +3598,81 @@
                 }
             });
         }
+        // Swipe gesture detection: top-left to bottom-right
+        let swipeStartX = null;
+        let swipeStartY = null;
+        let swipeEndX = null;
+        let swipeEndY = null;
+        const minSwipeDistance = 100; // Minimum distance in pixels to trigger swipe
+        
+        function handleSwipeStart(e) {
+            const touch = e.touches ? e.touches[0] : e;
+            swipeStartX = touch.clientX;
+            swipeStartY = touch.clientY;
+        }
+        
+        function handleSwipeMove(e) {
+            // Prevent default scrolling during swipe
+            if (e.touches) {
+                e.preventDefault();
+            }
+        }
+        
+        function handleSwipeEnd(e) {
+            const touch = e.changedTouches ? e.changedTouches[0] : e;
+            swipeEndX = touch.clientX;
+            swipeEndY = touch.clientY;
+            
+            if (swipeStartX === null || swipeStartY === null) return;
+            
+            const deltaX = swipeEndX - swipeStartX;
+            const deltaY = swipeEndY - swipeStartY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            // Check if swipe is from top-left to bottom-right
+            // Top-left to bottom-right means: positive deltaX and positive deltaY
+            if (deltaX > 0 && deltaY > 0 && distance >= minSwipeDistance) {
+                // Calculate angle to ensure it's roughly diagonal (45 degrees ± 30 degrees)
+                const angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+                
+                // Angle should be between 15 and 75 degrees for top-left to bottom-right
+                if (angle >= 15 && angle <= 75) {
+                    console.log('Swipe detected: top-left to bottom-right');
+                    triggerTopLeftToBottomRightSwipe();
+                }
+            }
+            
+            // Reset
+            swipeStartX = null;
+            swipeStartY = null;
+        }
+        
+        function triggerTopLeftToBottomRightSwipe() {
+            // Add your custom action here
+            // For example: navigate to next page, show animation, etc.
+            console.log('Top-left to bottom-right swipe action triggered!');
+            
+            // Example: You can add specific actions here
+            // For instance, if you want to trigger on a specific container:
+            // const container = document.getElementById('someContainer');
+            // if (container) {
+            //     // Do something with the container
+            // }
+        }
+        
+        // Add event listeners to the body or specific container
+        // You can change 'body' to a specific element ID if needed
+        const swipeContainer = document.body;
+        
+        // Touch events
+        swipeContainer.addEventListener('touchstart', handleSwipeStart, { passive: false });
+        swipeContainer.addEventListener('touchmove', handleSwipeMove, { passive: false });
+        swipeContainer.addEventListener('touchend', handleSwipeEnd, { passive: false });
+        
+        // Mouse events (for desktop)
+        swipeContainer.addEventListener('mousedown', handleSwipeStart);
+        swipeContainer.addEventListener('mousemove', handleSwipeMove);
+        swipeContainer.addEventListener('mouseup', handleSwipeEnd);
     </script>
 </body>
 </html>

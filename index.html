@@ -454,6 +454,53 @@
                 padding: 0 20px;
             }
         }
+        
+        /* Diagonal trigger area - top-left to bottom-right */
+        .diagonal-trigger-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 4;
+            cursor: default;
+            pointer-events: none;
+        }
+        
+        .diagonal-trigger-area.in-top-left {
+            cursor: crosshair;
+            pointer-events: auto;
+        }
+        
+        /* Visual guide line (optional, can be hidden) */
+        .diagonal-guide-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 6;
+            pointer-events: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .diagonal-guide-line.active {
+            opacity: 1;
+        }
+        
+        .diagonal-guide-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 141.42%; /* sqrt(2) * 100% for diagonal */
+            background: rgba(166, 124, 82, 0.9);
+            transform: rotate(45deg);
+            transform-origin: top left;
+            box-shadow: 0 0 8px rgba(166, 124, 82, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -511,6 +558,10 @@
         
         <!-- Static text hint -->
         <div class="text-hint" id="textHint">Every Drawer Holds Secrets..</div>
+        
+        <!-- Diagonal trigger area (top-left to bottom-right) -->
+        <div class="diagonal-guide-line" id="diagonalGuideLine"></div>
+        <div class="diagonal-trigger-area" id="diagonalTriggerArea"></div>
         
     </div>
 
@@ -696,6 +747,187 @@
         // Collection click - redirect to gallery
         collectionArea.addEventListener('click', () => {
             window.location.href = 'gallery.html';
+        });
+        
+        // Diagonal trigger (top-left to bottom-right)
+        const diagonalTriggerArea = document.getElementById('diagonalTriggerArea');
+        const diagonalGuideLine = document.getElementById('diagonalGuideLine');
+        let diagonalStartPoint = null;
+        let isDiagonalActive = false;
+        const DIAGONAL_THRESHOLD = 50; // Minimum distance in pixels to trigger
+        const DIAGONAL_TOLERANCE = 30; // Tolerance for diagonal angle (degrees)
+        const TOP_LEFT_QUADRANT = 0.3; // Top-left 30% of screen
+        const BOTTOM_RIGHT_QUADRANT = 0.7; // Bottom-right 30% of screen
+        
+        function calculateAngle(x1, y1, x2, y2) {
+            const dx = x2 - x1;
+            const dy = y2 - y1;
+            const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+            return angle;
+        }
+        
+        function calculateDistance(x1, y1, x2, y2) {
+            return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        }
+        
+        function isInTopLeftQuadrant(x, y) {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            return x <= screenWidth * TOP_LEFT_QUADRANT && y <= screenHeight * TOP_LEFT_QUADRANT;
+        }
+        
+        function isInBottomRightQuadrant(x, y) {
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            return x >= screenWidth * BOTTOM_RIGHT_QUADRANT && y >= screenHeight * BOTTOM_RIGHT_QUADRANT;
+        }
+        
+        function isDiagonalDirection(angle) {
+            // Check if angle is approximately 45 degrees (top-left to bottom-right)
+            // 45 degrees = top-left to bottom-right
+            // Allow some tolerance
+            const targetAngle = 45;
+            return Math.abs(angle - targetAngle) <= DIAGONAL_TOLERANCE;
+        }
+        
+        function handleDiagonalTrigger() {
+            console.log('Diagonal trigger activated! (top-left to bottom-right)');
+            // Add your trigger action here
+            // For example: show animation, navigate, etc.
+            
+            // Example: You could show a visual feedback
+            diagonalGuideLine.classList.add('active');
+            setTimeout(() => {
+                diagonalGuideLine.classList.remove('active');
+            }, 500);
+        }
+        
+        // Mouse events - use document to track mouse position globally
+        document.addEventListener('mousemove', (e) => {
+            // Update cursor style based on position
+            if (isInTopLeftQuadrant(e.clientX, e.clientY)) {
+                diagonalTriggerArea.classList.add('in-top-left');
+            } else {
+                diagonalTriggerArea.classList.remove('in-top-left');
+            }
+            
+            // Handle dragging
+            if (isDiagonalActive && diagonalStartPoint) {
+                const currentPoint = { x: e.clientX, y: e.clientY };
+                const distance = calculateDistance(
+                    diagonalStartPoint.x, 
+                    diagonalStartPoint.y,
+                    currentPoint.x,
+                    currentPoint.y
+                );
+                
+                // Show guide line when dragging
+                if (distance > 20) {
+                    diagonalGuideLine.classList.add('active');
+                }
+            }
+        });
+        
+        document.addEventListener('mousedown', (e) => {
+            // Only activate if starting in top-left quadrant and not clicking on other interactive elements
+            const target = e.target;
+            const isInteractiveElement = target.closest('.drawer-area, .book-area, .door-area, .collection-area, .menu-icon, .dropdown-menu, .content-overlay');
+            
+            if (!isInteractiveElement && isInTopLeftQuadrant(e.clientX, e.clientY)) {
+                diagonalStartPoint = { x: e.clientX, y: e.clientY };
+                isDiagonalActive = true;
+            }
+        });
+        
+        document.addEventListener('mouseup', (e) => {
+            if (!isDiagonalActive || !diagonalStartPoint) return;
+            
+            const endPoint = { x: e.clientX, y: e.clientY };
+            const distance = calculateDistance(
+                diagonalStartPoint.x,
+                diagonalStartPoint.y,
+                endPoint.x,
+                endPoint.y
+            );
+            
+            const angle = calculateAngle(
+                diagonalStartPoint.x,
+                diagonalStartPoint.y,
+                endPoint.x,
+                endPoint.y
+            );
+            
+            // Check if it's a valid diagonal swipe from top-left to bottom-right
+            if (distance >= DIAGONAL_THRESHOLD && 
+                isDiagonalDirection(angle) &&
+                isInBottomRightQuadrant(endPoint.x, endPoint.y)) {
+                handleDiagonalTrigger();
+            }
+            
+            diagonalStartPoint = null;
+            isDiagonalActive = false;
+            diagonalGuideLine.classList.remove('active');
+        });
+        
+        // Touch events for mobile
+        document.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            const target = e.target;
+            const isInteractiveElement = target.closest('.drawer-area, .book-area, .door-area, .collection-area, .menu-icon, .dropdown-menu, .content-overlay');
+            
+            // Only activate if starting in top-left quadrant and not touching other interactive elements
+            if (!isInteractiveElement && isInTopLeftQuadrant(touch.clientX, touch.clientY)) {
+                diagonalStartPoint = { x: touch.clientX, y: touch.clientY };
+                isDiagonalActive = true;
+            }
+        });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (!isDiagonalActive || !diagonalStartPoint) return;
+            
+            const touch = e.touches[0];
+            const currentPoint = { x: touch.clientX, y: touch.clientY };
+            const distance = calculateDistance(
+                diagonalStartPoint.x,
+                diagonalStartPoint.y,
+                currentPoint.x,
+                currentPoint.y
+            );
+            
+            if (distance > 20) {
+                diagonalGuideLine.classList.add('active');
+            }
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            if (!isDiagonalActive || !diagonalStartPoint) return;
+            
+            const touch = e.changedTouches[0];
+            const endPoint = { x: touch.clientX, y: touch.clientY };
+            const distance = calculateDistance(
+                diagonalStartPoint.x,
+                diagonalStartPoint.y,
+                endPoint.x,
+                endPoint.y
+            );
+            
+            const angle = calculateAngle(
+                diagonalStartPoint.x,
+                diagonalStartPoint.y,
+                endPoint.x,
+                endPoint.y
+            );
+            
+            // Check if it's a valid diagonal swipe from top-left to bottom-right
+            if (distance >= DIAGONAL_THRESHOLD && 
+                isDiagonalDirection(angle) &&
+                isInBottomRightQuadrant(endPoint.x, endPoint.y)) {
+                handleDiagonalTrigger();
+            }
+            
+            diagonalStartPoint = null;
+            isDiagonalActive = false;
+            diagonalGuideLine.classList.remove('active');
         });
     </script>
 </body>
