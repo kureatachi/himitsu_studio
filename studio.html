@@ -61,6 +61,13 @@
             background: transparent;
         }
         
+        /* Global smooth transitions for all video and image containers */
+        [class*="-container"],
+        [class*="-image-container"],
+        [class*="-video-container"] {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
         /* Video container */
         .video-container {
             position: absolute;
@@ -77,6 +84,7 @@
             align-items: center;
             justify-content: center;
             background: transparent;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .video-container.hidden {
@@ -111,6 +119,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .second-video-container.active {
@@ -145,6 +154,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .origami1-video-container.active {
@@ -179,6 +189,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .origami2-video-container.active {
@@ -213,6 +224,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .origami3-video-container.active {
@@ -247,6 +259,7 @@
             justify-content: center;
             background: transparent;
             backface-visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .origami2-end-image-container.active {
@@ -285,6 +298,7 @@
             justify-content: center;
             background: transparent;
             backface-visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
         .instructions-image-container.active {
@@ -330,6 +344,44 @@
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
+        }
+        
+        /* Pause after rules image container */
+        .pauseafterrules-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .pauseafterrules-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: none;
+        }
+        
+        .pauseafterrules-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
         }
         
         .intro-go-image {
@@ -889,6 +941,30 @@
             z-index: 39;
             pointer-events: auto;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold1-end-swipe-trigger::before {
+            content: '↑↑↑';
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 6rem;
+            color: transparent;
+            font-weight: bold;
+            text-shadow: none;
+            animation: bounce 2s infinite;
+            line-height: 0.8;
+            letter-spacing: -0.2em;
+            opacity: 0;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
         }
         
         /* Fold2 end image container */
@@ -1142,6 +1218,141 @@
             backface-visibility: hidden;
         }
         
+        /* Fold5 final image container */
+        .fold5-final-image-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 47;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            backface-visibility: hidden;
+        }
+        
+        .fold5-final-image-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .fold5-final-image {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+        
+        /* Nickname input container */
+        .nickname-input-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 48;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(248, 246, 240, 0.95);
+            backface-visibility: hidden;
+        }
+        
+        .nickname-input-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        
+        .nickname-input-wrapper {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(166, 124, 82, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .nickname-input-title {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .nickname-input-subtitle {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .nickname-input-field {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: var(--text-dark);
+            background: #f8f6f0;
+            transition: all 0.3s ease;
+        }
+        
+        .nickname-input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(166, 124, 82, 0.2);
+            background: white;
+        }
+        
+        .drawer-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(166, 124, 82, 0.3);
+        }
+        
+        .drawer-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(166, 124, 82, 0.4);
+            background: #8b6f47;
+        }
+        
+        .drawer-button:active {
+            transform: translateY(0);
+        }
+        
+        .drawer-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
         /* Fold2.1 video container (for box 2) */
         .fold2-1-video-container {
             position: absolute;
@@ -1262,6 +1473,25 @@
             z-index: 50;
             pointer-events: auto;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold2-1end-drag-trigger::before {
+            content: '↑↑↑';
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 6rem;
+            color: transparent;
+            font-weight: bold;
+            text-shadow: none;
+            animation: bounce 2s infinite;
+            line-height: 0.8;
+            letter-spacing: -0.2em;
+            opacity: 0;
         }
         
         /* Fold2.2 video container (for box 2) */
@@ -1597,6 +1827,25 @@
             z-index: 59;
             pointer-events: auto;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fold3end-fold-drag-trigger::before {
+            content: '↑↑↑';
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 6rem;
+            color: transparent;
+            font-weight: bold;
+            text-shadow: none;
+            animation: bounce 2s infinite;
+            line-height: 0.8;
+            letter-spacing: -0.2em;
+            opacity: 0;
         }
         
         /* Fold3.2 video container (for box 3) */
@@ -1874,7 +2123,7 @@
         
         .continue-button {
             position: absolute;
-            bottom: 420px;
+            bottom: 336px;
             left: 50%;
             transform: translateX(-50%);
             min-width: 100px;
@@ -2149,6 +2398,11 @@
                 <button class="continue-button" id="continueButton">Continue</button>
             </div>
             
+            <!-- Pause after rules image container -->
+            <div class="pauseafterrules-image-container" id="pauseafterrulesImageContainer">
+                <img src="images/pauseafterrules.png" alt="Pause After Rules" class="pauseafterrules-image" loading="eager" />
+            </div>
+            
             <!-- Animation end image with button (keeping for backward compatibility if needed) -->
             <div class="animation-end-image-container" id="animationEndImageContainer" style="display: none;">
                 <img src="images/intro-end.PNG" alt="Animation End" class="animation-end-image" loading="eager" />
@@ -2272,6 +2526,21 @@
             <!-- Fold5 end image container -->
             <div class="fold5-end-image-container" id="fold5EndImageContainer">
                 <img src="images/fold5.end.png" alt="Fold5 End" class="fold5-end-image" loading="eager" />
+            </div>
+            
+            <!-- Fold5 final image container -->
+            <div class="fold5-final-image-container" id="fold5FinalImageContainer">
+                <img src="images/fold5.final.PNG" alt="Fold5 Final" class="fold5-final-image" loading="eager" />
+            </div>
+            
+            <!-- Nickname input container -->
+            <div class="nickname-input-container" id="nicknameInputContainer">
+                <div class="nickname-input-wrapper">
+                    <h2 class="nickname-input-title">Put it in the drawer</h2>
+                    <p class="nickname-input-subtitle">Enter your nickname to save your creation</p>
+                    <input type="text" id="nicknameInput" class="nickname-input-field" placeholder="Your nickname..." maxlength="30" />
+                    <button id="drawerButton" class="drawer-button">Put it in the drawer</button>
+                </div>
             </div>
             
             <!-- Fold2.1 video container (for box 2) -->
@@ -2402,6 +2671,7 @@
         const videoContainer = document.getElementById('videoContainer');
         const instructionsImageContainer = document.getElementById('instructionsImageContainer');
         const introGoImageContainer = document.getElementById('introGoImageContainer');
+        const pauseafterrulesImageContainer = document.getElementById('pauseafterrulesImageContainer');
         const animationEndImageContainer = document.getElementById('animationEndImageContainer');
         const continueButton = document.getElementById('continueButton');
         const origamiVideo = document.getElementById('origamiVideo');
@@ -2429,6 +2699,10 @@
         const fold4EndImageContainer = document.getElementById('fold4EndImageContainer');
         const fold4SemiovalTrigger = document.getElementById('fold4SemiovalTrigger');
         const fold5EndImageContainer = document.getElementById('fold5EndImageContainer');
+        const fold5FinalImageContainer = document.getElementById('fold5FinalImageContainer');
+        const nicknameInputContainer = document.getElementById('nicknameInputContainer');
+        const nicknameInput = document.getElementById('nicknameInput');
+        const drawerButton = document.getElementById('drawerButton');
         const fold2_1Video = document.getElementById('fold2-1Video');
         const fold2_1VideoContainer = document.getElementById('fold2-1VideoContainer');
         const foldend2_1ImageContainer = document.getElementById('foldend2-1ImageContainer');
@@ -2470,7 +2744,7 @@
             origami3Video.playbackRate = 0.85;
         }
         if (fold1Video) {
-            fold1Video.playbackRate = 0.6;
+            fold1Video.playbackRate = 0.4;
         }
         if (fold2Video) {
             fold2Video.playbackRate = 0.6;
@@ -2561,14 +2835,21 @@
         const triggerOrigamiStart = () => {
             // Hide the intro go image and button
             introGoImageContainer.classList.remove('active');
-            // Show and play the second video
-            secondVideoContainer.classList.add('active');
-            origamiVideo.play();
-            // Show back button
-            const backButton = document.getElementById('backButton');
-            if (backButton) {
-                backButton.classList.add('visible');
-            }
+            // Show pauseafterrules.png for 1.3 seconds
+            pauseafterrulesImageContainer.classList.add('active');
+            
+            // After 1.3 seconds, hide pauseafterrules and play the video
+            setTimeout(() => {
+                pauseafterrulesImageContainer.classList.remove('active');
+                // Show and play the second video
+                secondVideoContainer.classList.add('active');
+                origamiVideo.play();
+                // Show back button
+                const backButton = document.getElementById('backButton');
+                if (backButton) {
+                    backButton.classList.add('visible');
+                }
+            }, 1300);
         };
 
         continueButton.addEventListener('click', () => {
@@ -3103,7 +3384,7 @@
             let fold3BottomTopDragStartPoint = null;
             let isFold3BottomTopDragActive = false;
             const FOLD3_BOTTOM_TOP_DRAG_THRESHOLD = 50;
-            const FOLD3_BOTTOM_TOP_DRAG_TOLERANCE = 30;
+            const FOLD3_BOTTOM_TOP_DRAG_TOLERANCE = 60; // Increased for more flexibility
             
             function calculateAngle(x1, y1, x2, y2) {
                 const dx = x2 - x1;
@@ -3232,7 +3513,7 @@
             let bottomTopDragStartPoint = null;
             let isBottomTopDragActive = false;
             const BOTTOM_TOP_DRAG_THRESHOLD = 50;
-            const BOTTOM_TOP_DRAG_TOLERANCE = 30;
+            const BOTTOM_TOP_DRAG_TOLERANCE = 60; // Increased for more flexibility
             
             function calculateAngle(x1, y1, x2, y2) {
                 const dx = x2 - x1;
@@ -3543,7 +3824,7 @@
             let dragStartPoint = null;
             let isDragActive = false;
             const DRAG_THRESHOLD = 50; // Minimum distance in pixels to trigger
-            const DRAG_TOLERANCE = 30; // Tolerance for vertical angle (degrees)
+            const DRAG_TOLERANCE = 60; // Tolerance for vertical angle (degrees) - increased for more flexibility
             
             function calculateAngle(x1, y1, x2, y2) {
                 const dx = x2 - x1;
@@ -3749,12 +4030,92 @@
                 isSemiovalDragActive = false;
             });
             
-            // Handle fold3 video end - show fold5.end.png
+            // Handle fold3 video end - show fold5.end.png, then fold5.final.PNG, then nickname input
             fold3Video.addEventListener('ended', () => {
                 fold3VideoContainer.classList.remove('active');
                 // Show fold5 end image
                 if (fold5EndImageContainer) {
                     fold5EndImageContainer.classList.add('active');
+                }
+                // After 0.5 seconds, show fold5.final.PNG
+                setTimeout(() => {
+                    if (fold5EndImageContainer) {
+                        fold5EndImageContainer.classList.remove('active');
+                    }
+                    if (fold5FinalImageContainer) {
+                        fold5FinalImageContainer.classList.add('active');
+                    }
+                    // After 1 second, show nickname input
+                    setTimeout(() => {
+                        if (fold5FinalImageContainer) {
+                            fold5FinalImageContainer.classList.remove('active');
+                        }
+                        if (nicknameInputContainer) {
+                            nicknameInputContainer.classList.add('active');
+                            if (nicknameInput) {
+                                nicknameInput.focus();
+                            }
+                        }
+                    }, 1000);
+                }, 500);
+            });
+        }
+        
+        // Handle nickname input and drawer button
+        if (nicknameInput && drawerButton) {
+            // Enable/disable drawer button based on input
+            nicknameInput.addEventListener('input', function() {
+                const nickname = this.value.trim();
+                drawerButton.disabled = nickname.length === 0;
+            });
+            
+            // Handle drawer button click
+            drawerButton.addEventListener('click', function() {
+                const nickname = nicknameInput.value.trim();
+                if (nickname.length === 0) {
+                    return;
+                }
+                
+                // Get user text from origamiTextInput
+                const userText = origamiTextInput ? origamiTextInput.value.trim() : '';
+                
+                // Map selectedOrigamiBox to origami type and image
+                const origamiTypes = {
+                    1: { name: 'Starry Night Sky - Crane', image: 'images/origamis/origami1.png' },
+                    2: { name: 'Gentle Forest - Heart', image: 'images/origamis/origami2.png' },
+                    3: { name: 'Morning Glow Sea - Crane', image: 'images/origamis/origami3.png' }
+                };
+                
+                const origamiInfo = origamiTypes[selectedOrigamiBox] || { name: 'Unknown Origami', image: 'images/origamis/origami1.png' };
+                
+                // Save to gallery using localStorage
+                const savedCreations = JSON.parse(localStorage.getItem('galleryCreations') || '[]');
+                const newCreation = {
+                    id: Date.now(),
+                    userName: nickname,
+                    origamiType: origamiInfo.name,
+                    userText: userText || 'A secret thought...',
+                    origamiImage: origamiInfo.image
+                };
+                
+                savedCreations.push(newCreation);
+                localStorage.setItem('galleryCreations', JSON.stringify(savedCreations));
+                
+                // Hide nickname input
+                nicknameInputContainer.classList.remove('active');
+                
+                // Show success message or redirect to gallery
+                setTimeout(() => {
+                    alert('Your creation has been saved to the drawer! Visit the Himitsu Gallery to see it.');
+                    // Optionally redirect to gallery
+                    // window.location.href = 'gallery.html';
+                }, 300);
+            });
+            
+            // Allow Enter key to submit
+            nicknameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !drawerButton.disabled) {
+                    drawerButton.click();
                 }
             });
         }
