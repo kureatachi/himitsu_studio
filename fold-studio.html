@@ -99,7 +99,7 @@
         
         /* Fade-in transition for overlay */
         #fold1Origami1Container {
-            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+            transition: none;
         }
         
         /* Diagonal drag line - centered square */
@@ -177,6 +177,30 @@
             max-height: 1080px;
             object-fit: contain;
         }
+        
+        /* Curved drag line (on fold4) */
+        .curved-drag-line {
+            position: absolute;
+            top: 25%;
+            right: 28%;
+            width: 120px;
+            height: 200px;
+            pointer-events: none;
+            z-index: 500 !important;
+        }
+        
+        .curved-drag-line svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        
+        .curved-drag-line path {
+            stroke: transparent;
+            stroke-width: 6;
+            fill: none;
+            stroke-linecap: round;
+        }
     </style>
 </head>
 <body>
@@ -199,7 +223,7 @@
     </div>
     
     <!-- Video container for fold1.MP4 -->
-    <div class="container second-video-container" id="fold1VideoContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
+    <div class="container second-video-container" id="fold1VideoContainer" style="z-index: 0;">
         <video id="fold1Video" muted>
             <source src="media/fold1.MP4" type="video/mp4">
         </video>
@@ -219,9 +243,36 @@
     </div>
     
     <!-- Video container for fold2.MP4 -->
-    <div class="container second-video-container" id="fold2VideoContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
+    <div class="container second-video-container" id="fold2VideoContainer" style="z-index: 0;">
         <video id="fold2Video" muted>
             <source src="media/fold2.MP4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Image container for fold3.end.PNG - always rendered -->
+    <div class="container image-container" id="fold3EndImageContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; display: flex;">
+        <img src="images/fold3.end.PNG" alt="Fold3 End" loading="eager" style="width: 100vw; height: auto; max-width: 1920px; max-height: 1080px; object-fit: contain;">
+    </div>
+    
+    <!-- Image container for fold4.end.PNG - always rendered -->
+    <div class="container image-container" id="fold4EndImageContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; display: flex;">
+        <img src="images/fold4.end.PNG" alt="Fold4 End" loading="eager" style="width: 100vw; height: auto; max-width: 1920px; max-height: 1080px; object-fit: contain;">
+        <div class="curved-drag-line" id="curvedDragLine">
+            <svg viewBox="0 0 200 300">
+                <defs>
+                    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L8,4 L0,8 z" fill="#0da5a2"/>
+                    </marker>
+                </defs>
+                <path d="M40 40 C 160 40, 160 200, 120 260" marker-end="url(#arrowhead)"/>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- Video container for fold3.MP4 -->
+    <div class="container second-video-container" id="fold3VideoContainer" style="z-index: 0;">
+        <video id="fold3Video" muted>
+            <source src="media/fold3.MP4" type="video/mp4">
         </video>
     </div>
 
@@ -332,7 +383,7 @@
                                 fold1VideoContainer.style.opacity = '1';
                                 fold1VideoContainer.style.visibility = 'visible';
                                 fold1Video.currentTime = 0;
-                                fold1Video.playbackRate = 0.75; // Slow down video to 75% speed
+                                fold1Video.playbackRate = 0.6; // Slow down video to 60% speed
                                 
                                 fold1Video.play().then(() => {
                                     console.log('✅ fold1.MP4 is playing');
@@ -405,6 +456,13 @@
                             if (verticalDragLine) {
                                 verticalDragLine.style.pointerEvents = 'auto';
                             }
+                            
+                            const curvedDragLine = document.getElementById('curvedDragLine');
+                            if (curvedDragLine) {
+                                curvedDragLine.style.pointerEvents = 'auto';
+                                curvedDragLine.style.opacity = '1';
+                                curvedDragLine.style.visibility = 'visible';
+                            }
                         }
                     }, 1000); // 1 second delay
                 });
@@ -424,6 +482,10 @@
         const fold2VideoContainer = document.getElementById('fold2VideoContainer');
         const fold2Video = document.getElementById('fold2Video');
         const fold2EndImageContainer = document.getElementById('fold2EndImageContainer');
+        const fold3VideoContainer = document.getElementById('fold3VideoContainer');
+        const fold3Video = document.getElementById('fold3Video');
+        const fold4EndImageContainer = document.getElementById('fold4EndImageContainer');
+        const curvedDragLine = document.getElementById('curvedDragLine');
         
         if (verticalDragLine && fold2VideoContainer && fold2Video) {
             let isDraggingVertical = false;
@@ -470,23 +532,18 @@
                         if (distance >= minDragDistance) {
                             // Trigger fold2.MP4 video
                             if (fold2VideoContainer && fold2Video) {
-                                // Hide fold2.end.PNG overlay
+                                // Hide fold2.end.PNG overlay via z-index only
                                 if (fold2EndImageContainer) {
-                                    fold2EndImageContainer.style.opacity = '0';
-                                    fold2EndImageContainer.style.visibility = 'hidden';
+                                    fold2EndImageContainer.style.zIndex = '0';
                                 }
                                 
                                 // Hide vertical drag line
                                 if (verticalDragLine) {
-                                    verticalDragLine.style.opacity = '0';
-                                    verticalDragLine.style.visibility = 'hidden';
                                     verticalDragLine.style.pointerEvents = 'none';
                                 }
                                 
-                                // Show and play video
+                                // Show and play video (z-index only)
                                 fold2VideoContainer.style.zIndex = '350';
-                                fold2VideoContainer.style.opacity = '1';
-                                fold2VideoContainer.style.visibility = 'visible';
                                 fold2Video.currentTime = 0;
                                 fold2Video.playbackRate = 0.75; // Slow down video to 75% speed
                                 
@@ -510,6 +567,98 @@
                     isDraggingVertical = false;
                     verticalDragLine.classList.remove('dragging');
                 }
+            });
+        }
+        
+        // Curved drag trigger on fold4 image to play fold3.MP4
+        if (curvedDragLine && fold3VideoContainer && fold3Video) {
+            let isDraggingCurved = false;
+            let curvedStartY = 0;
+            const minCurveDistance = 150;
+            
+            curvedDragLine.addEventListener('mousedown', (e) => {
+                const rect = curvedDragLine.getBoundingClientRect();
+                const lineLeft = rect.left;
+                const lineTop = rect.top;
+                const lineWidth = rect.width;
+                const lineHeight = rect.height;
+                
+                const clickX = e.clientX;
+                const clickY = e.clientY;
+                
+                if (clickX >= lineLeft && clickX <= lineLeft + lineWidth &&
+                    clickY >= lineTop && clickY <= lineTop + lineHeight) {
+                    isDraggingCurved = true;
+                    curvedStartY = clickY;
+                    curvedDragLine.classList.add('dragging');
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDraggingCurved) return;
+                
+                const currentY = e.clientY;
+                const deltaY = currentY - curvedStartY;
+                
+                if (deltaY > minCurveDistance) {
+                    // Hide fold4 end image and curved line
+                    if (fold4EndImageContainer) {
+                        fold4EndImageContainer.style.zIndex = '0';
+                    }
+                    curvedDragLine.style.pointerEvents = 'none';
+                    curvedDragLine.style.opacity = '0';
+                    
+                    // Show fold3 video
+                    fold3VideoContainer.style.zIndex = '380';
+                    fold3Video.currentTime = 0;
+                    fold3Video.playbackRate = 0.75;
+                    fold3Video.play().then(() => {
+                        console.log('✅ fold3.MP4 is playing');
+                    }).catch(error => {
+                        console.error('❌ Error playing fold3.MP4:', error);
+                    });
+                    
+                    isDraggingCurved = false;
+                    curvedDragLine.classList.remove('dragging');
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDraggingCurved) {
+                    isDraggingCurved = false;
+                    curvedDragLine.classList.remove('dragging');
+                }
+            });
+        }
+        
+        // After fold2 video ends, show fold3.end.PNG then fold4.end.PNG (cut transitions)
+        if (fold2Video) {
+            fold2Video.addEventListener('ended', () => {
+                console.log('✅ fold2.MP4 ended');
+                
+                // Hide fold2 video via z-index cut
+                if (fold2VideoContainer) {
+                    fold2VideoContainer.style.zIndex = '0';
+                }
+                
+                // Show fold3.end.PNG first
+                const fold3EndImageContainer = document.getElementById('fold3EndImageContainer');
+                if (fold3EndImageContainer) {
+                    fold3EndImageContainer.style.zIndex = '370';
+                    console.log('✅ fold3.end.PNG shown (cut transition)');
+                }
+                
+                // After 1 second, show fold4 and hide fold3
+                setTimeout(() => {
+                    const fold4EndImageContainer = document.getElementById('fold4EndImageContainer');
+                    if (fold4EndImageContainer) {
+                        fold4EndImageContainer.style.zIndex = '370';
+                        console.log('✅ fold4.end.PNG shown (cut transition)');
+                    }
+                    if (fold3EndImageContainer) {
+                        fold3EndImageContainer.style.zIndex = '0';
+                    }
+                }, 1000);
             });
         }
     </script>
