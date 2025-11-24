@@ -544,6 +544,7 @@
     
     <div class="container image-container" id="origami3AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
         <img src="images/origami-fold-afterpng.png" alt="Origami 3 After" loading="eager">
+        <button class="fold-button" id="origami3FoldButton" style="z-index: 250; display: block; visibility: visible; opacity: 1;">FOLD</button>
     </div>
 
     <script>
@@ -1183,6 +1184,7 @@
         // FOLD button handler for box 1 - show white rectangles above and below text input
         const origami1FoldButton = document.getElementById('origami1FoldButton');
         const origami2FoldButton = document.getElementById('origami2FoldButton');
+        const origami3FoldButton = document.getElementById('origami3FoldButton');
         const whiteRectangleAbove = document.getElementById('whiteRectangleAbove');
         const whiteRectangleBelow = document.getElementById('whiteRectangleBelow');
         const messageInput = document.getElementById('messageInput');
@@ -1195,6 +1197,9 @@
                 }
                 if (origami2FoldButton) {
                     origami2FoldButton.disabled = !hasText;
+                }
+                if (origami3FoldButton) {
+                    origami3FoldButton.disabled = !hasText;
                 }
             }
         }
@@ -1250,6 +1255,32 @@
                     
                     setTimeout(() => {
                         window.location.href = 'fold-studio-box2.html';
+                    }, 3500);
+                }
+                
+                if (whiteRectangleAbove) {
+                    whiteRectangleAbove.classList.add('active');
+                }
+                if (whiteRectangleBelow) {
+                    whiteRectangleBelow.classList.add('active');
+                }
+            });
+        }
+        
+        if (origami3FoldButton) {
+            origami3FoldButton.addEventListener('click', () => {
+                if (!messageInput || messageInput.value.trim().length === 0) {
+                    console.log('❌ Text input is empty, cannot fold (box 3)');
+                    return;
+                }
+                
+                console.log('✅ Origami 3 FOLD button clicked');
+                
+                if (messageInput) {
+                    messageInput.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'fold-studio-box3.html';
                     }, 3500);
                 }
                 

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>秘密スタジオ - Fold 1</title>
+    <style>
+        :root {
+            --bg: #f8f6f0;
+            --fg: #3a3a3a;
+            --accent: #8b7d6b;
+            --text-dark: #2c2c2c;
+            --border-light: rgba(139, 125, 107, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .home-button {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .home-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Container for full-screen content */
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: none;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: transform;
+        }
+        
+        /* Overlay image container */
+        .overlay-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay-image img {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+        }
+        
+        /* Fade-in transition for overlay */
+        #fold1Origami1Container {
+            transition: none;
+        }
+        
+        /* Diagonal drag line - centered square */
+        .diagonal-drag-line {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            pointer-events: auto;
+            cursor: crosshair;
+            z-index: 500 !important;
+            overflow: visible;
+        }
+        
+        
+        /* Optional: show square border for reference - transparent */
+        .diagonal-drag-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px dashed transparent;
+            pointer-events: none;
+        }
+        
+        /* Vertical drag line (down to up) */
+        .vertical-drag-line {
+            position: fixed;
+            top: 58%;
+            left: 51.5%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 600px;
+            pointer-events: none;
+            cursor: crosshair;
+            z-index: 500 !important;
+            overflow: visible;
+        }
+        
+        .vertical-drag-line::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+            box-shadow: none;
+            z-index: 501 !important;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .vertical-drag-line.dragging::before {
+            background: transparent;
+            width: 8px;
+            box-shadow: none;
+        }
+        
+        /* Video container */
+        .second-video-container {
+            z-index: 350;
+        }
+        
+        .second-video-container video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+        }
+        
+        /* Curved drag line (on fold4) */
+        .curved-drag-line {
+            position: absolute;
+            top: 18%;
+            right: 28%;
+            width: 120px;
+            height: 200px;
+            pointer-events: none;
+            z-index: 500 !important;
+        }
+        
+        .curved-drag-line svg {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+        
+        .curved-drag-line path {
+            stroke: transparent;
+            stroke-width: 6;
+            fill: none;
+            stroke-linecap: round;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="home-button" onclick="window.location.href='index.html'">🏠</button>
+    </div>
+    
+    <!-- Fold1 origami1 image overlay -->
+    <div class="container image-container overlay-image" id="fold1Origami1Container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 300; opacity: 1; visibility: visible; display: flex;">
+        <img src="images/fold1-origami1.png" alt="Fold1 Origami1" loading="eager">
+    </div>
+    
+    <!-- Diagonal drag line trigger - centered square -->
+    <div class="diagonal-drag-line" id="diagonalDragLine">
+        <!-- SVG line from top-left to bottom-right - transparent -->
+        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 501;">
+            <line x1="0" y1="0" x2="100%" y2="100%" stroke="#8b7d6b" stroke-width="10" stroke-opacity="0" stroke-linecap="round"/>
+        </svg>
+    </div>
+    
+    <!-- Video container for fold3.1.MP4 -->
+    <div class="container second-video-container" id="fold1VideoContainer" style="z-index: 0;">
+        <video id="fold1Video" muted>
+            <source src="media/fold3.1.MP4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Image container for fold3end.PNG - always rendered, z-index only -->
+    <div class="container image-container" id="fold1EndImageContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; display: flex;">
+        <img src="images/fold3end.PNG" alt="Fold1 End" loading="eager" style="width: 100vw; height: auto; max-width: 1920px; max-height: 1080px; object-fit: contain;">
+    </div>
+    
+    <!-- Image container for fold3end-fold.PNG - always rendered, z-index only -->
+    <div class="container image-container" id="fold2EndImageContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; display: flex;">
+        <img src="images/fold3end-fold.PNG" alt="Fold2 End" loading="eager" style="width: 100vw; height: auto; max-width: 1920px; max-height: 1080px; object-fit: contain;">
+        
+        <!-- Vertical drag line trigger (down to up) -->
+        <div class="vertical-drag-line" id="verticalDragLine"></div>
+    </div>
+    
+    <!-- Video container for fold3.2.MP4 -->
+    <div class="container second-video-container" id="fold2VideoContainer" style="z-index: 0;">
+        <video id="fold2Video" muted>
+            <source src="media/fold3.2.MP4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Image container for fold3.2end.PNG - always rendered -->
+    <div class="container image-container" id="fold3EndImageContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; display: flex;">
+        <img src="images/fold3.2end.PNG" alt="Fold3.2 End" loading="eager" style="width: 100vw; height: auto; max-width: 1920px; max-height: 1080px; object-fit: contain;">
+    </div>
+    
+    <!-- Image container for fold3.2endfold.PNG - always rendered -->
+    <div class="container image-container" id="fold4EndImageContainer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; display: flex;">
+        <img src="images/fold3.2endfold.PNG" alt="Fold3.2 End Fold" loading="eager" style="width: 100vw; height: auto; max-width: 1920px; max-height: 1080px; object-fit: contain;">
+        <div class="curved-drag-line" id="curvedDragLine">
+            <svg viewBox="0 0 200 300">
+                <defs>
+                    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto" markerUnits="strokeWidth">
+                        <path d="M0,0 L8,4 L0,8 z" fill="#0da5a2"/>
+                    </marker>
+                </defs>
+                <path d="M40 40 C 160 40, 160 200, 120 260" marker-end="url(#arrowhead)"/>
+            </svg>
+        </div>
+    </div>
+    
+    <!-- Video container for fold3.3.MP4 -->
+    <div class="container second-video-container" id="fold3VideoContainer" style="z-index: 0;">
+        <video id="fold3Video" muted>
+            <source src="media/fold3.3.MP4" type="video/mp4">
+        </video>
+    </div>
+
+    <script>
+        // Diagonal drag trigger for fold1.MP4
+        const diagonalDragLine = document.getElementById('diagonalDragLine');
+        const fold1VideoContainer = document.getElementById('fold1VideoContainer');
+        const fold1Video = document.getElementById('fold1Video');
+        const fold1Origami1Container = document.getElementById('fold1Origami1Container');
+        
+        if (diagonalDragLine && fold1VideoContainer && fold1Video) {
+            let isDragging = false;
+            let startX = 0;
+            let startY = 0;
+            let dragProgress = 0;
+            const minDragDistance = 200; // Minimum distance to trigger (in pixels) - reduced for flexibility
+            const tolerance = 100; // Tolerance for diagonal line (in pixels) - increased for flexibility
+            
+            // Calculate if point is on diagonal line (top-left to bottom-right of square)
+            // More flexible: allows for slight deviations from perfect diagonal
+            function isOnDiagonalLine(x, y, startX, startY) {
+                const deltaX = x - startX;
+                const deltaY = y - startY;
+                
+                // Must be moving down and right
+                if (deltaX <= 0 || deltaY <= 0) return false;
+                
+                // For a square, the diagonal should have equal X and Y deltas (45 degree angle)
+                // But we allow flexibility - check if the ratio is close to 1:1
+                const ratio = deltaY / deltaX;
+                const expectedRatio = 1.0; // Perfect diagonal would be 1:1
+                
+                // Allow ratio between 0.5 and 2.0 (very flexible)
+                // This means the line can be anywhere from 26.5° to 63.4° from horizontal
+                return ratio >= 0.5 && ratio <= 2.0;
+            }
+            
+            diagonalDragLine.addEventListener('mousedown', (e) => {
+                // Get the bounding box of the square
+                const rect = diagonalDragLine.getBoundingClientRect();
+                const squareLeft = rect.left;
+                const squareTop = rect.top;
+                
+                // Check if click is within the square
+                const clickX = e.clientX;
+                const clickY = e.clientY;
+                
+                if (clickX >= squareLeft && clickX <= squareLeft + 600 && 
+                    clickY >= squareTop && clickY <= squareTop + 600) {
+                    isDragging = true;
+                    // Store relative position within the square
+                    startX = clickX - squareLeft;
+                    startY = clickY - squareTop;
+                    dragProgress = 0;
+                    diagonalDragLine.classList.add('dragging');
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                // Get the bounding box of the square
+                const rect = diagonalDragLine.getBoundingClientRect();
+                const squareLeft = rect.left;
+                const squareTop = rect.top;
+                
+                // Calculate relative position within the square
+                const currentX = e.clientX - squareLeft;
+                const currentY = e.clientY - squareTop;
+                
+                // Check if still within square bounds
+                if (currentX < 0 || currentX > 600 || currentY < 0 || currentY > 600) {
+                    // Reset if dragged outside square
+                    isDragging = false;
+                    diagonalDragLine.classList.remove('dragging');
+                    return;
+                }
+                
+                const deltaX = currentX - startX;
+                const deltaY = currentY - startY;
+                
+                // Check if dragging in the right direction (down and right)
+                if (deltaX > 0 && deltaY > 0) {
+                    // Check if following diagonal line (for square, deltaY should equal deltaX)
+                    if (isOnDiagonalLine(currentX, currentY, startX, startY)) {
+                        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                        dragProgress = distance;
+                        
+                        // If dragged far enough, trigger video
+                        if (distance >= minDragDistance) {
+                            // Trigger fold1.MP4 video
+                            if (fold1VideoContainer && fold1Video) {
+                                // Hide fold1-origami1 overlay
+                                if (fold1Origami1Container) {
+                                    fold1Origami1Container.style.opacity = '0';
+                                    fold1Origami1Container.style.visibility = 'hidden';
+                                }
+                                
+                                // Hide diagonal drag line
+                                if (diagonalDragLine) {
+                                    diagonalDragLine.style.opacity = '0';
+                                    diagonalDragLine.style.visibility = 'hidden';
+                                    diagonalDragLine.style.pointerEvents = 'none';
+                                }
+                                
+                                // Show and play video
+                                fold1VideoContainer.style.zIndex = '350';
+                                fold1VideoContainer.style.opacity = '1';
+                                fold1VideoContainer.style.visibility = 'visible';
+                                fold1Video.currentTime = 0;
+                                fold1Video.playbackRate = 0.6; // Slow down video to 60% speed
+                                
+                                fold1Video.play().then(() => {
+                                    console.log('✅ fold1.MP4 is playing');
+                                }).catch(error => {
+                                    console.error('❌ Error playing fold1.MP4:', error);
+                                });
+                                
+                                // Reset drag state
+                                isDragging = false;
+                                diagonalDragLine.classList.remove('dragging');
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Preload end images to prevent flickering
+            let fold1EndImgLoaded = false;
+            let fold2EndImgLoaded = false;
+            
+            const fold1EndImg = new Image();
+            fold1EndImg.src = 'images/fold1.end.png';
+            fold1EndImg.onload = () => {
+                fold1EndImgLoaded = true;
+                console.log('✅ fold1.end.png preloaded');
+            };
+            
+            const fold2EndImg = new Image();
+            fold2EndImg.src = 'images/fold2.end.PNG';
+            fold2EndImg.onload = () => {
+                fold2EndImgLoaded = true;
+                console.log('✅ fold2.end.PNG preloaded');
+            };
+            
+            // When fold1 video ends, show fold1.end.png, then fold2.end.PNG with cut transitions
+            if (fold1Video) {
+                fold1Video.addEventListener('ended', () => {
+                    console.log('✅ fold1.MP4 ended');
+                    
+                    // Pause and stop video to prevent rendering
+                    fold1Video.pause();
+                    fold1Video.currentTime = fold1Video.duration;
+                    
+                    // True cut transition: z-index only, no opacity changes
+                    const fold1EndImageContainer = document.getElementById('fold1EndImageContainer');
+                    if (fold1EndImageContainer) {
+                        // Show image with z-index only (instant cut)
+                        fold1EndImageContainer.style.zIndex = '370';
+                        
+                        // Hide video with z-index only (instant cut)
+                        if (fold1VideoContainer) {
+                            fold1VideoContainer.style.zIndex = '0';
+                        }
+                    }
+                    
+                    // Show fold2.end.PNG 1 second later with true cut transition
+                    setTimeout(() => {
+                        const fold2EndImageContainer = document.getElementById('fold2EndImageContainer');
+                        if (fold2EndImageContainer) {
+                            // True cut transition: z-index only, no opacity changes
+                            fold2EndImageContainer.style.zIndex = '370';
+                            
+                            // Hide fold1.end.png with z-index only (instant cut)
+                            if (fold1EndImageContainer) {
+                                fold1EndImageContainer.style.zIndex = '0';
+                            }
+                            
+                            // Enable vertical drag line when fold2.end.PNG is visible
+                            const verticalDragLine = document.getElementById('verticalDragLine');
+                            if (verticalDragLine) {
+                                verticalDragLine.style.pointerEvents = 'auto';
+                            }
+                            
+                            const curvedDragLine = document.getElementById('curvedDragLine');
+                            if (curvedDragLine) {
+                                curvedDragLine.style.pointerEvents = 'auto';
+                                curvedDragLine.style.opacity = '1';
+                                curvedDragLine.style.visibility = 'visible';
+                            }
+                        }
+                    }, 1000); // 1 second delay
+                });
+            }
+            
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    diagonalDragLine.classList.remove('dragging');
+                    dragProgress = 0;
+                }
+            });
+        }
+        
+        // Vertical drag trigger for fold2.MP4 (down to up)
+        const verticalDragLine = document.getElementById('verticalDragLine');
+        const fold2VideoContainer = document.getElementById('fold2VideoContainer');
+        const fold2Video = document.getElementById('fold2Video');
+        const fold2EndImageContainer = document.getElementById('fold2EndImageContainer');
+        const fold3VideoContainer = document.getElementById('fold3VideoContainer');
+        const fold3Video = document.getElementById('fold3Video');
+        const fold4EndImageContainer = document.getElementById('fold4EndImageContainer');
+        const curvedDragLine = document.getElementById('curvedDragLine');
+        
+        if (verticalDragLine && fold2VideoContainer && fold2Video) {
+            let isDraggingVertical = false;
+            let startY = 0;
+            const minDragDistance = 200; // Minimum distance to trigger (in pixels)
+            const tolerance = 80; // Tolerance for vertical line (in pixels)
+            
+            verticalDragLine.addEventListener('mousedown', (e) => {
+                // Get the bounding box of the vertical line area
+                const rect = verticalDragLine.getBoundingClientRect();
+                const lineLeft = rect.left;
+                const lineTop = rect.top;
+                
+                // Check if click is within the vertical line area
+                const clickX = e.clientX;
+                const clickY = e.clientY;
+                
+                if (clickX >= lineLeft && clickX <= lineLeft + 100 && 
+                    clickY >= lineTop && clickY <= lineTop + 600) {
+                    isDraggingVertical = true;
+                    startY = clickY;
+                    verticalDragLine.classList.add('dragging');
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDraggingVertical) return;
+                
+                const currentY = e.clientY;
+                const deltaY = startY - currentY; // Positive because we're going up (startY > currentY)
+                
+                // Check if dragging upward (down to up)
+                if (deltaY > 0) {
+                    // Check if following vertical line (within tolerance)
+                    const rect = verticalDragLine.getBoundingClientRect();
+                    const lineLeft = rect.left;
+                    const currentX = e.clientX;
+                    
+                    // Check if still within horizontal bounds
+                    if (currentX >= lineLeft - tolerance && currentX <= lineLeft + 100 + tolerance) {
+                        const distance = Math.abs(deltaY);
+                        
+                        // If dragged far enough upward, trigger video
+                        if (distance >= minDragDistance) {
+                            // Trigger fold2.MP4 video
+                            if (fold2VideoContainer && fold2Video) {
+                                // Hide fold2.end.PNG overlay via z-index only
+                                if (fold2EndImageContainer) {
+                                    fold2EndImageContainer.style.zIndex = '0';
+                                }
+                                
+                                // Hide vertical drag line
+                                if (verticalDragLine) {
+                                    verticalDragLine.style.pointerEvents = 'none';
+                                }
+                                
+                                // Show and play video (z-index only)
+                                fold2VideoContainer.style.zIndex = '350';
+                                fold2Video.currentTime = 0;
+                                fold2Video.playbackRate = 0.75; // Slow down video to 75% speed
+                                
+                                fold2Video.play().then(() => {
+                                    console.log('✅ fold2.MP4 is playing');
+                                }).catch(error => {
+                                    console.error('❌ Error playing fold2.MP4:', error);
+                                });
+                                
+                                // Reset drag state
+                                isDraggingVertical = false;
+                                verticalDragLine.classList.remove('dragging');
+                            }
+                        }
+                    }
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDraggingVertical) {
+                    isDraggingVertical = false;
+                    verticalDragLine.classList.remove('dragging');
+                }
+            });
+        }
+        
+        // Curved drag trigger on fold4 image to play fold3.MP4
+        if (curvedDragLine && fold3VideoContainer && fold3Video) {
+            let isDraggingCurved = false;
+            let curvedStartY = 0;
+            const minCurveDistance = 150;
+            
+            curvedDragLine.addEventListener('mousedown', (e) => {
+                const rect = curvedDragLine.getBoundingClientRect();
+                const lineLeft = rect.left;
+                const lineTop = rect.top;
+                const lineWidth = rect.width;
+                const lineHeight = rect.height;
+                
+                const clickX = e.clientX;
+                const clickY = e.clientY;
+                
+                if (clickX >= lineLeft && clickX <= lineLeft + lineWidth &&
+                    clickY >= lineTop && clickY <= lineTop + lineHeight) {
+                    isDraggingCurved = true;
+                    curvedStartY = clickY;
+                    curvedDragLine.classList.add('dragging');
+                }
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDraggingCurved) return;
+                
+                const currentY = e.clientY;
+                const deltaY = currentY - curvedStartY;
+                
+                if (deltaY > minCurveDistance) {
+                    // Hide fold4 end image and curved line
+                    if (fold4EndImageContainer) {
+                        fold4EndImageContainer.style.zIndex = '0';
+                    }
+                    curvedDragLine.style.pointerEvents = 'none';
+                    curvedDragLine.style.opacity = '0';
+                    
+                    // Show fold3 video
+                    fold3VideoContainer.style.zIndex = '380';
+                    fold3Video.currentTime = 0;
+                    fold3Video.playbackRate = 0.75;
+                    fold3Video.play().then(() => {
+                        console.log('✅ fold3.MP4 is playing');
+                    }).catch(error => {
+                        console.error('❌ Error playing fold3.MP4:', error);
+                    });
+                    
+                    isDraggingCurved = false;
+                    curvedDragLine.classList.remove('dragging');
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDraggingCurved) {
+                    isDraggingCurved = false;
+                    curvedDragLine.classList.remove('dragging');
+                }
+            });
+        }
+        
+        // After fold2 video ends, show fold3.end.PNG then fold4.end.PNG (cut transitions)
+        if (fold2Video) {
+            fold2Video.addEventListener('ended', () => {
+                console.log('✅ fold2.MP4 ended');
+                
+                // Hide fold2 video via z-index cut
+                if (fold2VideoContainer) {
+                    fold2VideoContainer.style.zIndex = '0';
+                }
+                
+                // Show fold3.end.PNG first
+                const fold3EndImageContainer = document.getElementById('fold3EndImageContainer');
+                if (fold3EndImageContainer) {
+                    fold3EndImageContainer.style.zIndex = '370';
+                    console.log('✅ fold3.end.PNG shown (cut transition)');
+                }
+                
+                // After 1 second, show fold4 and hide fold3
+                setTimeout(() => {
+                    const fold4EndImageContainer = document.getElementById('fold4EndImageContainer');
+                    if (fold4EndImageContainer) {
+                        fold4EndImageContainer.style.zIndex = '370';
+                        console.log('✅ fold4.end.PNG shown (cut transition)');
+                    }
+                    if (fold3EndImageContainer) {
+                        fold3EndImageContainer.style.zIndex = '0';
+                    }
+                }, 1000);
+            });
+        }
+    </script>
+</body>
+</html>
+
