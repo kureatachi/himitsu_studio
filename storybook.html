@@ -12,8 +12,8 @@
         <a href="studio.html" onclick="localStorage.removeItem('origamiFlowState'); return true;">Skip to Studio</a>
     </div>
 
-    <!-- Scroll down indicator -->
-    <div class="scroll-indicator">
+    <!-- Scroll down indicator (hidden for autoplay) -->
+    <div class="scroll-indicator" style="display: none;">
         <div class="scroll-text">Scroll down to explore the stories</div>
         <div class="scroll-arrow">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -138,6 +138,93 @@
 
     </div>
 
+    <style>
+        /* Crossfade transition for story items */
+        .story-item {
+            transition: opacity 1.2s ease-in-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .stories-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+    
+    <script>
+        // Autoplay storybook images in a loop with crossfade
+        (function() {
+            const storyItems = document.querySelectorAll('.story-item');
+            let currentIndex = 0;
+            const displayDuration = 5000; // 5 seconds per image (adjust as needed)
+            const transitionDuration = 1200; // Crossfade duration in milliseconds
+            
+            // Position all story items absolutely and set initial states
+            storyItems.forEach((item, index) => {
+                item.style.position = 'absolute';
+                item.style.top = '0';
+                item.style.left = '0';
+                item.style.width = '100%';
+                item.style.height = '100%';
+                
+                if (index !== 0) {
+                    item.style.display = 'flex';
+                    item.style.opacity = '0';
+                    item.style.zIndex = '1';
+                } else {
+                    item.style.display = 'flex';
+                    item.style.opacity = '1';
+                    item.style.zIndex = '2';
+                }
+            });
+            
+            // Function to show next image with crossfade transition
+            function showNextImage() {
+                // Get current and next items
+                const currentItem = storyItems[currentIndex];
+                const nextIndex = (currentIndex + 1) % storyItems.length;
+                const nextItem = storyItems[nextIndex];
+                
+                if (currentItem && nextItem) {
+                    // Bring next item to front
+                    nextItem.style.zIndex = '2';
+                    currentItem.style.zIndex = '1';
+                    
+                    // Show next item if hidden
+                    if (nextItem.style.display === 'none') {
+                        nextItem.style.display = 'flex';
+                    }
+                    
+                    // Start crossfade: both images visible, one fading out, one fading in
+                    nextItem.style.opacity = '0';
+                    // Small delay to ensure next item is rendered
+                    setTimeout(() => {
+                        // Fade out current, fade in next simultaneously
+                        currentItem.style.opacity = '0';
+                        nextItem.style.opacity = '1';
+                    }, 10);
+                    
+                    // Hide current item after transition completes
+                    setTimeout(() => {
+                        currentItem.style.display = 'none';
+                    }, transitionDuration);
+                }
+                
+                // Move to next image
+                currentIndex = nextIndex;
+            }
+            
+            // Start autoplay loop after page loads
+            setTimeout(() => {
+                setInterval(showNextImage, displayDuration);
+            }, 1000); // Wait 1 second before starting autoplay
+        })();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
