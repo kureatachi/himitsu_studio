@@ -535,10 +535,11 @@
     <div class="container image-container" id="origami1AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden; position: relative;">
         <img src="images/origami-fold-afterpng.png" alt="Origami 1 After" loading="eager">
         <button class="fold-button" id="origami1FoldButton" style="z-index: 250; display: block; visibility: visible; opacity: 1;">FOLD</button>
-    </div>
-    
+        </div>
+        
     <div class="container image-container" id="origami2AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
         <img src="images/origami-fold-afterpng.png" alt="Origami 2 After" loading="eager">
+        <button class="fold-button" id="origami2FoldButton" style="z-index: 250; display: block; visibility: visible; opacity: 1;">FOLD</button>
     </div>
     
     <div class="container image-container" id="origami3AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
@@ -1181,14 +1182,20 @@
         
         // FOLD button handler for box 1 - show white rectangles above and below text input
         const origami1FoldButton = document.getElementById('origami1FoldButton');
+        const origami2FoldButton = document.getElementById('origami2FoldButton');
         const whiteRectangleAbove = document.getElementById('whiteRectangleAbove');
         const whiteRectangleBelow = document.getElementById('whiteRectangleBelow');
         const messageInput = document.getElementById('messageInput');
         // Check if text input is empty and disable/enable FOLD button
         function updateFoldButtonState() {
-            if (origami1FoldButton && messageInput) {
+            if (messageInput) {
                 const hasText = messageInput.value.trim().length > 0;
-                origami1FoldButton.disabled = !hasText;
+                if (origami1FoldButton) {
+                    origami1FoldButton.disabled = !hasText;
+                }
+                if (origami2FoldButton) {
+                    origami2FoldButton.disabled = !hasText;
+                }
             }
         }
         
@@ -1220,6 +1227,32 @@
                 }
                 
                 // Show white rectangles above and below text input
+                if (whiteRectangleAbove) {
+                    whiteRectangleAbove.classList.add('active');
+                }
+                if (whiteRectangleBelow) {
+                    whiteRectangleBelow.classList.add('active');
+                }
+            });
+        }
+        
+        if (origami2FoldButton) {
+            origami2FoldButton.addEventListener('click', () => {
+                if (!messageInput || messageInput.value.trim().length === 0) {
+                    console.log('❌ Text input is empty, cannot fold (box 2)');
+                    return;
+                }
+                
+                console.log('✅ Origami 2 FOLD button clicked');
+                
+                if (messageInput) {
+                    messageInput.classList.add('fade-out');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'fold-studio-box2.html';
+                    }, 3500);
+                }
+                
                 if (whiteRectangleAbove) {
                     whiteRectangleAbove.classList.add('active');
                 }
