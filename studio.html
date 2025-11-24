@@ -108,12 +108,12 @@
         /* Continue button */
         .continue-button {
             position: absolute;
-            top: 50%;
+            top: 55%;
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 15px 40px;
-            background: var(--accent);
-            color: white;
+            background: transparent;
+            color: transparent;
             border: none;
             border-radius: 8px;
             font-family: 'Georgia', 'Times New Roman', serif;
@@ -123,13 +123,14 @@
             z-index: 20;
             pointer-events: auto;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: none;
         }
         
         .continue-button:hover {
-            background: #7a6b5a;
+            background: transparent;
+            color: transparent;
             transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            box-shadow: none;
         }
         
         .continue-button:active {
