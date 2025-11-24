@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>秘密スタジオ - Origami Paper Selection</title>
+    <title>秘密スタジオ - Origami Studio</title>
     <style>
+        @font-face {
+            font-family: 'VAG Rounded Next';
+            src: url('VAG-Rounded-Next-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
         :root {
             --bg: #f8f6f0;
             --fg: #3a3a3a;
@@ -21,15 +28,10 @@
         
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
-            background: #ffffff;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="paper" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23ffffff"/><circle cx="20" cy="20" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="80" cy="40" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="40" cy="80" r="0.5" fill="%23f5f5f5" opacity="0.4"/><circle cx="60" cy="10" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="10" cy="70" r="0.3" fill="%23f8f8f8" opacity="0.3"/><circle cx="90" cy="90" r="0.3" fill="%23f8f8f8" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23paper)"/></svg>');
+            background: var(--bg);
             color: var(--fg);
             min-height: 100vh;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            overflow: hidden;
         }
         
         /* Header */
@@ -42,7 +44,7 @@
             gap: 10px;
         }
         
-        .home-button {
+        .home-button, .back-button {
             width: 50px;
             height: 50px;
             background: var(--accent);
@@ -58,257 +60,349 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        .home-button:hover {
+        .home-button:hover, .back-button:hover {
             transform: scale(1.1);
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         
-        .back-button {
-            width: 50px;
-            height: 50px;
-            background: var(--accent);
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            font-size: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .back-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        /* Main content */
-        .main-content {
-            text-align: center;
-            margin-bottom: 40px;
-            max-width: 800px;
-            width: 100%;
-        }
-        
-        .main-title {
-            font-size: 1.5rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            margin-bottom: 40px;
-        }
-        
-        /* Paper selection */
-        .paper-selection-container {
-            margin-bottom: 80px;
-        }
-        
-        .paper-selection {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            padding: 20px 0;
-            justify-content: flex-start;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) transparent;
-            cursor: grab;
-        }
-        
-        .paper-selection::-webkit-scrollbar {
-            height: 8px;
-        }
-        
-        .paper-selection::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        
-        .paper-selection::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-        
-        .paper-selection::-webkit-scrollbar-thumb:hover {
-            background: #6b5b4a;
-        }
-        
-        .paper-selection:active {
-            cursor: grabbing;
-        }
-        
-        .paper-option {
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        
-        .paper-option:hover {
-            transform: translateY(-5px);
-        }
-        
-        .paper-option.selected {
-            transform: translateY(-8px);
-        }
-        
-        .paper-square {
-            width: 220px;
-            height: 220px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.8);
-        }
-        
-        .paper-square::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-        }
-        
-        .paper-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        
-        .paper-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-        
-        .paper-overlay:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .paper-option.selected .paper-overlay {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: inset 0 0 0 3px var(--accent);
-        }
-        
-        /* Visible square trigger container */
-        .paper-trigger {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 3px solid rgba(0, 0, 0, 0.4);
-            border-radius: 8px;
-            background: rgba(200, 200, 200, 0.15);
-            cursor: pointer;
-            z-index: 5;
-            transition: all 0.3s ease;
-            pointer-events: auto;
-        }
-        
-        .paper-trigger:hover {
-            border-color: rgba(0, 0, 0, 0.6);
-            background: rgba(200, 200, 200, 0.25);
-        }
-        
-        .paper-option.selected .paper-trigger {
-            border-color: #000000;
-            border-width: 3px;
-            background: rgba(0, 0, 0, 0.3);
-        }
-        
-        
-        .paper-option.selected .paper-square {
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            transform: scale(1.05);
-        }
-        
-        .paper-name {
-            margin-top: 12px;
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--text-dark);
-            text-align: center;
-        }
-        
-        /* Selection indicator */
-        .selection-indicator {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 30px;
-            height: 30px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        
-        .paper-option.selected .selection-indicator {
-            display: flex;
-        }
-        
-        /* Scroll instruction */
-        .scroll-instruction {
-            text-align: center;
-            font-size: 12px;
-            color: var(--fg);
-            margin-top: 20px;
-            font-weight: 400;
-        }
-        
-        /* Choose button */
+        /* Choose button style */
         .choose-button {
-            display: inline-block;
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
             padding: 15px 40px;
+            min-width: 200px;
             background: var(--accent);
             color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: all 0.3s ease;
             border: none;
+            border-radius: 8px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 18px;
             cursor: pointer;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-        
-        .choose-button.active {
-            opacity: 1;
-            pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 200;
         }
         
         .choose-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 125, 107, 0.3);
+            background: #7a6b5a;
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .paper-square {
-                width: 180px;
-                height: 180px;
+        .choose-button:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+        
+        /* FOLD button styling - only for box 1 */
+        .fold-button {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 40px;
+            min-width: 200px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 200;
+            pointer-events: auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .fold-button:hover {
+            background: #7a6b5a;
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fold-button:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+        
+        /* White rectangles above and below text input */
+        .white-rectangle {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100px;
+            background-color: white;
+            z-index: 199;
+            display: none;
+        }
+        
+        .white-rectangle.active {
+            display: block;
+        }
+        
+        .white-rectangle.above {
+            width: 800px; /* Wider */
+            top: calc(50% - 185px - 100px - 50px); /* Moved further up with larger gap */
+        }
+        
+        .white-rectangle.below {
+            width: 600px;
+            top: calc(50% + 165px + 100px); /* Below the text input with larger gap */
+        }
+        
+        /* Container for full-screen content */
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* True cut transition - z-index only, no display changes */
+            transition: none;
+            /* Prevent flickering with hardware acceleration */
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* Always rendered, just change z-index */
+            will-change: transform;
+        }
+        
+        /* Go image containers - no transitions, pure cut, always rendered */
+        #origami1GoImageContainer,
+        #origami2GoImageContainer,
+        #origami3GoImageContainer {
+            transition: none !important;
+            opacity: 1 !important;
+            visibility: visible;
+            /* Always rendered, just change z-index for instant cut */
+        }
+        
+        /* After image containers - fade in overlay */
+        #origami1AfterImageContainer,
+        #origami2AfterImageContainer,
+        #origami3AfterImageContainer {
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        #origami1AfterImageContainer.active,
+        #origami2AfterImageContainer.active,
+        #origami3AfterImageContainer.active {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        .container.active {
+            z-index: 10 !important;
+            pointer-events: auto;
+        }
+        
+        .container:not(.active) {
+            z-index: 0 !important;
+            pointer-events: none;
+        }
+        
+        /* Image container */
+        .image-container {
+            z-index: 30;
+        }
+        
+        .image-container img {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+            object-position: center;
+            pointer-events: none;
+        }
+        
+        /* Origami selection container */
+        .origami-selection-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 80px;
+            align-items: center;
+            justify-content: center;
+            z-index: 100 !important;
+            pointer-events: auto !important;
+            /* Always visible and functional - highest z-index */
+        }
+        
+        /* Origami paper square - completely invisible but functional */
+        .origami-paper-square {
+            width: 300px;
+            height: 300px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: none;
+            position: relative;
+            background: transparent;
+            box-shadow: none;
+            /* Completely invisible but still clickable */
+            opacity: 0;
+            pointer-events: auto !important;
+            z-index: 101 !important;
+            /* Fixed size - no changes */
+            min-width: 300px;
+            max-width: 300px;
+            min-height: 300px;
+            max-height: 300px;
+        }
+        
+        /* Origami trigger areas on images - same size as boxes - completely invisible */
+        .origami-trigger-area {
+            width: 300px;
+            height: 300px;
+            min-width: 300px;
+            max-width: 300px;
+            min-height: 300px;
+            max-height: 300px;
+            cursor: pointer;
+            pointer-events: auto !important;
+            z-index: 102 !important;
+            opacity: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            /* Completely invisible but still clickable */
+        }
+        
+        /* Video container */
+        .second-video-container {
+            z-index: 30;
+        }
+        
+        .second-video-container video {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+        }
+        
+        /* Fade container for smooth fade-in transitions */
+        .fade-container {
+            transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+        }
+        
+        /* Overlay image container */
+        .overlay-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 250;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay-image img {
+            width: 100vw;
+            height: auto;
+            max-width: 1920px;
+            max-height: 1080px;
+            object-fit: contain;
+        }
+        
+        .fade-container.active {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        /* White background overlay to cover gaps */
+        .white-background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+        
+        .white-background-overlay.active {
+            opacity: 1;
+        }
+        
+        /* Square text input field in center */
+        .message-input-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, calc(-50% - 10px));
+            z-index: 200;
+            display: none;
+        }
+        
+        .message-input-container.active {
+            display: block;
+        }
+        
+        .message-input {
+            width: 350px;
+            height: 350px;
+            padding: 20px;
+            font-size: 22px;
+            font-family: 'VAG Rounded Next', sans-serif;
+            font-weight: 500;
+            line-height: 1.8;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text);
+            resize: none;
+            box-shadow: none;
+            transition: none;
+            letter-spacing: 0.5px;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            background: transparent;
+        }
+        
+        .message-input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Text fade out animation for input field */
+        .message-input.fade-out {
+            animation: textFadeOut 2s ease-in forwards;
+        }
+        
+        @keyframes textFadeOut {
+            0% {
+                color: var(--text);
             }
-            
-            .main-title {
-                font-size: 1.3rem;
+            100% {
+                color: transparent;
             }
+        }
+        
+        /* Disabled state for fold button */
+        .fold-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -316,113 +410,873 @@
     <!-- Header -->
     <div class="header">
         <button class="home-button" onclick="window.location.href='index.html'">🏠</button>
-        <button class="back-button" onclick="window.location.href='studio.html'">←</button>
     </div>
     
-    <!-- Main content -->
-    <div class="main-content">
-        <h1 class="main-title">1. Please choose your origami paper</h1>
+    <!-- Pause after rules image - shows first -->
+    <div class="container image-container active" id="pauseAfterRulesContainer" style="z-index: 10;">
+        <img src="images/pauseafterrules.png" alt="Pause After Rules" loading="eager">
+    </div>
+    
+    <!-- Origami intro video - plays 1 second later -->
+    <div class="container second-video-container" id="origamiIntroVideoContainer" style="z-index: 0;">
+        <video id="origamiIntroVideo" muted>
+            <source src="media/origamiintro.MP4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Origami begin end image - shows after video ends -->
+    <div class="container image-container" id="origamiBeginEndContainer" style="z-index: 0;">
+        <img src="images/origami-beginend1.png" alt="Origami Begin End" loading="eager">
         
-        <div class="paper-selection-container">
-            <div class="paper-selection">
-                <div class="paper-option" data-color="blue">
-                    <div class="paper-square paper-1" style="background-image: url('images/origamis/origami1.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
-                        <div class="paper-trigger"></div>
-                        <div class="paper-overlay"></div>
+        <!-- Origami selection squares - appears on begin end image -->
+        <div class="origami-selection-container" id="origamiSelectionContainer">
+            <div class="origami-paper-square origami-paper-1" id="origamiPaper1" data-origami="1"></div>
+            <div class="origami-paper-square origami-paper-2" id="origamiPaper2" data-origami="2"></div>
+            <div class="origami-paper-square origami-paper-3" id="origamiPaper3" data-origami="3"></div>
                     </div>
-                    <div class="paper-name">Starry Night Sky</div>
-                    <div class="selection-indicator">✓</div>
                 </div>
                 
-                <div class="paper-option" data-color="green">
-                    <div class="paper-square paper-2" style="background-image: url('images/origamis/origami2.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
-                        <div class="paper-trigger"></div>
-                        <div class="paper-overlay"></div>
+    <!-- Content containers for each origami selection -->
+    <div class="container image-container" id="origami1ContentContainer" style="z-index: 0; display: none; position: relative;">
+        <img src="images/origami1.2.png" alt="Origami 1" loading="eager">
+        <!-- Invisible clickable areas for box 2 and box 3 on origami1.2.png -->
+        <!-- Positioned to match EXACTLY where boxes 2 and 3 are in the selection container on origami-beginend1.png -->
+        <!-- Selection container: centered at 50%, gap: 80px, box size: 300px -->
+        <!-- Box 2 center: 50% - 190px (half box + gap + half box = 150px + 80px = 230px... wait, let me recalculate) -->
+        <!-- Actually: Box 1 at center (50%), Box 2 at center - (300px/2 + 80px + 300px/2) = center - 380px -->
+        <!-- But with transform translate(-50%), the left position needs to account for the box center -->
+        <!-- Box 2 center position: 50% - 190px (150px box half + 80px gap = 230px, but we need center so 230px - 40px = 190px) -->
+        <!-- Actually simpler: gap is 80px, so from box 1 center to box 2 center is 300px + 80px = 380px -->
+        <!-- So box 2 center at: 50% - 190px (half of 380px) -->
+        <!-- Box 3 center at: 50% + 190px -->
+        <div class="origami-trigger-area" id="origami1Box2Trigger" data-trigger="2" style="position: absolute; top: 50%; left: calc(50% + 0px); transform: translate(-50%, -50%);"></div>
+        <div class="origami-trigger-area" id="origami1Box3Trigger" data-trigger="3" style="position: absolute; top: 50%; left: calc(50% + 330px); transform: translate(-50%, -50%);"></div>
+        <button class="choose-button" id="origami1ChooseButton">Choose</button>
                     </div>
-                    <div class="paper-name">Gentle Forest</div>
-                    <div class="selection-indicator">✓</div>
+    
+    <div class="container image-container" id="origami2ContentContainer" style="z-index: 0; display: none; position: relative;">
+        <img src="images/origami2.2.png" alt="Origami 2" loading="eager">
+        <!-- Invisible clickable areas for box 1 and box 3 on origami2.2.png -->
+        <div class="origami-trigger-area" id="origami2Box1Trigger" data-trigger="1" style="position: absolute; top: 50%; left: calc(50% - 290px); transform: translate(-50%, -50%);"></div>
+        <div class="origami-trigger-area" id="origami2Box3Trigger" data-trigger="3" style="position: absolute; top: 50%; left: calc(50% + 330px); transform: translate(-50%, -50%);"></div>
+        <button class="choose-button" id="origami2ChooseButton">Choose</button>
                 </div>
                 
-                <div class="paper-option" data-color="orange">
-                    <div class="paper-square paper-3" style="background-image: url('images/origamis/origami3.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
-                        <div class="paper-trigger"></div>
-                        <div class="paper-overlay"></div>
-                    </div>
-                    <div class="paper-name">Morning Glow Sea</div>
-                    <div class="selection-indicator">✓</div>
+    <div class="container image-container" id="origami3ContentContainer" style="z-index: 0; display: none; position: relative;">
+        <img src="images/origami3.2.png" alt="Origami 3" loading="eager">
+        <!-- Invisible clickable areas for box 1 and box 2 on origami3.2.png -->
+        <div class="origami-trigger-area" id="origami3Box1Trigger" data-trigger="1" style="position: absolute; top: 50%; left: calc(50% - 290px); transform: translate(-50%, -50%);"></div>
+        <div class="origami-trigger-area" id="origami3Box2Trigger" data-trigger="2" style="position: absolute; top: 50%; left: calc(50% + 0px); transform: translate(-50%, -50%);"></div>
+        <button class="choose-button" id="origami3ChooseButton">Choose</button>
                 </div>
                 
-                <div class="paper-option" data-color="purple">
-                    <div class="paper-square paper-4" style="background-image: url('images/origamis/origami4.png'); background-size: contain; background-position: center; background-color: transparent; border: none; box-shadow: none;">
-                        <div class="paper-trigger"></div>
-                        <div class="paper-overlay"></div>
-                    </div>
-                    <div class="paper-name">Rainbow Dreams</div>
-                    <div class="selection-indicator">✓</div>
-                </div>
-            </div>
+    <!-- Video container for origami1 intro video -->
+    <div class="container second-video-container" id="origami1IntroVideoContainer" style="z-index: 0;">
+        <video id="origami1IntroVideo" muted>
+            <source src="media/orgami1-intro.MP4" type="video/mp4">
+        </video>
         </div>
         
-        <button class="choose-button" id="chooseButton">Choose</button>
+    <!-- Video container for origami2 intro video -->
+    <div class="container second-video-container" id="origami2IntroVideoContainer" style="z-index: 0;">
+        <video id="origami2IntroVideo" muted>
+            <source src="media/origami2-intro.MP4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- Video container for origami3 intro video -->
+    <div class="container second-video-container" id="origami3IntroVideoContainer" style="z-index: 0;">
+        <video id="origami3IntroVideo" muted>
+            <source src="media/origami3-intro1.MP4" type="video/mp4">
+        </video>
+    </div>
+    
+    <!-- White background overlay to cover gaps -->
+    <div class="white-background-overlay" id="whiteBackgroundOverlay"></div>
+    
+    <!-- Square text input field in center for message -->
+    <div class="message-input-container" id="messageInputContainer">
+        <textarea class="message-input" id="messageInput" placeholder="ex. I struggle with keeping up with school assignments" rows="10" cols="30"></textarea>
+    </div>
+    
+    <!-- White rectangles above and below text input (shown when FOLD button is clicked) -->
+    <div class="white-rectangle above" id="whiteRectangleAbove"></div>
+    <div class="white-rectangle below" id="whiteRectangleBelow"></div>
+    
+    <!-- Fold1 origami1 image overlay (shown after text animation completes) -->
+    <div class="container image-container overlay-image" id="fold1Origami1Container" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; opacity: 0; visibility: hidden; display: flex;">
+        <img src="images/fold1-origami1.png" alt="Fold1 Origami1" loading="eager">
+    </div>
+    
+    <!-- Melting text animation container -->
+    <!-- Go images that appear after each intro video (cut transition) - always rendered, just z-index change -->
+    <div class="container image-container" id="origami1GoImageContainer" style="z-index: 0; opacity: 1;">
+        <img src="images/origami-fold-go.PNG" alt="Origami 1 Go" loading="eager">
+    </div>
+    
+    <div class="container image-container" id="origami2GoImageContainer" style="z-index: 0; opacity: 1;">
+        <img src="images/origami-fold-go.PNG" alt="Origami 2 Go" loading="eager">
+    </div>
+    
+    <div class="container image-container" id="origami3GoImageContainer" style="z-index: 0; opacity: 1;">
+        <img src="images/origami-fold-go.PNG" alt="Origami 3 Go" loading="eager">
+    </div>
+    
+    <!-- After images that fade in as overlay on top of go images -->
+    <div class="container image-container" id="origami1AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden; position: relative;">
+        <img src="images/origami-fold-afterpng.png" alt="Origami 1 After" loading="eager">
+        <button class="fold-button" id="origami1FoldButton">FOLD</button>
+    </div>
+    
+    <div class="container image-container" id="origami2AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
+        <img src="images/origami-fold-afterpng.png" alt="Origami 2 After" loading="eager">
+    </div>
+    
+    <div class="container image-container" id="origami3AfterImageContainer" style="z-index: 0; opacity: 0; visibility: hidden;">
+        <img src="images/origami-fold-afterpng.png" alt="Origami 3 After" loading="eager">
     </div>
 
     <script>
-        let selectedPaper = null;
-        const paperOptions = document.querySelectorAll('.paper-option');
-        const chooseButton = document.getElementById('chooseButton');
+        // Studio page JavaScript
+        console.log('Origami Studio page loaded');
         
-        paperOptions.forEach(option => {
-            option.addEventListener('click', () => {
-                // Remove selection from all papers
-                paperOptions.forEach(opt => opt.classList.remove('selected'));
-                
-                // Select current paper
-                option.classList.add('selected');
-                selectedPaper = option.dataset.color;
-                
-                // Enable choose button
-                chooseButton.classList.add('active');
-            });
-        });
+        const pauseAfterRulesContainer = document.getElementById('pauseAfterRulesContainer');
+        const origamiIntroVideo = document.getElementById('origamiIntroVideo');
+        const origamiIntroVideoContainer = document.getElementById('origamiIntroVideoContainer');
+        const origamiBeginEndContainer = document.getElementById('origamiBeginEndContainer');
         
-        chooseButton.addEventListener('click', () => {
-            if (selectedPaper) {
-                // Store selected paper and navigate to next step
-                localStorage.setItem('selectedPaper', selectedPaper);
-                window.location.href = 'origami-choice.html';
+        // Preload the end image to prevent flickering
+        if (origamiBeginEndContainer) {
+            const img = origamiBeginEndContainer.querySelector('img');
+            if (img) {
+                const preloadImg = new Image();
+                preloadImg.src = img.src;
+                preloadImg.onload = () => {
+                    console.log('✅ Origami begin end image preloaded');
+                };
             }
-        });
+        }
         
-        // Mouse drag scrolling
-        const paperSelection = document.querySelector('.paper-selection');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+        // Preload origami-fold-go.PNG for seamless transitions
+        const origamiFoldGoImg = new Image();
+        origamiFoldGoImg.src = 'images/origami-fold-go.PNG';
+        origamiFoldGoImg.onload = () => {
+            console.log('✅ Origami-fold-go.PNG preloaded for seamless transition');
+        };
         
-        paperSelection.addEventListener('mousedown', (e) => {
-            isDown = true;
-            paperSelection.classList.add('active');
-            startX = e.pageX - paperSelection.offsetLeft;
-            scrollLeft = paperSelection.scrollLeft;
-        });
         
-        paperSelection.addEventListener('mouseleave', () => {
-            isDown = false;
-            paperSelection.classList.remove('active');
-        });
+        // After 1 second, hide pause image and play video
+        setTimeout(() => {
+            console.log('1 second passed - showing video');
+            
+            // Hide pause after rules image
+            if (pauseAfterRulesContainer) {
+                pauseAfterRulesContainer.classList.remove('active');
+                pauseAfterRulesContainer.style.zIndex = '0';
+            }
+            
+            // Show and play origami intro video
+            if (origamiIntroVideoContainer && origamiIntroVideo) {
+                origamiIntroVideoContainer.classList.add('active');
+                origamiIntroVideoContainer.style.zIndex = '10';
+                
+                // Play the video
+                origamiIntroVideo.play().then(() => {
+                    console.log('✅ Origami intro video is playing');
+                }).catch(error => {
+                    console.error('❌ Error playing origami intro video:', error);
+                });
+            }
+        }, 1000); // 1 second delay
         
-        paperSelection.addEventListener('mouseup', () => {
-            isDown = false;
-            paperSelection.classList.remove('active');
-        });
+        // When video ends, show origami-beginend1.png
+        if (origamiIntroVideo) {
+            origamiIntroVideo.addEventListener('ended', () => {
+                console.log('Origami intro video ended - showing begin end image');
+                
+                // Stop video completely to prevent rendering
+                origamiIntroVideo.pause();
+                origamiIntroVideo.currentTime = origamiIntroVideo.duration;
+                
+                // TRUE CUT TRANSITION - use z-index only, both containers always rendered
+                if (origamiIntroVideoContainer) {
+                    origamiIntroVideoContainer.classList.remove('active');
+                    origamiIntroVideoContainer.style.zIndex = '0';
+                }
+                
+                // Show origami begin end image immediately - z-index change only
+                if (origamiBeginEndContainer) {
+                    origamiBeginEndContainer.classList.add('active');
+                    origamiBeginEndContainer.style.zIndex = '10';
+                    console.log('✅ Origami begin end image shown (TRUE CUT - z-index only)');
+                } else {
+                    console.error('❌ Origami begin end container not found');
+                }
+            });
+        }
         
-        paperSelection.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - paperSelection.offsetLeft;
-            const walk = (x - startX) * 2;
-            paperSelection.scrollLeft = scrollLeft - walk;
-        });
+        // Origami paper selection handlers
+        const origamiPaper1 = document.getElementById('origamiPaper1');
+        const origamiPaper2 = document.getElementById('origamiPaper2');
+        const origamiPaper3 = document.getElementById('origamiPaper3');
+        const origami1ContentContainer = document.getElementById('origami1ContentContainer');
+        const origami2ContentContainer = document.getElementById('origami2ContentContainer');
+        const origami3ContentContainer = document.getElementById('origami3ContentContainer');
+        
+        let selectedOrigami = null;
+        
+        // Function to handle origami selection
+        function selectOrigami(origamiNumber) {
+            // Remove selection from all papers
+            [origamiPaper1, origamiPaper2, origamiPaper3].forEach(paper => {
+                if (paper) paper.classList.remove('selected');
+            });
+            
+            // Hide all content containers
+            [origami1ContentContainer, origami2ContentContainer, origami3ContentContainer].forEach(container => {
+                if (container) {
+                    container.classList.remove('active');
+                    container.style.zIndex = '0';
+                    container.style.display = 'none';
+                }
+            });
+            
+            // Select the clicked paper
+            selectedOrigami = origamiNumber;
+            const selectedPaper = document.getElementById(`origamiPaper${origamiNumber}`);
+            if (selectedPaper) {
+                selectedPaper.classList.add('selected');
+            }
+            
+            // Show corresponding content container (behind the selection boxes)
+            const contentContainer = document.getElementById(`origami${origamiNumber}ContentContainer`);
+            if (contentContainer) {
+                contentContainer.style.display = 'flex';
+                contentContainer.classList.add('active');
+                contentContainer.style.zIndex = '10'; // Lower than selection container
+                console.log(`✅ Origami ${origamiNumber} selected - showing content`);
+            }
+            
+            // Ensure the selection container stays visible and functional on top
+            const origamiSelectionContainer = document.getElementById('origamiSelectionContainer');
+            if (origamiSelectionContainer) {
+                origamiSelectionContainer.style.zIndex = '100';
+                origamiSelectionContainer.style.pointerEvents = 'auto';
+                origamiSelectionContainer.style.display = 'flex';
+                console.log('✅ Selection container kept on top and clickable');
+            }
+            
+            // Ensure all boxes are clickable
+            [origamiPaper1, origamiPaper2, origamiPaper3].forEach(paper => {
+                if (paper) {
+                    paper.style.pointerEvents = 'auto';
+                    paper.style.zIndex = '101';
+                }
+            });
+        }
+        
+        // Add click handlers
+        if (origamiPaper1) {
+            origamiPaper1.addEventListener('click', () => {
+                selectOrigami(1);
+            });
+        }
+        
+        if (origamiPaper2) {
+            origamiPaper2.addEventListener('click', () => {
+                selectOrigami(2);
+            });
+        }
+        
+        if (origamiPaper3) {
+            origamiPaper3.addEventListener('click', () => {
+                selectOrigami(3);
+            });
+        }
+        
+        // Add click handlers for triggers on origami1.2.png
+        const origami1Box2Trigger = document.getElementById('origami1Box2Trigger');
+        const origami1Box3Trigger = document.getElementById('origami1Box3Trigger');
+        
+        if (origami1Box2Trigger) {
+            origami1Box2Trigger.addEventListener('click', () => {
+                console.log('Box 2 triggered from origami1.2.png');
+                selectOrigami(2);
+            });
+        }
+        
+        if (origami1Box3Trigger) {
+            origami1Box3Trigger.addEventListener('click', () => {
+                console.log('Box 3 triggered from origami1.2.png');
+                selectOrigami(3);
+            });
+        }
+        
+        // Add click handlers for triggers on origami2.2.png
+        const origami2Box1Trigger = document.getElementById('origami2Box1Trigger');
+        const origami2Box3Trigger = document.getElementById('origami2Box3Trigger');
+        
+        if (origami2Box1Trigger) {
+            origami2Box1Trigger.addEventListener('click', () => {
+                console.log('Box 1 triggered from origami2.2.png');
+                selectOrigami(1);
+            });
+        }
+        
+        if (origami2Box3Trigger) {
+            origami2Box3Trigger.addEventListener('click', () => {
+                console.log('Box 3 triggered from origami2.2.png');
+                selectOrigami(3);
+            });
+        }
+        
+        // Add click handlers for triggers on origami3.2.png
+        const origami3Box1Trigger = document.getElementById('origami3Box1Trigger');
+        const origami3Box2Trigger = document.getElementById('origami3Box2Trigger');
+        
+        if (origami3Box1Trigger) {
+            origami3Box1Trigger.addEventListener('click', () => {
+                console.log('Box 1 triggered from origami3.2.png');
+                selectOrigami(1);
+            });
+        }
+        
+        if (origami3Box2Trigger) {
+            origami3Box2Trigger.addEventListener('click', () => {
+                console.log('Box 2 triggered from origami3.2.png');
+                selectOrigami(2);
+            });
+        }
+        
+        // Choose button handlers - each triggers different actions
+        const origami1ChooseButton = document.getElementById('origami1ChooseButton');
+        const origami2ChooseButton = document.getElementById('origami2ChooseButton');
+        const origami3ChooseButton = document.getElementById('origami3ChooseButton');
+        
+        if (origami1ChooseButton) {
+            origami1ChooseButton.addEventListener('click', () => {
+                console.log('✅ Origami 1 choose button clicked');
+                // Store selection
+                localStorage.setItem('selectedOrigami', '1');
+                
+                // Completely hide the origami-beginend1.png background
+                if (origamiBeginEndContainer) {
+                    origamiBeginEndContainer.style.display = 'none';
+                    origamiBeginEndContainer.style.opacity = '0';
+                    origamiBeginEndContainer.style.pointerEvents = 'none';
+                }
+                
+                // Hide the selection container (boxes)
+                const origamiSelectionContainer = document.getElementById('origamiSelectionContainer');
+                if (origamiSelectionContainer) {
+                    origamiSelectionContainer.style.display = 'none';
+                    origamiSelectionContainer.style.opacity = '0';
+                    origamiSelectionContainer.style.pointerEvents = 'none';
+                }
+                
+                // Hide pauseAfterRulesContainer if it's still visible
+                if (pauseAfterRulesContainer) {
+                    pauseAfterRulesContainer.style.display = 'none';
+                    pauseAfterRulesContainer.style.opacity = '0';
+                    pauseAfterRulesContainer.style.pointerEvents = 'none';
+                }
+                
+                // Show white background overlay to cover any gaps
+                const whiteBackgroundOverlay = document.getElementById('whiteBackgroundOverlay');
+                if (whiteBackgroundOverlay) {
+                    whiteBackgroundOverlay.classList.add('active');
+                }
+                
+                // Hide the origami1 content container
+                if (origami1ContentContainer) {
+                    origami1ContentContainer.classList.remove('active');
+                    origami1ContentContainer.style.zIndex = '0';
+                    origami1ContentContainer.style.display = 'none';
+                }
+                
+                // Show and play origami1 intro video
+                const origami1IntroVideoContainer = document.getElementById('origami1IntroVideoContainer');
+                const origami1IntroVideo = document.getElementById('origami1IntroVideo');
+                
+                console.log('Video container:', origami1IntroVideoContainer);
+                console.log('Video element:', origami1IntroVideo);
+                
+                if (origami1IntroVideoContainer && origami1IntroVideo) {
+                    console.log('✅ Both container and video found');
+                    
+                    // Reset video to beginning
+                    origami1IntroVideo.currentTime = 0;
+                    
+                    // Show video container - match the pattern used for origami intro video (z-index only)
+                    origami1IntroVideoContainer.classList.add('active');
+                    origami1IntroVideoContainer.style.zIndex = '10';
+                    console.log('✅ Video container shown, z-index set to 10');
+                    
+                    // When video ends, show go image with smooth cut transition (no fade)
+                    origami1IntroVideo.addEventListener('ended', () => {
+                        console.log('✅ Origami 1 intro video ended - showing go image with cut transition');
+                        const origami1GoImageContainer = document.getElementById('origami1GoImageContainer');
+                        
+                        if (origami1GoImageContainer) {
+                            // Pause video
+                            origami1IntroVideo.pause();
+                            
+                            // Pure cut transition - change z-index only (containers always rendered)
+                            // Hide video first, then show go image (both in same frame)
+                            origami1IntroVideoContainer.classList.remove('active');
+                            origami1IntroVideoContainer.style.zIndex = '0';
+                            
+                            // Show go image immediately (already rendered, just change z-index)
+                            origami1GoImageContainer.style.zIndex = '15';
+                            origami1GoImageContainer.classList.add('active');
+                            
+                            console.log('✅ Origami 1 go image shown (pure cut transition)');
+                            
+                            // After a delay, fade in the after image as overlay
+                            const origami1AfterImageContainer = document.getElementById('origami1AfterImageContainer');
+                            setTimeout(() => {
+                                if (origami1AfterImageContainer) {
+                                    origami1AfterImageContainer.style.display = 'flex'; // Ensure container is displayed
+                                    origami1AfterImageContainer.style.zIndex = '16'; // Higher than go image
+                                    origami1AfterImageContainer.style.opacity = '1'; // Set opacity explicitly
+                                    origami1AfterImageContainer.style.visibility = 'visible';
+                                    origami1AfterImageContainer.classList.add('active');
+                                    console.log('✅ Origami 1 after image fading in');
+                                    
+                                    // Show message input field
+                                    const messageInputContainer = document.getElementById('messageInputContainer');
+                                    if (messageInputContainer) {
+                                        messageInputContainer.classList.add('active');
+                                    }
+                                } else {
+                                    console.error('❌ origami1AfterImageContainer not found');
+                                }
+                            }, 500); // 0.5 second delay before fade in
+                        }
+                    }, { once: true });
+                    
+                    // Check if video is ready
+                    if (origami1IntroVideo.readyState >= 2) {
+                        console.log('Video is ready, playing...');
+                        origami1IntroVideo.play().then(() => {
+                            console.log('✅ Origami 1 intro video is playing');
+                        }).catch(error => {
+                            console.error('❌ Error playing origami1 intro video:', error);
+                        });
+                    } else {
+                        console.log('Video not ready yet, waiting for loadeddata...');
+                        origami1IntroVideo.addEventListener('loadeddata', () => {
+                            console.log('Video loaded, playing...');
+                            origami1IntroVideo.play().then(() => {
+                                console.log('✅ Origami 1 intro video is playing');
+                            }).catch(error => {
+                                console.error('❌ Error playing origami1 intro video:', error);
+                            });
+                        }, { once: true });
+                        
+                        // Also try to load the video
+                        origami1IntroVideo.load();
+                        
+                        // Fallback: try playing after a delay
+                        setTimeout(() => {
+                            origami1IntroVideo.play().catch(err => {
+                                console.error('❌ Fallback play failed:', err);
+                            });
+                        }, 500);
+                    }
+                } else {
+                    console.error('❌ Origami1 intro video container or video element not found');
+                    if (!origami1IntroVideoContainer) console.error('Container missing');
+                    if (!origami1IntroVideo) console.error('Video element missing');
+                }
+            });
+        }
+        
+        if (origami2ChooseButton) {
+            origami2ChooseButton.addEventListener('click', () => {
+                console.log('✅ Origami 2 choose button clicked');
+                // Store selection
+                localStorage.setItem('selectedOrigami', '2');
+                
+                // Completely hide the origami-beginend1.png background
+                if (origamiBeginEndContainer) {
+                    origamiBeginEndContainer.style.display = 'none';
+                    origamiBeginEndContainer.style.opacity = '0';
+                    origamiBeginEndContainer.style.pointerEvents = 'none';
+                }
+                
+                // Hide the selection container (boxes)
+                const origamiSelectionContainer = document.getElementById('origamiSelectionContainer');
+                if (origamiSelectionContainer) {
+                    origamiSelectionContainer.style.display = 'none';
+                    origamiSelectionContainer.style.opacity = '0';
+                    origamiSelectionContainer.style.pointerEvents = 'none';
+                }
+                
+                // Hide pauseAfterRulesContainer if it's still visible
+                if (pauseAfterRulesContainer) {
+                    pauseAfterRulesContainer.style.display = 'none';
+                    pauseAfterRulesContainer.style.opacity = '0';
+                    pauseAfterRulesContainer.style.pointerEvents = 'none';
+                }
+                
+                // Show white background overlay to cover any gaps
+                const whiteBackgroundOverlay = document.getElementById('whiteBackgroundOverlay');
+                if (whiteBackgroundOverlay) {
+                    whiteBackgroundOverlay.classList.add('active');
+                }
+                
+                // Hide the origami2 content container
+                if (origami2ContentContainer) {
+                    origami2ContentContainer.classList.remove('active');
+                    origami2ContentContainer.style.zIndex = '0';
+                    origami2ContentContainer.style.display = 'none';
+                }
+                
+                // Show and play origami2 intro video
+                const origami2IntroVideoContainer = document.getElementById('origami2IntroVideoContainer');
+                const origami2IntroVideo = document.getElementById('origami2IntroVideo');
+                
+                console.log('Video container:', origami2IntroVideoContainer);
+                console.log('Video element:', origami2IntroVideo);
+                
+                if (origami2IntroVideoContainer && origami2IntroVideo) {
+                    console.log('✅ Both container and video found');
+                    
+                    // Reset video to beginning
+                    origami2IntroVideo.currentTime = 0;
+                    
+                    // Show video container - match the pattern used for origami intro video (z-index only)
+                    origami2IntroVideoContainer.classList.add('active');
+                    origami2IntroVideoContainer.style.zIndex = '10';
+                    console.log('✅ Video container shown, z-index set to 10');
+                    
+                    // When video ends, show go image with smooth cut transition (no fade)
+                    origami2IntroVideo.addEventListener('ended', () => {
+                        console.log('✅ Origami 2 intro video ended - showing go image with cut transition');
+                        const origami2GoImageContainer = document.getElementById('origami2GoImageContainer');
+                        
+                        if (origami2GoImageContainer) {
+                            // Pause video
+                            origami2IntroVideo.pause();
+                            
+                            // Pure cut transition - change z-index only (containers always rendered)
+                            // Hide video first, then show go image (both in same frame)
+                            origami2IntroVideoContainer.classList.remove('active');
+                            origami2IntroVideoContainer.style.zIndex = '0';
+                            
+                            // Show go image immediately (already rendered, just change z-index)
+                            origami2GoImageContainer.style.zIndex = '15';
+                            origami2GoImageContainer.classList.add('active');
+                            
+                            console.log('✅ Origami 2 go image shown (pure cut transition)');
+                            
+                            // After a delay, fade in the after image as overlay
+                            const origami2AfterImageContainer = document.getElementById('origami2AfterImageContainer');
+                            setTimeout(() => {
+                                if (origami2AfterImageContainer) {
+                                    origami2AfterImageContainer.style.display = 'flex'; // Ensure container is displayed
+                                    origami2AfterImageContainer.style.zIndex = '16'; // Higher than go image
+                                    origami2AfterImageContainer.style.opacity = '1'; // Set opacity explicitly
+                                    origami2AfterImageContainer.style.visibility = 'visible';
+                                    origami2AfterImageContainer.classList.add('active');
+                                    console.log('✅ Origami 2 after image fading in');
+                                    
+                                    // Show message input field
+                                    const messageInputContainer = document.getElementById('messageInputContainer');
+                                    if (messageInputContainer) {
+                                        messageInputContainer.classList.add('active');
+                                    }
+                                } else {
+                                    console.error('❌ origami2AfterImageContainer not found');
+                                }
+                            }, 500); // 0.5 second delay before fade in
+                        }
+                    }, { once: true });
+                    
+                    // Check if video is ready
+                    if (origami2IntroVideo.readyState >= 2) {
+                        console.log('Video is ready, playing...');
+                        origami2IntroVideo.play().then(() => {
+                            console.log('✅ Origami 2 intro video is playing');
+                        }).catch(error => {
+                            console.error('❌ Error playing origami2 intro video:', error);
+                        });
+                    } else {
+                        console.log('Video not ready yet, waiting for loadeddata...');
+                        origami2IntroVideo.addEventListener('loadeddata', () => {
+                            console.log('Video loaded, playing...');
+                            origami2IntroVideo.play().then(() => {
+                                console.log('✅ Origami 2 intro video is playing');
+                            }).catch(error => {
+                                console.error('❌ Error playing origami2 intro video:', error);
+                            });
+                        }, { once: true });
+                        
+                        // Also try to load the video
+                        origami2IntroVideo.load();
+                        
+                        // Fallback: try playing after a delay
+                        setTimeout(() => {
+                            origami2IntroVideo.play().catch(err => {
+                                console.error('❌ Fallback play failed:', err);
+                            });
+                        }, 500);
+                    }
+                } else {
+                    console.error('❌ Origami2 intro video container or video element not found');
+                    if (!origami2IntroVideoContainer) console.error('Container missing');
+                    if (!origami2IntroVideo) console.error('Video element missing');
+                }
+            });
+        }
+        
+        if (origami3ChooseButton) {
+            origami3ChooseButton.addEventListener('click', () => {
+                console.log('✅ Origami 3 choose button clicked');
+                // Store selection
+                localStorage.setItem('selectedOrigami', '3');
+                
+                // Completely hide the origami-beginend1.png background
+                if (origamiBeginEndContainer) {
+                    origamiBeginEndContainer.style.display = 'none';
+                    origamiBeginEndContainer.style.opacity = '0';
+                    origamiBeginEndContainer.style.pointerEvents = 'none';
+                }
+                
+                // Hide the selection container (boxes)
+                const origamiSelectionContainer = document.getElementById('origamiSelectionContainer');
+                if (origamiSelectionContainer) {
+                    origamiSelectionContainer.style.display = 'none';
+                    origamiSelectionContainer.style.opacity = '0';
+                    origamiSelectionContainer.style.pointerEvents = 'none';
+                }
+                
+                // Hide pauseAfterRulesContainer if it's still visible
+                if (pauseAfterRulesContainer) {
+                    pauseAfterRulesContainer.style.display = 'none';
+                    pauseAfterRulesContainer.style.opacity = '0';
+                    pauseAfterRulesContainer.style.pointerEvents = 'none';
+                }
+                
+                // Show white background overlay to cover any gaps
+                const whiteBackgroundOverlay = document.getElementById('whiteBackgroundOverlay');
+                if (whiteBackgroundOverlay) {
+                    whiteBackgroundOverlay.classList.add('active');
+                }
+                
+                // Hide the origami3 content container
+                if (origami3ContentContainer) {
+                    origami3ContentContainer.classList.remove('active');
+                    origami3ContentContainer.style.zIndex = '0';
+                    origami3ContentContainer.style.display = 'none';
+                }
+                
+                // Show and play origami3 intro video
+                const origami3IntroVideoContainer = document.getElementById('origami3IntroVideoContainer');
+                const origami3IntroVideo = document.getElementById('origami3IntroVideo');
+                
+                console.log('Video container:', origami3IntroVideoContainer);
+                console.log('Video element:', origami3IntroVideo);
+                
+                if (origami3IntroVideoContainer && origami3IntroVideo) {
+                    console.log('✅ Both container and video found');
+                    
+                    // Reset video to beginning
+                    origami3IntroVideo.currentTime = 0;
+                    
+                    // Show video container - match the pattern used for origami intro video (z-index only)
+                    origami3IntroVideoContainer.classList.add('active');
+                    origami3IntroVideoContainer.style.zIndex = '10';
+                    console.log('✅ Video container shown, z-index set to 10');
+                    
+                    // When video ends, show go image with cut transition
+                    origami3IntroVideo.addEventListener('ended', () => {
+                        console.log('✅ Origami 3 intro video ended - showing go image');
+                        const origami3GoImageContainer = document.getElementById('origami3GoImageContainer');
+                        
+                        if (origami3GoImageContainer) {
+                            // Pause video
+                            origami3IntroVideo.pause();
+                            
+                            // Pure cut transition - change z-index only (containers always rendered)
+                            // Hide video first, then show go image (both in same frame)
+                            origami3IntroVideoContainer.classList.remove('active');
+                            origami3IntroVideoContainer.style.zIndex = '0';
+                            
+                            // Show go image immediately (already rendered, just change z-index)
+                            origami3GoImageContainer.style.zIndex = '15';
+                            origami3GoImageContainer.classList.add('active');
+                            
+                            console.log('✅ Origami 3 go image shown (pure cut transition)');
+                            
+                            // After a delay, fade in the after image as overlay
+                            const origami3AfterImageContainer = document.getElementById('origami3AfterImageContainer');
+                            setTimeout(() => {
+                                if (origami3AfterImageContainer) {
+                                    origami3AfterImageContainer.style.display = 'flex'; // Ensure container is displayed
+                                    origami3AfterImageContainer.style.zIndex = '16'; // Higher than go image
+                                    origami3AfterImageContainer.style.opacity = '1'; // Set opacity explicitly
+                                    origami3AfterImageContainer.style.visibility = 'visible';
+                                    origami3AfterImageContainer.classList.add('active');
+                                    console.log('✅ Origami 3 after image fading in');
+                                    
+                                    // Show message input field
+                                    const messageInputContainer = document.getElementById('messageInputContainer');
+                                    if (messageInputContainer) {
+                                        messageInputContainer.classList.add('active');
+                                    }
+                                } else {
+                                    console.error('❌ origami3AfterImageContainer not found');
+                                }
+                            }, 500); // 0.5 second delay before fade in
+                        }
+                    }, { once: true });
+                    
+                    // Check if video is ready
+                    if (origami3IntroVideo.readyState >= 2) {
+                        console.log('Video is ready, playing...');
+                        origami3IntroVideo.play().then(() => {
+                            console.log('✅ Origami 3 intro video is playing');
+                        }).catch(error => {
+                            console.error('❌ Error playing origami3 intro video:', error);
+                        });
+                    } else {
+                        console.log('Video not ready yet, waiting for loadeddata...');
+                        origami3IntroVideo.addEventListener('loadeddata', () => {
+                            console.log('Video loaded, playing...');
+                            origami3IntroVideo.play().then(() => {
+                                console.log('✅ Origami 3 intro video is playing');
+                            }).catch(error => {
+                                console.error('❌ Error playing origami3 intro video:', error);
+                            });
+                        }, { once: true });
+                        
+                        // Also try to load the video
+                        origami3IntroVideo.load();
+                        
+                        // Fallback: try playing after a delay
+                        setTimeout(() => {
+                            origami3IntroVideo.play().catch(err => {
+                                console.error('❌ Fallback play failed:', err);
+                            });
+                        }, 500);
+                    }
+                } else {
+                    console.error('❌ Origami3 intro video container or video element not found');
+                    if (!origami3IntroVideoContainer) console.error('Container missing');
+                    if (!origami3IntroVideo) console.error('Video element missing');
+                }
+            });
+        }
+        
+        // FOLD button handler for box 1 - show white rectangles above and below text input
+        const origami1FoldButton = document.getElementById('origami1FoldButton');
+        const whiteRectangleAbove = document.getElementById('whiteRectangleAbove');
+        const whiteRectangleBelow = document.getElementById('whiteRectangleBelow');
+        const messageInput = document.getElementById('messageInput');
+        // Check if text input is empty and disable/enable FOLD button
+        function updateFoldButtonState() {
+            if (origami1FoldButton && messageInput) {
+                const hasText = messageInput.value.trim().length > 0;
+                origami1FoldButton.disabled = !hasText;
+            }
+        }
+        
+        // Update button state on input
+        if (messageInput) {
+            messageInput.addEventListener('input', updateFoldButtonState);
+            // Check initial state
+            updateFoldButtonState();
+        }
+        
+        if (origami1FoldButton) {
+            origami1FoldButton.addEventListener('click', () => {
+                // Check if text input has content
+                if (!messageInput || messageInput.value.trim().length === 0) {
+                    console.log('❌ Text input is empty, cannot fold');
+                    return;
+                }
+                
+                console.log('✅ Origami 1 FOLD button clicked');
+                
+                // Trigger fade-out animation on the text input field
+                if (messageInput) {
+                    messageInput.classList.add('fade-out');
+                    
+                    // Clear the text after animation completes and show fold1-origami1 overlay
+                    setTimeout(() => {
+                        messageInput.value = '';
+                        messageInput.classList.remove('fade-out');
+                        
+                        // Hide text input container
+                        const messageInputContainer = document.getElementById('messageInputContainer');
+                        if (messageInputContainer) {
+                            messageInputContainer.classList.remove('active');
+                            messageInputContainer.style.display = 'none';
+                        }
+                        
+                        // Hide origami1 after image container
+                        const origami1AfterImageContainer = document.getElementById('origami1AfterImageContainer');
+                        if (origami1AfterImageContainer) {
+                            origami1AfterImageContainer.style.zIndex = '0';
+                            origami1AfterImageContainer.style.opacity = '0';
+                            origami1AfterImageContainer.style.visibility = 'hidden';
+                            origami1AfterImageContainer.classList.remove('active');
+                        }
+                        
+                        // Hide origami1 go image container (origami-fold-go.PNG)
+                        const origami1GoImageContainer = document.getElementById('origami1GoImageContainer');
+                        if (origami1GoImageContainer) {
+                            origami1GoImageContainer.style.zIndex = '0';
+                            origami1GoImageContainer.style.opacity = '0';
+                            origami1GoImageContainer.style.visibility = 'hidden';
+                            origami1GoImageContainer.classList.remove('active');
+                        }
+                        
+                        // Hide white rectangles
+                        if (whiteRectangleAbove) {
+                            whiteRectangleAbove.classList.remove('active');
+                        }
+                        if (whiteRectangleBelow) {
+                            whiteRectangleBelow.classList.remove('active');
+                        }
+                        
+                        // Show fold1-origami1 image overlay after text is fully gone
+                        const fold1Origami1Container = document.getElementById('fold1Origami1Container');
+                        console.log('🔍 Looking for fold1Origami1Container:', fold1Origami1Container);
+                        if (fold1Origami1Container) {
+                            fold1Origami1Container.style.display = 'flex';
+                            fold1Origami1Container.style.zIndex = '250';
+                            fold1Origami1Container.style.opacity = '1';
+                            fold1Origami1Container.style.visibility = 'visible';
+                            fold1Origami1Container.style.position = 'fixed';
+                            fold1Origami1Container.style.top = '0';
+                            fold1Origami1Container.style.left = '0';
+                            fold1Origami1Container.style.width = '100vw';
+                            fold1Origami1Container.style.height = '100vh';
+                            console.log('✅ Showing fold1-origami1 overlay');
+                            console.log('📊 Container styles:', {
+                                display: fold1Origami1Container.style.display,
+                                zIndex: fold1Origami1Container.style.zIndex,
+                                opacity: fold1Origami1Container.style.opacity,
+                                visibility: fold1Origami1Container.style.visibility
+                            });
+                        } else {
+                            console.error('❌ fold1Origami1Container not found');
+                        }
+                    }, 2000);
+                }
+                
+                // Show white rectangles above and below text input
+                if (whiteRectangleAbove) {
+                    whiteRectangleAbove.classList.add('active');
+                }
+                if (whiteRectangleBelow) {
+                    whiteRectangleBelow.classList.add('active');
+                }
+            });
+        }
     </script>
 </body>
 </html>
