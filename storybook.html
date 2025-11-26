@@ -22,125 +22,174 @@
         </div>
     </div>
 
+    <!-- Scroll message (shown when mouse movement detected) -->
+    <div class="scroll-message" id="scrollMessage" style="display: none;">
+        Scroll to read full story
+    </div>
+
 
     <div class="stories-container">
         <!-- Story 1 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble.png" alt="Story 1" />
+                <img src="storybookfinal/誰もみない引き出し.png" alt="Story 1" />
             </div>
         </div>
 
         <!-- Story 2 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble2.png" alt="Story 2" />
+                <img src="storybookfinal/誰もみない引き出し2.png" alt="Story 2" />
             </div>
         </div>
 
         <!-- Story 3 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble3.png" alt="Story 3" />
+                <img src="storybookfinal/誰もみない引き出し3.png" alt="Story 3" />
             </div>
         </div>
 
         <!-- Story 4 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble4.png" alt="Story 4" />
+                <img src="storybookfinal/誰もみない引き出し4.png" alt="Story 4" />
             </div>
         </div>
 
         <!-- Story 5 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble5.png" alt="Story 5" />
+                <img src="storybookfinal/誰もみない引き出し5.png" alt="Story 5" />
             </div>
         </div>
 
         <!-- Story 6 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble6.png" alt="Story 6" />
+                <img src="storybookfinal/誰もみない引き出し6.png" alt="Story 6" />
             </div>
         </div>
 
         <!-- Story 7 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble7.png" alt="Story 7" />
+                <img src="storybookfinal/誰もみない引き出し7.png" alt="Story 7" />
             </div>
         </div>
 
         <!-- Story 8 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble8.png" alt="Story 8" />
+                <img src="storybookfinal/誰もみない引き出し8.png" alt="Story 8" />
             </div>
         </div>
 
         <!-- Story 9 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble9.png" alt="Story 9" />
+                <img src="storybookfinal/誰もみない引き出し9.png" alt="Story 9" />
             </div>
         </div>
 
         <!-- Story 10 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble10.png" alt="Story 10" />
+                <img src="storybookfinal/誰もみない引き出し10.png" alt="Story 10" />
             </div>
         </div>
 
         <!-- Story 11 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble11.png" alt="Story 11" />
+                <img src="storybookfinal/誰もみない引き出し11.png" alt="Story 11" />
             </div>
         </div>
 
         <!-- Story 12 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble12.png" alt="Story 12" />
+                <img src="storybookfinal/誰もみない引き出し12.png" alt="Story 12" />
             </div>
         </div>
 
         <!-- Story 13 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble13.png" alt="Story 13" />
+                <img src="storybookfinal/誰もみない引き出し13.png" alt="Story 13" />
             </div>
         </div>
 
         <!-- Story 14 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble14.png" alt="Story 14" />
+                <img src="storybookfinal/誰もみない引き出し14.png" alt="Story 14" />
             </div>
         </div>
 
         <!-- Story 15 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble15.png" alt="Story 15" />
+                <img src="storybookfinal/誰もみない引き出し15.png" alt="Story 15" />
             </div>
         </div>
 
         <!-- Story 16 -->
         <div class="story-item">
             <div class="story-image">
-                <img src="storybookfinal/messydrawerdouble16.png" alt="Story 16" />
+                <img src="storybookfinal/誰もみない引き出し16.png" alt="Story 16" />
             </div>
         </div>
 
     </div>
 
     <style>
-        /* Crossfade transition for story items */
-        .story-item {
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Scroll mode: normal document flow */
+        .stories-container.scroll-mode {
+            position: relative;
+            width: 100%;
+        }
+        
+        .stories-container.scroll-mode .story-item {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stories-container.scroll-mode .story-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stories-container.scroll-mode .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Autoplay mode: absolute positioning with crossfade */
+        .stories-container.autoplay-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .stories-container.autoplay-mode .story-item {
             transition: opacity 1.2s ease-in-out;
             position: absolute;
             top: 0;
@@ -149,42 +198,119 @@
             height: 100%;
         }
         
-        .stories-container {
-            position: relative;
+        .stories-container.autoplay-mode .story-image {
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stories-container.autoplay-mode .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Scroll message styling */
+        .scroll-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-size: 16px;
+            z-index: 1000;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
     </style>
     
     <script>
-        // Autoplay storybook images in a loop with crossfade
+        // Hybrid scroll/autoplay storybook
         (function() {
+            const storiesContainer = document.querySelector('.stories-container');
             const storyItems = document.querySelectorAll('.story-item');
+            const scrollMessage = document.getElementById('scrollMessage');
             let currentIndex = 0;
             const displayDuration = 8000; // 8 seconds per image
             const transitionDuration = 1200; // Crossfade duration in milliseconds
+            const mouseInactivityDelay = 2000; // 2 seconds of no mouse movement to switch to autoplay
             
-            // Position all story items absolutely and set initial states
-            storyItems.forEach((item, index) => {
-                item.style.position = 'absolute';
-                item.style.top = '0';
-                item.style.left = '0';
-                item.style.width = '100%';
-                item.style.height = '100%';
+            let autoplayInterval = null;
+            let mouseInactivityTimeout = null;
+            let isAutoplayMode = true; // Start in autoplay mode
+            let lastMouseMoveTime = Date.now();
+            
+            // Initialize in autoplay mode
+            function initAutoplayMode() {
+                storiesContainer.classList.remove('scroll-mode');
+                storiesContainer.classList.add('autoplay-mode');
+                document.body.style.overflow = 'hidden';
                 
-                if (index !== 0) {
-                    item.style.display = 'flex';
-                    item.style.opacity = '0';
-                    item.style.zIndex = '1';
-                } else {
-                    item.style.display = 'flex';
-                    item.style.opacity = '1';
-                    item.style.zIndex = '2';
+                // Hide scroll message
+                if (scrollMessage) {
+                    scrollMessage.style.display = 'none';
                 }
-            });
+                
+                // Position all story items absolutely and set initial states
+                storyItems.forEach((item, index) => {
+                    item.style.position = 'absolute';
+                    item.style.top = '0';
+                    item.style.left = '0';
+                    item.style.width = '100%';
+                    item.style.height = '100%';
+                    
+                    if (index !== 0) {
+                        item.style.display = 'flex';
+                        item.style.opacity = '0';
+                        item.style.zIndex = '1';
+                    } else {
+                        item.style.display = 'flex';
+                        item.style.opacity = '1';
+                        item.style.zIndex = '2';
+                    }
+                });
+                
+                // Start autoplay
+                startAutoplay();
+            }
+            
+            // Initialize in scroll mode
+            function initScrollMode() {
+                storiesContainer.classList.remove('autoplay-mode');
+                storiesContainer.classList.add('scroll-mode');
+                document.body.style.overflow = 'auto';
+                
+                // Show scroll message
+                if (scrollMessage) {
+                    scrollMessage.style.display = 'block';
+                }
+                
+                // Reset all story items to normal flow
+                storyItems.forEach((item) => {
+                    item.style.position = '';
+                    item.style.top = '';
+                    item.style.left = '';
+                    item.style.width = '';
+                    item.style.height = '';
+                    item.style.display = '';
+                    item.style.opacity = '';
+                    item.style.zIndex = '';
+                });
+                
+                // Stop autoplay
+                stopAutoplay();
+            }
             
             // Function to show next image with crossfade transition
             function showNextImage() {
+                if (!isAutoplayMode) return;
+                
                 // Get current and next items
                 const currentItem = storyItems[currentIndex];
                 const nextIndex = (currentIndex + 1) % storyItems.length;
@@ -211,7 +337,9 @@
                     
                     // Hide current item after transition completes
                     setTimeout(() => {
-                        currentItem.style.display = 'none';
+                        if (isAutoplayMode) {
+                            currentItem.style.display = 'none';
+                        }
                     }, transitionDuration);
                 }
                 
@@ -219,9 +347,51 @@
                 currentIndex = nextIndex;
             }
             
-            // Start autoplay loop after page loads
+            function startAutoplay() {
+                if (autoplayInterval) return;
+                autoplayInterval = setInterval(showNextImage, displayDuration);
+            }
+            
+            function stopAutoplay() {
+                if (autoplayInterval) {
+                    clearInterval(autoplayInterval);
+                    autoplayInterval = null;
+                }
+            }
+            
+            // Mouse movement detection
+            function handleMouseMove() {
+                lastMouseMoveTime = Date.now();
+                
+                // Switch to scroll mode if in autoplay mode
+                if (isAutoplayMode) {
+                    isAutoplayMode = false;
+                    initScrollMode();
+                }
+                
+                // Clear existing timeout
+                if (mouseInactivityTimeout) {
+                    clearTimeout(mouseInactivityTimeout);
+                }
+                
+                // Set timeout to switch back to autoplay after inactivity
+                mouseInactivityTimeout = setTimeout(() => {
+                    const timeSinceLastMove = Date.now() - lastMouseMoveTime;
+                    if (timeSinceLastMove >= mouseInactivityDelay && !isAutoplayMode) {
+                        isAutoplayMode = true;
+                        initAutoplayMode();
+                    }
+                }, mouseInactivityDelay);
+            }
+            
+            // Add mouse movement listeners
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mousedown', handleMouseMove);
+            document.addEventListener('wheel', handleMouseMove);
+            
+            // Initialize in autoplay mode
             setTimeout(() => {
-                setInterval(showNextImage, displayDuration);
+                initAutoplayMode();
             }, 1000); // Wait 1 second before starting autoplay
         })();
     </script>
